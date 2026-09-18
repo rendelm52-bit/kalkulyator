@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Розрахунок потужності</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root{
+    --bg: #0f1720;
+    --panel: #172230;
+    --panel-2: #1d2b3a;
+    --line: #2a3a4a;
+    --text: #e8edf2;
+    --text-dim: #9fb0bf;
+    --accent: #ffb020;
+    --accent-2: #4fd1c5;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height:1.45;
+    padding: 16px 14px 90px;
+  }
+  .wrap{max-width:720px; margin:0 auto;}
+  header{margin-bottom:16px;}
+  header h1{font-size:19px; margin:0 0 6px; font-weight:650;}
+  header p{color:var(--text-dim); font-size:13px; margin:0;}
+
+  section{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  section h2{font-size:14px; margin:0 0 10px; font-weight:650;}
+
+  .device-row{
+    display:grid;
+    grid-template-columns: 24px 1fr 64px 72px;
+    gap:8px;
+    align-items:center;
+    padding:8px 0;
+    border-bottom: 1px solid var(--line);
+    font-size:14px;
+  }
+  .device-row:last-child{border-bottom:none;}
+  .device-row label{cursor:pointer; display:flex; flex-direction:column;}
+  .device-row .dname{color:var(--text);}
+  .device-row .dhint{color:var(--text-dim); font-size:11px; margin-top:1px;}
+  .device-row input[type="checkbox"]{width:18px; height:18px; accent-color: var(--accent);}
+  .device-row input[type="number"]{
+    width:100%; background: var(--panel-2); border:1px solid var(--line);
+    color:var(--text); border-radius:6px; padding:6px; font-size:13px; text-align:center;
+  }
+
+  .field{margin-bottom:12px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{display:block; font-size:13px; color:var(--text-dim); margin-bottom:6px;}
+  .row-inline{display:flex; gap:8px; flex-wrap:wrap;}
+  .pill{
+    flex:1; min-width:80px; background: var(--panel-2); border:1px solid var(--line);
+    color:var(--text); border-radius:8px; padding:9px 10px; font-size:13px;
+    text-align:center; cursor:pointer; user-select:none;
+  }
+  .pill.active{border-color: var(--accent); color: var(--accent); background: rgba(255,176,32,0.08);}
+  input[type="range"]{width:100%; accent-color: var(--accent);}
+  .range-value{color:var(--accent); font-weight:650;}
+
+  .results{
+    background: linear-gradient(180deg, var(--panel-2), var(--panel));
+    border: 1px solid var(--accent);
+  }
+  .result-grid{display:grid; grid-template-columns: 1fr 1fr; gap:10px;}
+  .result-card{background: rgba(0,0,0,0.15); border-radius:8px; padding:12px;}
+  .result-card .label{font-size:11.5px; color:var(--text-dim); margin-bottom:4px;}
+  .result-card .value{font-size:20px; font-weight:700;}
+  .result-card .value .unit{font-size:12px; color:var(--text-dim); font-weight:400;}
+  .empty-note{color:var(--text-dim); font-size:13px; font-style:italic;}
+
+  .send-bar{
+    position:fixed; left:0; right:0; bottom:0;
+    padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, rgba(15,23,32,0), var(--bg) 30%);
+  }
+  .send-btn{
+    width:100%; max-width:720px; margin:0 auto; display:block;
+    background: var(--accent); color:#1a1305; border:none;
+    border-radius:10px; padding:14px; font-size:15px; font-weight:700; cursor:pointer;
+  }
+  .send-btn:disabled{opacity:0.4;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Розрахунок потужності</h1>
+    <p>Відмітьте прилади — покажемо потрібну потужність інвертора та ємність АКБ.</p>
+  </header>
+
+  <section>
+    <h2>Прилади</h2>
+    <div id="deviceList"></div>
+  </section>
+
+  <section>
+    <h2>Автономність: <span class="range-value" id="hoursLabel">4 год</span></h2>
+    <input type="range" id="hoursRange" min="0.5" max="24" step="0.5" value="4">
+  </section>
+
+  <section>
+    <h2>Тип АКБ</h2>
+    <div class="row-inline" id="batteryTypePills">
+      <div class="pill" data-dod="0.5" data-name="Свинцевий">Свинцевий</div>
+      <div class="pill" data-dod="0.6" data-name="AGM/Gel">AGM/Gel</div>
+      <div class="pill active" data-dod="0.9" data-name="LiFePO4">LiFePO4</div>
+    </div>
+    <div class="field" style="margin-top:10px;">
+      <div class="row-inline" id="voltagePills">
+        <div class="pill" data-v="12">12В</div>
+        <div class="pill active" data-v="24">24В</div>
+        <div class="pill" data-v="48">48В</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="results">
+    <h2>Результат</h2>
+    <div id="resultsBody"><p class="empty-note">Оберіть хоча б один прилад.</p></div>
+  </section>
+</div>
+
+<div class="send-bar">
+  <button class="send-btn" id="sendBtn" disabled>Відправити менеджеру</button>
+</div>
+
+<script>
+const DEVICES = [
+  {id:'fridge', name:'Холодильник', hint:'компресор', watt:150, motor:true, surgeFactor:3, checked:true},
+  {id:'router', name:'Роутер', hint:'', watt:15, motor:false, checked:true},
+  {id:'lights', name:'Освітлення', hint:'', watt:60, motor:false, checked:true},
+  {id:'tv', name:'Телевізор', hint:'', watt:100, motor:false, checked:false},
+  {id:'laptop', name:'Ноутбук', hint:'', watt:65, motor:false, checked:true},
+  {id:'boiler_circ', name:'Насос опалення', hint:'мотор', watt:90, motor:true, surgeFactor:3, checked:false},
+  {id:'well_pump', name:'Насос свердловини', hint:'мотор', watt:750, motor:true, surgeFactor:3, checked:false},
+  {id:'microwave', name:'Мікрохвильовка', hint:'', watt:1000, motor:false, checked:false},
+  {id:'kettle', name:'Чайник', hint:'', watt:1500, motor:false, checked:false},
+  {id:'ac', name:'Кондиціонер', hint:'компресор', watt:1000, motor:true, surgeFactor:3, checked:false},
+  {id:'gas_boiler', name:'Газовий котел', hint:'', watt:120, motor:true, surgeFactor:2, checked:false},
+  {id:'washer', name:'Пральна машина', hint:'мотор', watt:2000, motor:true, surgeFactor:2, checked:false},
+];
+
+let batteryDoD = 0.9, batteryTypeName = 'LiFePO4', systemVoltage = 24, hours = 4;
+let lastResult = null;
+const tg = window.Telegram ? window.Telegram.WebApp : null;
+if(tg) tg.ready();
+
+function renderDevices(){
+  const list = document.getElementById('deviceList');
+  list.innerHTML = '';
+  DEVICES.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'device-row';
+
+    const chk = document.createElement('input');
+    chk.type = 'checkbox'; chk.id = 'chk_' + d.id; chk.checked = !!d.checked;
+    chk.addEventListener('change', recalc);
+
+    const label = document.createElement('label');
+    label.setAttribute('for', chk.id);
+    const dname = document.createElement('span');
+    dname.className = 'dname'; dname.textContent = d.name;
+    label.appendChild(dname);
+    if(d.hint){
+      const dhint = document.createElement('span');
+      dhint.className = 'dhint'; dhint.textContent = d.hint;
+      label.appendChild(dhint);
+    }
+
+    const qty = document.createElement('input');
+    qty.type = 'number'; qty.id = 'qty_' + d.id; qty.value = '1'; qty.min = '1'; qty.max = '20';
+    qty.addEventListener('input', recalc);
+
+    const watt = document.createElement('input');
+    watt.type = 'number'; watt.id = 'watt_' + d.id; watt.value = String(d.watt); watt.min = '1';
+    watt.addEventListener('input', recalc);
+
+    row.appendChild(chk); row.appendChild(label); row.appendChild(qty); row.appendChild(watt);
+    list.appendChild(row);
+  });
+}
+
+function roundUpToStep(value, step){ return Math.ceil(value / step) * step; }
+function nearestInverterSize(watts){
+  const sizes = [500,800,1000,1500,2000,2500,3000,4000,5000,6000,8000,10000,12000,15000];
+  for(const s of sizes){ if(watts <= s) return s; }
+  return roundUpToStep(watts, 2000);
+}
+
+function recalc(){
+  let totalRunning = 0, biggestSurgeExtra = 0, hasSelection = false;
+  const devicesOut = [];
+
+  DEVICES.forEach(d => {
+    const chk = document.getElementById('chk_' + d.id);
+    if(!chk || !chk.checked) return;
+    hasSelection = true;
+    const qty = parseFloat(document.getElementById('qty_' + d.id).value) || 1;
+    const watt = parseFloat(document.getElementById('watt_' + d.id).value) || d.watt;
+    const power = qty * watt;
+    totalRunning += power;
+    devicesOut.push({name: d.name, qty, watt});
+    if(d.motor){
+      const extra = power * ((d.surgeFactor || 2) - 1);
+      if(extra > biggestSurgeExtra) biggestSurgeExtra = extra;
+    }
+  });
+
+  const resultsBody = document.getElementById('resultsBody');
+  const sendBtn = document.getElementById('sendBtn');
+
+  if(!hasSelection){
+    resultsBody.innerHTML = '<p class="empty-note">Оберіть хоча б один прилад.</p>';
+    sendBtn.disabled = true;
+    lastResult = null;
+    return;
+  }
+
+  const continuousNeeded = totalRunning * 1.2;
+  const surgeNeeded = totalRunning + biggestSurgeExtra;
+  const inverterSize = nearestInverterSize(Math.max(continuousNeeded, surgeNeeded));
+
+  const loadWh = totalRunning * hours;
+  const whTotalNeeded = (loadWh / 0.9) / batteryDoD;
+  const ahRounded = roundUpToStep(whTotalNeeded / systemVoltage, 10);
+
+  resultsBody.innerHTML = `
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="label">Інвертор</div>
+        <div class="value">${inverterSize.toLocaleString('uk-UA')} <span class="unit">Вт</span></div>
+      </div>
+      <div class="result-card">
+        <div class="label">АКБ (${systemVoltage}В, ${batteryTypeName})</div>
+        <div class="value">${Math.round(ahRounded).toLocaleString('uk-UA')} <span class="unit">Аг</span></div>
+      </div>
+    </div>
+  `;
+
+  lastResult = {
+    inverter_w: inverterSize,
+    battery_ah: Math.round(ahRounded),
+    battery_voltage: systemVoltage,
+    battery_type: batteryTypeName,
+    hours: hours,
+    running_w: Math.round(totalRunning),
+    devices: devicesOut
+  };
+  sendBtn.disabled = false;
+}
+
+document.getElementById('hoursRange').addEventListener('input', (e) => {
+  hours = parseFloat(e.target.value);
+  document.getElementById('hoursLabel').textContent = hours + ' год';
+  recalc();
+});
+
+document.getElementById('batteryTypePills').addEventListener('click', (e) => {
+  const pill = e.target.closest('.pill'); if(!pill) return;
+  document.querySelectorAll('#batteryTypePills .pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  batteryDoD = parseFloat(pill.dataset.dod);
+  batteryTypeName = pill.dataset.name;
+  recalc();
+});
+
+document.getElementById('voltagePills').addEventListener('click', (e) => {
+  const pill = e.target.closest('.pill'); if(!pill) return;
+  document.querySelectorAll('#voltagePills .pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  systemVoltage = parseFloat(pill.dataset.v);
+  recalc();
+});
+
+document.getElementById('sendBtn').addEventListener('click', () => {
+  if(!lastResult) return;
+  const payload = JSON.stringify(lastResult);
+  if(tg && tg.sendData){
+    tg.sendData(payload);
+  } else {
+    alert('Поза Telegram — ось що було б відправлено:\\n' + payload);
+  }
+});
+
+renderDevices();
+recalc();
+</script>
+</body>
+</html>
