@@ -154,7 +154,7 @@
 </div>
 
 <div class="send-bar">
-  <button class="send-btn" id="sendBtn" disabled>Отримати розрахунок</button>
+  <button class="send-btn" id="sendBtn" disabled>Замовити дзвінок</button>
 </div>
 
 <script>
@@ -322,7 +322,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   const tgUser = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
   const usernameText = tgUser && tgUser.username ? `@${tgUser.username}` : 'немає';
 
-  const text = `📥 *НОВИЙ ЛІД З КАЛЬКУЛЯТОРА!*\n\n` +
+  const text = `📥 *НОВИЙ ЛІДЗ КАЛЬКУЛЯТОРА!*\n\n` +
                `👤 *Ім'я:* ${name}\n` +
                `📞 *Телефон:* ${phone}\n` +
                `✈️ *Telegram:* ${usernameText}\n\n` +
@@ -354,13 +354,13 @@ document.getElementById('sendBtn').addEventListener('click', () => {
     } else {
       alert('Помилка надсилання. Перевірте правильності налаштувань токена та CHAT_ID.');
       btn.disabled = false;
-      btn.textContent = 'Отримати розрахунок';
+      btn.textContent = 'Замовити дзвінок';
     }
   })
   .catch(err => {
     alert('Помилка мережі.');
     btn.disabled = false;
-    btn.textContent = 'Отримати розрахунок';
+    btn.textContent = 'Замовити дзвінок';
   });
 });
 
