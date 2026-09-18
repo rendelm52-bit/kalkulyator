@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height:1.45;
-    padding: 16px 14px 90px;
+    padding: 16px 14px 180px;
   }
   .wrap{max-width:720px; margin:0 auto;}
   header{margin-bottom:16px;}
@@ -62,6 +62,10 @@
   .field{margin-bottom:12px;}
   .field:last-child{margin-bottom:0;}
   .field label{display:block; font-size:13px; color:var(--text-dim); margin-bottom:6px;}
+  .field input[type="text"], .field input[type="tel"]{
+    width:100%; background: var(--panel-2); border:1px solid var(--line);
+    color:var(--text); border-radius:8px; padding:10px; font-size:14px;
+  }
   .row-inline{display:flex; gap:8px; flex-wrap:wrap;}
   .pill{
     flex:1; min-width:80px; background: var(--panel-2); border:1px solid var(--line);
@@ -86,7 +90,8 @@
   .send-bar{
     position:fixed; left:0; right:0; bottom:0;
     padding:12px 14px calc(12px + env(safe-area-inset-bottom));
-    background: linear-gradient(180deg, rgba(15,23,32,0), var(--bg) 30%);
+    background: #0f1720;
+    border-top: 1px solid var(--line);
   }
   .send-btn{
     width:100%; max-width:720px; margin:0 auto; display:block;
@@ -134,13 +139,29 @@
     <h2>Результат</h2>
     <div id="resultsBody"><p class="empty-note">Оберіть хоча б один прилад.</p></div>
   </section>
+
+  <section>
+    <h2>Ваші контакти для зв'язку</h2>
+    <div class="field">
+      <label>Ваше ім'я</label>
+      <input type="text" id="userName" placeholder="Олександр">
+    </div>
+    <div class="field">
+      <label>Телефон</label>
+      <input type="tel" id="userPhone" placeholder="+380XXXXXXXXX">
+    </div>
+  </section>
 </div>
 
 <div class="send-bar">
-  <button class="send-btn" id="sendBtn" disabled>Відправити менеджеру</button>
+  <button class="send-btn" id="sendBtn" disabled>Отримати розрахунок</button>
 </div>
 
 <script>
+// !!! НАЛАШТУВАННЯ ВІДПРАВКИ !!!
+const BOT_TOKEN = 'ВАШ_ТОКЕН_БОТА'; // Вставте сюди токен вашого бота від BotFather
+const CHAT_ID = 'ВАШ_TELEGRAM_ID';   // Вставте сюди ваш личный Telegram ID (або ID чату/групи)
+
 const DEVICES = [
   {id:'fridge', name:'Холодильник', hint:'компресор', watt:150, motor:true, surgeFactor:3, checked:true},
   {id:'router', name:'Роутер', hint:'', watt:15, motor:false, checked:true},
@@ -215,7 +236,7 @@ function recalc(){
     const watt = parseFloat(document.getElementById('watt_' + d.id).value) || d.watt;
     const power = qty * watt;
     totalRunning += power;
-    devicesOut.push({name: d.name, qty, watt});
+    devicesOut.push(`${d.name} (${qty} шт x ${watt}Вт)`);
     if(d.motor){
       const extra = power * ((d.surgeFactor || 2) - 1);
       if(extra > biggestSurgeExtra) biggestSurgeExtra = extra;
@@ -260,7 +281,7 @@ function recalc(){
     battery_type: batteryTypeName,
     hours: hours,
     running_w: Math.round(totalRunning),
-    devices: devicesOut
+    devices: devicesOut.join(', ')
   };
   sendBtn.disabled = false;
 }
@@ -290,12 +311,57 @@ document.getElementById('voltagePills').addEventListener('click', (e) => {
 
 document.getElementById('sendBtn').addEventListener('click', () => {
   if(!lastResult) return;
-  const payload = JSON.stringify(lastResult);
-  if(tg && tg.sendData){
-    tg.sendData(payload);
-  } else {
-    alert('Поза Telegram — ось що було б відправлено:\\n' + payload);
+  const name = document.getElementById('userName').value.trim();
+  const phone = document.getElementById('userPhone').value.trim();
+
+  if(!name || !phone){
+    alert('Будь ласка, введіть ваше ім\'я та номер телефону.');
+    return;
   }
+
+  const tgUser = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
+  const usernameText = tgUser && tgUser.username ? `@${tgUser.username}` : 'немає';
+
+  const text = `📥 *НОВИЙ ЛІД З КАЛЬКУЛЯТОРА!*\n\n` +
+               `👤 *Ім'я:* ${name}\n` +
+               `📞 *Телефон:* ${phone}\n` +
+               `✈️ *Telegram:* ${usernameText}\n\n` +
+               `📊 *Результат розрахунку:*\n` +
+               `• Інвертор: *${lastResult.inverter_w} Вт*\n` +
+               `• АКБ: *${lastResult.battery_ah} Аг (${lastResult.battery_voltage}В, ${lastResult.battery_type})*\n` +
+               `• Автономність: *${lastResult.hours} год*\n` +
+               `• Навантаження: *${lastResult.running_w} Вт*\n` +
+               `• Прилади: ${lastResult.devices}`;
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  btn.textContent = 'Надсилання...';
+
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: text,
+      parse_mode: 'Markdown'
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.ok){
+      alert('Дякуємо! Ваші дані успішно надіслані. Менеджер зв\'яжеться з вами найближчим часом.');
+      if(tg) tg.close();
+    } else {
+      alert('Помилка надсилання. Перевірте правильності налаштувань токена та CHAT_ID.');
+      btn.disabled = false;
+      btn.textContent = 'Отримати розрахунок';
+    }
+  })
+  .catch(err => {
+    alert('Помилка мережі.');
+    btn.disabled = false;
+    btn.textContent = 'Отримати розрахунок';
+  });
 });
 
 renderDevices();
