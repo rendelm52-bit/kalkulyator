@@ -167,19 +167,20 @@
 const BOT_TOKEN = '8786423841:AAGuTfPPyuZNId8cKbrndPFcNs5TG5JD7S8'; 
 const CHAT_ID = '7839515973';   
 
+// duty — частка часу, коли прилад реально споживає (компресор, нагрів, цикли)
 const DEVICES = [
-  {id:'fridge', name:'Холодильник', hint:'компресор', watt:150, motor:true, surgeFactor:3, checked:true},
-  {id:'router', name:'Роутер', hint:'', watt:15, motor:false, checked:true},
-  {id:'lights', name:'Освітлення', hint:'', watt:60, motor:false, checked:true},
-  {id:'tv', name:'Телевізор', hint:'', watt:100, motor:false, checked:false},
-  {id:'laptop', name:'Ноутбук', hint:'', watt:65, motor:false, checked:true},
-  {id:'boiler_circ', name:'Насос опалення', hint:'мотор', watt:90, motor:true, surgeFactor:3, checked:false},
-  {id:'well_pump', name:'Насос свердловини', hint:'мотор', watt:750, motor:true, surgeFactor:3, checked:false},
-  {id:'microwave', name:'Мікрохвильовка', hint:'', watt:1000, motor:false, checked:false},
-  {id:'kettle', name:'Чайник', hint:'', watt:1500, motor:false, checked:false},
-  {id:'ac', name:'Кондиціонер', hint:'компресор', watt:1000, motor:true, surgeFactor:3, checked:false},
-  {id:'gas_boiler', name:'Газовий котел', hint:'', watt:120, motor:true, surgeFactor:2, checked:false},
-  {id:'washer', name:'Пральна машина', hint:'мотор', watt:2000, motor:true, surgeFactor:2, checked:false},
+  {id:'fridge', name:'Холодильник', hint:'компресор', watt:150, motor:true, surgeFactor:3, duty:0.35, checked:true},
+  {id:'router', name:'Роутер', hint:'', watt:15, motor:false, duty:1, checked:true},
+  {id:'lights', name:'Освітлення', hint:'', watt:60, motor:false, duty:1, checked:true},
+  {id:'tv', name:'Телевізор', hint:'', watt:100, motor:false, duty:0.6, checked:false},
+  {id:'laptop', name:'Ноутбук', hint:'', watt:65, motor:false, duty:0.7, checked:true},
+  {id:'boiler_circ', name:'Насос опалення', hint:'мотор', watt:90, motor:true, surgeFactor:3, duty:1, checked:false},
+  {id:'well_pump', name:'Насос свердловини', hint:'мотор', watt:750, motor:true, surgeFactor:3, duty:0.1, checked:false},
+  {id:'microwave', name:'Мікрохвильовка', hint:'', watt:1000, motor:false, duty:0.03, checked:false},
+  {id:'kettle', name:'Чайник', hint:'', watt:1500, motor:false, duty:0.03, checked:false},
+  {id:'ac', name:'Кондиціонер', hint:'компресор', watt:1000, motor:true, surgeFactor:3, duty:0.5, checked:false},
+  {id:'gas_boiler', name:'Газовий котел', hint:'', watt:120, motor:true, surgeFactor:2, duty:0.6, checked:false},
+  {id:'washer', name:'Пральна машина', hint:'мотор', watt:2000, motor:true, surgeFactor:2, duty:0.05, checked:false},
 ];
 
 // Комплекти Opdrop. Ціни оновлювати тут.
@@ -256,7 +257,7 @@ function nearestInverterSize(watts){
 }
 
 function recalc(){
-  let totalRunning = 0, biggestSurgeExtra = 0, hasSelection = false;
+  let totalRunning = 0, totalAvg = 0, biggestSurgeExtra = 0, hasSelection = false;
   const devicesOut = [];
 
   DEVICES.forEach(d => {
@@ -267,6 +268,7 @@ function recalc(){
     const watt = parseFloat(document.getElementById('watt_' + d.id).value) || d.watt;
     const power = qty * watt;
     totalRunning += power;
+    totalAvg += power * (d.duty ?? 1);
     devicesOut.push(`${d.name} (${qty} шт x ${watt}Вт)`);
     if(d.motor){
       const extra = power * ((d.surgeFactor || 2) - 1);
@@ -288,14 +290,14 @@ function recalc(){
   const surgeNeeded = totalRunning + biggestSurgeExtra;
   const inverterSize = nearestInverterSize(Math.max(continuousNeeded, surgeNeeded));
 
-  const loadWh = totalRunning * hours;
+  const loadWh = totalAvg * hours;
   const whTotalNeeded = (loadWh / 0.9) / batteryDoD;
   const ahRounded = roundUpToStep(whTotalNeeded / systemVoltage, 10);
 
   const kit = pickKit(inverterSize, loadWh / INVERTER_EFF);
   let kitHtml;
   if(kit){
-    const kitHours = Math.floor((kit.battery_wh * KIT_DOD * INVERTER_EFF / totalRunning) * 2) / 2;
+    const kitHours = Math.floor((kit.battery_wh * KIT_DOD * INVERTER_EFF / totalAvg) * 2) / 2;
     kitHtml = `
     <div class="kit">
       <div class="label">Вам підходить</div>
@@ -303,7 +305,7 @@ function recalc(){
       <div class="kit-price">${kit.price.toLocaleString('uk-UA')} грн</div>
       <div class="kit-note">${kitHours >= hours
         ? `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год без світла.`
-        : `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год при постійній роботі всіх приладів. Для ${hours} год додамо акумулятор — підкажемо на дзвінку.`} Оплата при отриманні.</div>
+        : `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год. Для ${hours} год додамо акумулятор — підкажемо на дзвінку.`} Оплата при отриманні.</div>
     </div>`;
   } else {
     kitHtml = `
@@ -337,6 +339,7 @@ function recalc(){
     battery_type: batteryTypeName,
     hours: hours,
     running_w: Math.round(totalRunning),
+    avg_w: Math.round(totalAvg),
     devices: devicesOut.join(', ')
   };
   sendBtn.disabled = false;
@@ -386,7 +389,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
                `• Інвертор: *${lastResult.inverter_w} Вт*\n` +
                `• АКБ: *${lastResult.battery_ah} Аг (${lastResult.battery_voltage}В, ${lastResult.battery_type})*\n` +
                `• Автономність: *${lastResult.hours} год*\n` +
-               `• Навантаження: *${lastResult.running_w} Вт*\n` +
+               `• Навантаження: *${lastResult.running_w} Вт* (в середньому ${lastResult.avg_w} Вт)\n` +
                `• Прилади: ${lastResult.devices}\n\n` +
                `🎯 *Комплект:* ${lastResult.kit}${lastResult.kit_price ? ' — ' + lastResult.kit_price + ' грн' : ''}\n` +
                `📣 *Джерело:* \`${leadSource()}\``;
