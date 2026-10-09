@@ -164,9 +164,8 @@
 
 <script>
 // !!! НАЛАШТУВАННЯ ВІДПРАВКИ !!!
-const BOT_TOKEN = '8786423841:AAGuTfPPyuZNId8cKbrndPFcNs5TG5JD7S8'; 
-const CHAT_ID = '7839515973';   
-
+// Заявки йдуть через Cloudflare Worker; токен бота зберігається там, а не в цьому файлі.
+const LEAD_URL = 'https://ibp-leads.rendelm52.workers.dev/';
 // duty — частка часу, коли прилад реально споживає (компресор, нагрів, цикли)
 const DEVICES = [
   {id:'fridge', name:'Холодильник', hint:'компресор', watt:150, motor:true, surgeFactor:3, duty:0.35, checked:true},
@@ -400,13 +399,11 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   btn.disabled = true;
   btn.textContent = 'Надсилання...';
 
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+  fetch(LEAD_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      chat_id: CHAT_ID,
-      text: text,
-      parse_mode: 'HTML'
+      text: text
     })
   })
   .then(res => res.json())
@@ -415,7 +412,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
       alert('Дякуємо! Ваші дані успішно надіслані. Менеджер зв\'яжеться з вами найближчим часом.');
       if(tg) tg.close();
     } else {
-      alert('Помилка надсилання. Перевірте правильності налаштувань токена та CHAT_ID.\n\nTelegram: ' + (data.description || data.error_code || 'невідома помилка'));
+      alert('Помилка надсилання. Спробуйте ще раз або зателефонуйте нам.\n\nTelegram: ' + (data.description || data.error_code || 'невідома помилка'));
       btn.disabled = false;
       btn.textContent = 'Замовити дзвінок';
     }
