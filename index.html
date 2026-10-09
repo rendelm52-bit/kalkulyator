@@ -85,6 +85,11 @@
   .result-card .label{font-size:11.5px; color:var(--text-dim); margin-bottom:4px;}
   .result-card .value{font-size:20px; font-weight:700;}
   .result-card .value .unit{font-size:12px; color:var(--text-dim); font-weight:400;}
+  .kit{margin-top:12px; padding:12px; border-radius:8px; background: rgba(255,176,32,0.08); border:1px solid var(--accent);}
+  .kit .label{font-size:11.5px; color:var(--text-dim); margin-bottom:4px;}
+  .kit .kit-name{font-size:15px; font-weight:650; margin-bottom:4px;}
+  .kit .kit-price{font-size:20px; font-weight:700; color:var(--accent);}
+  .kit .kit-note{font-size:12.5px; color:var(--text-dim); margin-top:6px;}
   .empty-note{color:var(--text-dim); font-size:13px; font-style:italic;}
 
   .send-bar{
@@ -177,6 +182,32 @@ const DEVICES = [
   {id:'washer', name:'Пральна машина', hint:'мотор', watt:2000, motor:true, surgeFactor:2, checked:false},
 ];
 
+// Комплекти Opdrop. Ціни оновлювати тут.
+const KITS = [
+  {name:'Anenji 6.2 кВт + 1 АКБ LiFePO4 5.12 кВт·год', inverter_w:6200, battery_wh:5120, price:65990},
+  {name:'Aninerel 11 кВт + 1 АКБ LiFePO4 5.12 кВт·год', inverter_w:11000, battery_wh:5120, price:74990},
+  {name:'Anenji 6.2 кВт + 2 АКБ LiFePO4 10.24 кВт·год', inverter_w:6200, battery_wh:10240, price:99990},
+];
+const KIT_DOD = 0.9, INVERTER_EFF = 0.9;
+
+// Найдешевший комплект, що тягне і потужність, і автономність.
+// Якщо автономності не вистачає жодному — найбільша ємність серед тих, що тягнуть потужність.
+// Якщо потужність більша за всі комплекти — null (індивідуальний підбір).
+function pickKit(needW, needWh){
+  const powerOk = KITS.filter(k => k.inverter_w >= needW);
+  if(!powerOk.length) return null;
+  const full = powerOk.filter(k => k.battery_wh * KIT_DOD >= needWh).sort((a, b) => a.price - b.price);
+  if(full.length) return full[0];
+  return powerOk.slice().sort((a, b) => (b.battery_wh - a.battery_wh) || (a.price - b.price))[0];
+}
+
+// Мітка джерела: ?startapp=fb_kvartyra у посиланні на Mini App або ?src=... у URL
+function leadSource(){
+  const sp = tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param;
+  if(sp) return sp;
+  try { return new URLSearchParams(location.search).get('src') || 'невідомо'; } catch(e){ return 'невідомо'; }
+}
+
 let batteryDoD = 0.9, batteryTypeName = 'LiFePO4', systemVoltage = 24, hours = 4;
 let lastResult = null;
 const tg = window.Telegram ? window.Telegram.WebApp : null;
@@ -261,6 +292,28 @@ function recalc(){
   const whTotalNeeded = (loadWh / 0.9) / batteryDoD;
   const ahRounded = roundUpToStep(whTotalNeeded / systemVoltage, 10);
 
+  const kit = pickKit(inverterSize, loadWh / INVERTER_EFF);
+  let kitHtml;
+  if(kit){
+    const kitHours = Math.floor((kit.battery_wh * KIT_DOD * INVERTER_EFF / totalRunning) * 2) / 2;
+    kitHtml = `
+    <div class="kit">
+      <div class="label">Вам підходить</div>
+      <div class="kit-name">${kit.name}</div>
+      <div class="kit-price">${kit.price.toLocaleString('uk-UA')} грн</div>
+      <div class="kit-note">${kitHours >= hours
+        ? `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год без світла.`
+        : `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год при постійній роботі всіх приладів. Для ${hours} год додамо акумулятор — підкажемо на дзвінку.`} Оплата при отриманні.</div>
+    </div>`;
+  } else {
+    kitHtml = `
+    <div class="kit">
+      <div class="label">Вам підходить</div>
+      <div class="kit-name">Потужна система під ваш об'єкт</div>
+      <div class="kit-note">Потужність більша за стандартні комплекти (до 11 кВт). Залиште номер — підберемо систему індивідуально.</div>
+    </div>`;
+  }
+
   resultsBody.innerHTML = `
     <div class="result-grid">
       <div class="result-card">
@@ -272,9 +325,12 @@ function recalc(){
         <div class="value">${Math.round(ahRounded).toLocaleString('uk-UA')} <span class="unit">Аг</span></div>
       </div>
     </div>
+    ${kitHtml}
   `;
 
   lastResult = {
+    kit: kit ? kit.name : 'індивідуальний підбір',
+    kit_price: kit ? kit.price : null,
     inverter_w: inverterSize,
     battery_ah: Math.round(ahRounded),
     battery_voltage: systemVoltage,
@@ -331,7 +387,9 @@ document.getElementById('sendBtn').addEventListener('click', () => {
                `• АКБ: *${lastResult.battery_ah} Аг (${lastResult.battery_voltage}В, ${lastResult.battery_type})*\n` +
                `• Автономність: *${lastResult.hours} год*\n` +
                `• Навантаження: *${lastResult.running_w} Вт*\n` +
-               `• Прилади: ${lastResult.devices}`;
+               `• Прилади: ${lastResult.devices}\n\n` +
+               `🎯 *Комплект:* ${lastResult.kit}${lastResult.kit_price ? ' — ' + lastResult.kit_price + ' грн' : ''}\n` +
+               `📣 *Джерело:* \`${leadSource()}\``;
 
   const btn = document.getElementById('sendBtn');
   btn.disabled = true;
