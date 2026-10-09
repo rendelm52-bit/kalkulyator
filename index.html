@@ -381,18 +381,20 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   const tgUser = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
   const usernameText = tgUser && tgUser.username ? `@${tgUser.username}` : 'немає';
 
-  const text = `📥 *НОВИЙ ЛІДЗ КАЛЬКУЛЯТОРА!*\n\n` +
-               `👤 *Ім'я:* ${name}\n` +
-               `📞 *Телефон:* ${phone}\n` +
-               `✈️ *Telegram:* ${usernameText}\n\n` +
-               `📊 *Результат розрахунку:*\n` +
-               `• Інвертор: *${lastResult.inverter_w} Вт*\n` +
-               `• АКБ: *${lastResult.battery_ah} Аг (${lastResult.battery_voltage}В, ${lastResult.battery_type})*\n` +
-               `• Автономність: *${lastResult.hours} год*\n` +
-               `• Навантаження: *${lastResult.running_w} Вт* (в середньому ${lastResult.avg_w} Вт)\n` +
-               `• Прилади: ${lastResult.devices}\n\n` +
-               `🎯 *Комплект:* ${lastResult.kit}${lastResult.kit_price ? ' — ' + lastResult.kit_price + ' грн' : ''}\n` +
-               `📣 *Джерело:* \`${leadSource()}\``;
+  // HTML замість Markdown: підкреслення в імені чи @username більше не ламають відправку
+  const esc = v => String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const text = `📥 <b>НОВИЙ ЛІД КАЛЬКУЛЯТОРА!</b>\n\n` +
+               `👤 <b>Ім'я:</b> ${esc(name)}\n` +
+               `📞 <b>Телефон:</b> ${esc(phone)}\n` +
+               `✈️ <b>Telegram:</b> ${esc(usernameText)}\n\n` +
+               `📊 <b>Результат розрахунку:</b>\n` +
+               `• Інвертор: <b>${lastResult.inverter_w} Вт</b>\n` +
+               `• АКБ: <b>${lastResult.battery_ah} Аг (${lastResult.battery_voltage}В, ${esc(lastResult.battery_type)})</b>\n` +
+               `• Автономність: <b>${lastResult.hours} год</b>\n` +
+               `• Навантаження: <b>${lastResult.running_w} Вт</b> (в середньому ${lastResult.avg_w} Вт)\n` +
+               `• Прилади: ${esc(lastResult.devices)}\n\n` +
+               `🎯 <b>Комплект:</b> ${esc(lastResult.kit)}${lastResult.kit_price ? ' — ' + lastResult.kit_price + ' грн' : ''}\n` +
+               `📣 <b>Джерело:</b> <code>${esc(leadSource())}</code>`;
 
   const btn = document.getElementById('sendBtn');
   btn.disabled = true;
@@ -404,7 +406,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
     body: JSON.stringify({
       chat_id: CHAT_ID,
       text: text,
-      parse_mode: 'Markdown'
+      parse_mode: 'HTML'
     })
   })
   .then(res => res.json())
@@ -413,7 +415,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
       alert('Дякуємо! Ваші дані успішно надіслані. Менеджер зв\'яжеться з вами найближчим часом.');
       if(tg) tg.close();
     } else {
-      alert('Помилка надсилання. Перевірте правильності налаштувань токена та CHAT_ID.');
+      alert('Помилка надсилання. Перевірте правильності налаштувань токена та CHAT_ID.\n\nTelegram: ' + (data.description || data.error_code || 'невідома помилка'));
       btn.disabled = false;
       btn.textContent = 'Замовити дзвінок';
     }
