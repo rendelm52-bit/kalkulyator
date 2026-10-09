@@ -165,7 +165,7 @@
 <script>
 // !!! НАЛАШТУВАННЯ ВІДПРАВКИ !!!
 // Заявки йдуть через Cloudflare Worker; токен бота зберігається там, а не в цьому файлі.
-const LEAD_URL = 'WORKER_URL';
+const LEAD_URL = 'https://ibp-leads.rendelm52.workers.dev/';
 // duty — частка часу, коли прилад реально споживає (компресор, нагрів, цикли)
 const DEVICES = [
   {id:'fridge', name:'Холодильник', hint:'компресор', watt:150, motor:true, surgeFactor:3, duty:0.35, checked:true},
