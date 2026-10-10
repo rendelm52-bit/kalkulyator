@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АСЕ · Автономні Системи Енергії — інвертори з LiFePO4 акумулятором</title>
+<meta name="description" content="Комплекти резервного живлення для квартири, будинку й бізнесу: інвертор + LiFePO4 акумулятор. Оплата при отриманні, гарантія 1 рік, монтаж по Києву.">
+<meta property="og:title" content="АСЕ · Автономні Системи Енергії">
+<meta property="og:description" content="Світло вдома, навіть коли його вимкнули. Інвертор + LiFePO4 акумулятор від 65 990 грн.">
+<meta property="og:image" content="https://rendelm52-bit.github.io/kalkulyator/img/cover.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b6e4f'/%3E%3Cpath d='M18 4 8 18h7l-2 10 11-15h-7z' fill='%23ffc23d'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#f6faf8; --surface:#ffffff; --ink:#10261d; --ink-2:#4b6158; --line:#dfe9e4;
+    --brand:#0b6e4f; --brand-2:#13a06f; --sun:#ffc23d; --sky1:#e8f4ff; --sky2:#f7fbff;
+    --radius:16px; --shadow:0 10px 30px rgba(16,38,29,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; font-size:16px}
+  a{color:inherit}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 16px}
+
+  /* header */
+  header.top{position:sticky; top:0; z-index:10; background:rgba(255,255,255,.88); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+  header.top .wrap{display:flex; align-items:center; justify-content:space-between; height:64px; gap:12px}
+  .logo{display:flex; align-items:center; gap:10px; text-decoration:none}
+  .logo .mark{width:36px; height:36px; flex:none}
+  .logo b{font-size:20px; letter-spacing:.08em; color:var(--brand)}
+  .logo small{display:block; font-size:11px; color:var(--ink-2); line-height:1.1; letter-spacing:.02em}
+  nav.menu{display:flex; gap:22px; font-size:14.5px}
+  nav.menu a{text-decoration:none; color:var(--ink-2)} nav.menu a:hover{color:var(--brand)}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:12px; padding:13px 20px; font-weight:650; text-decoration:none; font-size:15.5px; border:2px solid transparent; transition:transform .15s, box-shadow .15s}
+  .btn:hover{transform:translateY(-1px); box-shadow:var(--shadow)}
+  .btn-primary{background:var(--brand); color:#fff}
+  .btn-sun{background:var(--sun); color:#2a1d00}
+  .btn-ghost{border-color:var(--brand); color:var(--brand); background:#fff}
+  .btn-sm{padding:9px 14px; font-size:14px}
+  @media (max-width:820px){ nav.menu{display:none} header.top .btn{display:none} }
+
+  /* hero */
+  .hero{background:linear-gradient(180deg,var(--sky1),var(--sky2) 70%, var(--bg)); overflow:hidden}
+  .hero .wrap{display:grid; grid-template-columns:1.05fr 1fr; gap:24px; align-items:center; padding-top:48px; padding-bottom:40px}
+  .eyebrow{display:inline-block; font-size:13px; font-weight:650; color:var(--brand); background:#e3f4ec; border-radius:20px; padding:5px 12px; margin-bottom:14px}
+  .hero h1{font-size:44px; line-height:1.1; margin:0 0 16px; letter-spacing:-.01em}
+  .hero h1 span{color:var(--brand)}
+  .hero p.lead{font-size:18px; color:var(--ink-2); margin:0 0 24px; max-width:520px}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap}
+  .trust{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:22px; font-size:14px; color:var(--ink-2)}
+  .trust span::before{content:"✓ "; color:var(--brand-2); font-weight:800}
+  .scene{width:100%; height:auto; display:block}
+  .blades{transform-box:fill-box; transform-origin:center; animation:spin 6s linear infinite}
+  .blades.b2{animation-duration:8s} .blades.b3{animation-duration:7s}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){ .blades{animation:none} html{scroll-behavior:auto} }
+  @media (max-width:820px){
+    .hero .wrap{grid-template-columns:1fr; padding-top:28px}
+    .hero h1{font-size:32px}
+    .hero p.lead{font-size:16.5px}
+    .scene{max-width:520px; margin:0 auto}
+  }
+
+  /* sections */
+  section{padding:56px 0}
+  section h2{font-size:30px; line-height:1.2; margin:0 0 8px; letter-spacing:-.01em}
+  section .sub{color:var(--ink-2); margin:0 0 28px; max-width:640px}
+  @media (max-width:820px){ section{padding:40px 0} section h2{font-size:24px} }
+
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:-8px}
+  .stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+  .stat b{display:block; font-size:28px; color:var(--brand); line-height:1.1}
+  .stat span{font-size:14px; color:var(--ink-2)}
+  @media (max-width:820px){ .stats{grid-template-columns:repeat(2,1fr)} .stat b{font-size:22px} }
+
+  .how{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px}
+  .card .ico{width:44px; height:44px; border-radius:12px; background:#e3f4ec; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:12px}
+  .card h3{margin:0 0 6px; font-size:18px}
+  .card p{margin:0; color:var(--ink-2); font-size:15px}
+  @media (max-width:820px){ .how{grid-template-columns:1fr} }
+
+  .kits{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  .kit{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; box-shadow:var(--shadow)}
+  .kit.best{border:2px solid var(--brand)}
+  .kit img{width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; display:block; border-bottom:1px solid var(--line)}
+  .kit .body{padding:18px; display:flex; flex-direction:column; flex:1}
+  .kit .tag{align-self:flex-start; font-size:12px; font-weight:700; background:var(--brand); color:#fff; border-radius:6px; padding:3px 8px; margin-bottom:8px}
+  .kit h3{margin:0 0 6px; font-size:17px; line-height:1.3}
+  .kit .for{color:var(--ink-2); font-size:14.5px; margin:0 0 10px}
+  .kit ul{margin:0 0 14px; padding-left:18px; font-size:14px; color:var(--ink-2)}
+  .kit .price{font-size:26px; font-weight:800; margin-top:auto; margin-bottom:12px}
+  .kit .price small{font-size:14px; font-weight:500; color:var(--ink-2)}
+  @media (max-width:900px){ .kits{grid-template-columns:1fr; max-width:460px; margin:0 auto} }
+
+  .steps{counter-reset:s; display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+  .step{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px 18px 18px}
+  .step::before{counter-increment:s; content:counter(s); position:absolute; top:-14px; left:18px; width:30px; height:30px; border-radius:50%; background:var(--sun); color:#2a1d00; font-weight:800; display:flex; align-items:center; justify-content:center}
+  .step h3{margin:6px 0 4px; font-size:16.5px} .step p{margin:0; font-size:14.5px; color:var(--ink-2)}
+  @media (max-width:820px){ .steps{grid-template-columns:1fr 1fr; row-gap:26px} }
+  @media (max-width:480px){ .steps{grid-template-columns:1fr} }
+
+  .why{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .why .card{display:flex; gap:14px; align-items:flex-start}
+  .why .card .ico{flex:none; margin:0}
+  @media (max-width:820px){ .why{grid-template-columns:1fr} }
+
+  .compare{width:100%; border-collapse:collapse; background:var(--surface); border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); font-size:15px}
+  .compare th,.compare td{padding:12px 14px; text-align:left; border-bottom:1px solid var(--line)}
+  .compare th{background:#eef6f2; font-size:14px}
+  .compare td.yes{color:var(--brand); font-weight:650}
+  .compare td.no{color:#a14b3a}
+  .table-scroll{overflow-x:auto}
+
+  details{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin-bottom:10px}
+  summary{cursor:pointer; font-weight:650; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+"; float:right; color:var(--brand); font-weight:800}
+  details[open] summary::after{content:"−"}
+  details p{margin:10px 0 0; color:var(--ink-2)}
+
+  .final{background:linear-gradient(135deg,var(--brand),#0e8a62); color:#fff; border-radius:24px; padding:40px 32px; display:grid; grid-template-columns:1.4fr 1fr; gap:20px; align-items:center}
+  .final h2{color:#fff} .final p{color:#d8f1e6; margin:0}
+  .final .cta-row{justify-content:flex-end}
+  @media (max-width:820px){ .final{grid-template-columns:1fr; padding:28px 20px} .final .cta-row{justify-content:flex-start} }
+
+  footer{padding:28px 0 40px; color:var(--ink-2); font-size:14px}
+  footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+
+  .mobile-cta{display:none}
+  @media (max-width:820px){
+    .mobile-cta{display:flex; position:fixed; left:0; right:0; bottom:0; z-index:20; gap:8px; padding:10px 12px calc(10px + env(safe-area-inset-bottom)); background:rgba(255,255,255,.95); border-top:1px solid var(--line)}
+    .mobile-cta .btn{flex:1; padding:12px 10px; font-size:14.5px}
+    body{padding-bottom:76px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#">
+      <svg class="mark" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#0b6e4f"/><path d="M20.5 5 9 20.5h8l-2.5 10.5L27 15h-8z" fill="#ffc23d"/></svg>
+      <span><b>АСЕ</b><small>Автономні Системи Енергії</small></span>
+    </a>
+    <nav class="menu">
+      <a href="#how">Як це працює</a>
+      <a href="#kits">Комплекти</a>
+      <a href="#buy">Як купити</a>
+      <a href="#faq">Питання</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Написати в Telegram</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Резервне живлення для дому та бізнесу</div>
+      <h1>Світло вдома, <span>навіть коли його вимкнули</span></h1>
+      <p class="lead">Інвертор з LiFePO4 акумулятором вмикається сам за мить після відключення. Холодильник, світло, котел, роутер і ноутбук працюють тихо, без генератора й бензину.</p>
+      <div class="cta-row">
+        <a class="btn btn-sun" href="../?src=site">🔋 Порахувати комплект за 1 хв</a>
+        <a class="btn btn-ghost" href="#kits">Подивитись комплекти</a>
+      </div>
+      <div class="trust">
+        <span>Оплата при отриманні</span>
+        <span>Гарантія 1 рік</span>
+        <span>Монтаж під ключ по Києву</span>
+        <span>Доставка по всій Україні</span>
+      </div>
+    </div>
+
+    <svg class="scene" viewBox="0 0 560 420" role="img" aria-label="Вітряки, сонячні панелі й будинок зі світлом у вікнах">
+      <defs>
+        <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe6cf"/><stop offset="1" stop-color="#9fd6b6"/></linearGradient>
+        <linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7efe1"/><stop offset="1" stop-color="#c3e6d1"/></linearGradient>
+        <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d5fa8"/><stop offset="1" stop-color="#1b3f78"/></linearGradient>
+        <radialGradient id="sunglow"><stop offset="0" stop-color="#ffd76a"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient>
+        <g id="turbine">
+          <rect x="-3" y="0" width="6" height="150" rx="3" fill="#f3f6f5" stroke="#8ea69c" stroke-width="1.2"/>
+        </g>
+        <g id="rotor">
+          <circle r="7" fill="#f3f6f5" stroke="#7d978c" stroke-width="1.5"/>
+          <path d="M0-6 C4-30 3-55 0-72 C-3-55-4-30 0-6Z" fill="#f3f6f5" stroke="#7d978c" stroke-width="1.5"/>
+          <path d="M0-6 C4-30 3-55 0-72 C-3-55-4-30 0-6Z" fill="#f3f6f5" stroke="#7d978c" stroke-width="1.5" transform="rotate(120)"/>
+          <path d="M0-6 C4-30 3-55 0-72 C-3-55-4-30 0-6Z" fill="#f3f6f5" stroke="#7d978c" stroke-width="1.5" transform="rotate(240)"/>
+        </g>
+      </defs>
+      <circle cx="460" cy="80" r="80" fill="url(#sunglow)"/>
+      <circle cx="460" cy="80" r="30" fill="#ffc23d"/>
+      <g fill="#ffffff" opacity=".9">
+        <ellipse cx="110" cy="70" rx="44" ry="14"/><ellipse cx="140" cy="62" rx="30" ry="14"/>
+        <ellipse cx="330" cy="45" rx="36" ry="11"/><ellipse cx="352" cy="38" rx="22" ry="11"/>
+      </g>
+      <path d="M0 300 C120 250 220 270 330 250 C430 232 500 250 560 240 V420 H0Z" fill="url(#hill2)"/>
+      <!-- turbines -->
+      <g transform="translate(150 145)"><use href="#turbine"/><g transform="translate(0 0)"><g class="blades"><use href="#rotor"/></g></g></g>
+      <g transform="translate(250 175) scale(.75)"><use href="#turbine"/><g class="blades b2"><use href="#rotor"/></g></g>
+      <g transform="translate(70 195) scale(.6)"><use href="#turbine"/><g class="blades b3"><use href="#rotor"/></g></g>
+      <path d="M0 340 C140 300 260 330 380 310 C460 297 520 305 560 300 V420 H0Z" fill="url(#hill)"/>
+      <!-- house -->
+      <g transform="translate(340 220)">
+        <rect x="0" y="70" width="170" height="110" rx="4" fill="#ffffff" stroke="#cfdcd6"/>
+        <path d="M-12 76 L85 8 L182 76Z" fill="#7a4b3a"/>
+        <g transform="translate(18 30) skewX(-34)">
+          <rect x="34" y="0" width="34" height="22" fill="url(#panel)" stroke="#e6eef8" stroke-width="1.5"/>
+          <rect x="70" y="0" width="34" height="22" fill="url(#panel)" stroke="#e6eef8" stroke-width="1.5"/>
+          <rect x="106" y="0" width="34" height="22" fill="url(#panel)" stroke="#e6eef8" stroke-width="1.5"/>
+        </g>
+        <rect x="20" y="96" width="38" height="32" rx="3" fill="#ffe08a"/>
+        <rect x="112" y="96" width="38" height="32" rx="3" fill="#ffe08a"/>
+        <rect x="70" y="120" width="30" height="60" rx="3" fill="#0b6e4f"/>
+        <!-- inverter + battery on wall -->
+        <g transform="translate(-58 112)">
+          <rect x="0" y="0" width="34" height="44" rx="4" fill="#2f6fd1"/>
+          <rect x="6" y="8" width="22" height="9" rx="2" fill="#0d1d33"/>
+          <rect x="38" y="8" width="20" height="36" rx="3" fill="#f2f5f4" stroke="#c9d6d0"/>
+          <path d="M48 16 l-5 9 h4 l-2 8 7-11 h-4 l2-6z" fill="#13a06f"/>
+        </g>
+      </g>
+      <!-- flowing line from turbines/panels to house -->
+      <path d="M150 230 C210 300 280 330 290 340" fill="none" stroke="#13a06f" stroke-width="3" stroke-dasharray="6 7" opacity=".7"/>
+    </svg>
+  </div>
+</div>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>до 20 год</b><span>холодильник, світло, роутер і ноутбук на одному акумуляторі</span></div>
+      <div class="stat"><b>10–20 мс</b><span>перемикання при відключенні: техніка не помічає</span></div>
+      <div class="stat"><b>6000+</b><span>циклів заряду LiFePO4 акумулятора за паспортом</span></div>
+      <div class="stat"><b>Тихо</b><span>без двигуна, вихлопу й бензину, можна в квартирі</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>Як це працює</h2>
+    <p class="sub">Система стоїть між електромережею та вашим щитком і працює автоматично. Вам нічого не треба вмикати.</p>
+    <div class="how">
+      <div class="card"><div class="ico">🔌</div><h3>Світло є</h3><p>Інвертор живить дім від мережі й тихо заряджає акумулятор.</p></div>
+      <div class="card"><div class="ico">⚡</div><h3>Світло зникло</h3><p>За 10–20 мілісекунд перемикається на акумулятор. Котел і роутер не перезавантажуються.</p></div>
+      <div class="card"><div class="ico">☀️</div><h3>Можна додати сонце</h3><p>Інвертори гібридні: пізніше підключите сонячні панелі, і акумулятор заряджатиметься вдень безкоштовно.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="kits" style="background:#eef6f2">
+  <div class="wrap">
+    <h2>Готові комплекти</h2>
+    <p class="sub">Чиста синусоїда, Wi-Fi моніторинг зі смартфона, акумулятор LiFePO4 51,2 В 100 А·год з вбудованою BMS. Не знаєте, який потрібен? <a href="../?src=site_kits">Калькулятор підбере за 1 хвилину</a>.</p>
+    <div class="kits">
+      <div class="kit best">
+        <img src="../img/anenji-1.jpg" alt="Інвертор Anenji 6,2 кВт з акумулятором LVTOPSUN" loading="lazy">
+        <div class="body">
+          <span class="tag">Найпопулярніший</span>
+          <h3>Anenji 6,2 кВт + 1 АКБ 5,12 кВт·год</h3>
+          <p class="for">Квартира або невеликий будинок</p>
+          <ul><li>Холодильник, світло, роутер, ноутбук ~20 год</li><li>Газовий котел з насосом</li><li>Вхід для сонячних панелей</li></ul>
+          <div class="price">65 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit1" target="_blank" rel="noopener">Хочу цей комплект</a>
+        </div>
+      </div>
+      <div class="kit">
+        <img src="../img/aninerel-1.jpg" alt="Інвертор Aninerel 11 кВт з акумулятором LVTOPSUN" loading="lazy">
+        <div class="body">
+          <h3>Aninerel 11 кВт + 1 АКБ 5,12 кВт·год</h3>
+          <p class="for">Будинок з насосом, кондиціонером, бойлером</p>
+          <ul><li>Потужний інвертор тягне все одночасно</li><li>Насос свердловини, пральна машина</li><li>Два входи для сонячних панелей</li></ul>
+          <div class="price">74 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit2" target="_blank" rel="noopener">Хочу цей комплект</a>
+        </div>
+      </div>
+      <div class="kit">
+        <img src="../img/anenji-2.jpg" alt="Інвертор Anenji 6,2 кВт з двома акумуляторами LVTOPSUN" loading="lazy">
+        <div class="body">
+          <h3>Anenji 6,2 кВт + 2 АКБ 10,24 кВт·год</h3>
+          <p class="for">Довгі відключення та невеликий бізнес</p>
+          <ul><li>Вдвічі більше годин роботи</li><li>Магазин, кафе, офіс, СТО</li><li>Вхід для сонячних панелей</li></ul>
+          <div class="price">99 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit3" target="_blank" rel="noopener">Хочу цей комплект</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="buy">
+  <div class="wrap">
+    <h2>Як проходить покупка</h2>
+    <p class="sub">Без передоплати й ризику: спершу бачите комплект, потім платите.</p>
+    <div class="steps">
+      <div class="step"><h3>Розрахунок</h3><p>Відмічаєте прилади в калькуляторі або пишете нам у Telegram.</p></div>
+      <div class="step"><h3>Дзвінок</h3><p>Роман уточнює деталі й підтверджує, що комплект точно підходить.</p></div>
+      <div class="step"><h3>Доставка</h3><p>Нова пошта по всій Україні. Перевіряєте на відділенні й оплачуєте при отриманні.</p></div>
+      <div class="step"><h3>Монтаж</h3><p>По Києву й області наша бригада підключає під ключ до вашого щитка.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#eef6f2">
+  <div class="wrap">
+    <h2>Чому інвертор, а не генератор</h2>
+    <p class="sub">Генератор рятує, але з ним треба жити: бензин, шум, запуск вручну.</p>
+    <div class="table-scroll">
+    <table class="compare">
+      <tr><th></th><th>Інвертор + LiFePO4</th><th>Бензиновий генератор</th></tr>
+      <tr><td>Вмикається</td><td class="yes">Сам, за 10–20 мс</td><td class="no">Вручну, треба вийти й завести</td></tr>
+      <tr><td>Шум</td><td class="yes">Тихо</td><td class="no">Гучно, сусіди скаржаться</td></tr>
+      <tr><td>Пальне</td><td class="yes">Не потрібне</td><td class="no">Бензин щодня</td></tr>
+      <tr><td>Квартира</td><td class="yes">Можна</td><td class="no">Не можна в приміщенні</td></tr>
+      <tr><td>Чутлива техніка</td><td class="yes">Чиста синусоїда</td><td class="no">Залежить від моделі</td></tr>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Чому з нами спокійно</h2>
+    <p class="sub">&nbsp;</p>
+    <div class="why">
+      <div class="card"><div class="ico">💳</div><div><h3>Оплата при отриманні</h3><p>Жодної передоплати. Відкриваєте посилку на пошті, перевіряєте й тільки тоді платите.</p></div></div>
+      <div class="card"><div class="ico">🛡️</div><div><h3>Гарантія 1 рік</h3><p>На інвертор і акумулятор. Якщо щось не так, вирішуємо питання самі, без вашої біганини.</p></div></div>
+      <div class="card"><div class="ico">🔧</div><div><h3>Своя бригада в Києві</h3><p>Монтаж під ключ: підключення до щитка, налаштування, пояснимо, як користуватись.</p></div></div>
+      <div class="card"><div class="ico">🧮</div><div><h3>Підбір під ваші прилади</h3><p>Не продаємо «найдорожче». Калькулятор і дзвінок показують, що реально потрібно саме вам.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:#eef6f2">
+  <div class="wrap" style="max-width:820px">
+    <h2>Часті питання</h2>
+    <p class="sub">&nbsp;</p>
+    <details><summary>Чи безпечно ставити в квартирі?</summary><p>Так. LiFePO4 (літій-залізо-фосфат) — найбезпечніший тип літієвих акумуляторів: не виділяє газів, не боїться перегріву, має вбудовану систему захисту BMS.</p></details>
+    <details><summary>Скільки годин протримається?</summary><p>Залежить від приладів. Холодильник, світло, роутер і ноутбук на одному акумуляторі 5,12 кВт·год працюють близько 20 годин. Точно для вашого дому порахує <a href="../?src=site_faq">калькулятор</a>.</p></details>
+    <details><summary>Чи потягне газовий котел і насос?</summary><p>Так, інвертори видають чисту синусоїду, як у мережі, тому котли, насоси й холодильники працюють як звичайно.</p></details>
+    <details><summary>Що потрібно, крім комплекту?</summary><p>Кабелі та автомати захисту під ваш щиток. Підберемо на дзвінку. По Києву бригада привезе все потрібне.</p></details>
+    <details><summary>Скільки служить акумулятор?</summary><p>Виробник заявляє 6000+ циклів заряду-розряду. Навіть при щоденних відключеннях це багато років роботи.</p></details>
+    <details><summary>Як оплатити?</summary><p>Накладеним платежем при отриманні на Новій пошті. Розстрочки, на жаль, немає.</p></details>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="final">
+      <div>
+        <h2>Порахуйте свій комплект за 1 хвилину</h2>
+        <p>Відмітьте прилади, і побачите комплект, ціну та скільки годин він протримає. Безкоштовно й без реєстрації.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-sun" href="../?src=site_bottom">🔋 Порахувати</a>
+        <a class="btn btn-ghost" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b style="color:var(--brand)">АСЕ</b> · Автономні Системи Енергії · Київ, доставка по Україні</div>
+    <div><a href="https://t.me/ibp2026_bot?start=site">Telegram: @ibp2026_bot</a></div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="btn btn-sun" href="../?src=site_mobile">🔋 Порахувати</a>
+  <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Telegram</a>
+</div>
+
+</body>
+</html>
