@@ -239,6 +239,13 @@ let batteryDoD = 0.9, batteryTypeName = 'LiFePO4', systemVoltage = 24, hours = 4
 let lastResult = null;
 const tg = window.Telegram ? window.Telegram.WebApp : null;
 if(tg) tg.ready();
+// Відкрили в Telegram — Worker запам'ятовує людину, щоб нагадати, якщо не залишить номер
+if(tg && tg.initData){
+  try {
+    fetch(LEAD_URL + 'open', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ initData: tg.initData, src: leadSource() }) }).catch(() => {});
+  } catch(e){}
+}
 
 function showThanks(){
   const k = lastResult && lastResult.kit_price ? `
@@ -448,7 +455,9 @@ document.getElementById('sendBtn').addEventListener('click', () => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      text: text
+      text: text,
+      initData: tg ? tg.initData : '',
+      src: leadSource()
     })
   })
   .then(res => res.json())
