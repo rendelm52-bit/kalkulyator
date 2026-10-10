@@ -90,6 +90,29 @@
   .kit .kit-name{font-size:15px; font-weight:650; margin-bottom:4px;}
   .kit .kit-price{font-size:20px; font-weight:700; color:var(--accent);}
   .kit .kit-note{font-size:12.5px; color:var(--text-dim); margin-top:6px;}
+  .hero{display:grid; grid-template-columns:1fr 42%; gap:12px; align-items:center; margin-bottom:14px;}
+  .hero h1{font-size:22px; line-height:1.2; margin:0 0 8px; font-weight:750;}
+  .hero h1 em{font-style:normal; color:var(--accent); display:block;}
+  .hero ul{list-style:none; margin:0; padding:0; font-size:12.5px;}
+  .hero li{margin:3px 0;} .hero li::before{content:'✓ '; color:var(--accent-2); font-weight:700;}
+  .hero img{width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; border-radius:12px; display:block;}
+  .hero .from{display:inline-block; margin-top:8px; background:var(--accent); color:#1a1305; font-weight:700; border-radius:8px; padding:5px 10px; font-size:14px;}
+  .gallery{display:flex; gap:8px; overflow-x:auto; scroll-snap-type:x mandatory; margin:0 -12px 10px; padding:0 12px; scrollbar-width:none;}
+  .gallery::-webkit-scrollbar{display:none;}
+  .gallery img{flex:0 0 82%; max-width:340px; aspect-ratio:1/1; object-fit:contain; background:#fff; border-radius:10px; scroll-snap-align:start;}
+  .swipe-hint{font-size:11.5px; color:var(--text-dim); margin:-4px 0 8px;}
+  .works{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+  .works span{font-size:12.5px; background:rgba(79,209,197,0.12); color:var(--accent-2); border-radius:20px; padding:4px 10px;}
+  .kits-row{display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; margin:0 -14px; padding:0 14px 4px; scrollbar-width:none;}
+  .kits-row::-webkit-scrollbar{display:none;}
+  .kit-card{flex:0 0 70%; max-width:260px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; overflow:hidden; scroll-snap-align:start;}
+  .kit-card.best{border-color:var(--accent);}
+  .kit-card img{width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; display:block;}
+  .kit-card .kc-body{padding:10px;}
+  .kit-card .kc-name{font-size:13.5px; font-weight:650; line-height:1.3;}
+  .kit-card .kc-for{font-size:12px; color:var(--text-dim); margin:4px 0 6px;}
+  .kit-card .kc-price{font-size:17px; font-weight:700; color:var(--accent);}
+  .kit-card .kc-tag{font-size:11px; color:#1a1305; background:var(--accent); border-radius:4px; padding:2px 6px; display:inline-block; margin-bottom:6px;}
   .empty-note{color:var(--text-dim); font-size:13px; font-style:italic;}
 
   .send-bar{
@@ -109,9 +132,17 @@
 <body>
 <div class="wrap" id="calcView">
 
+  <div class="hero">
+    <div>
+      <h1><em>Світло зникло?</em>А у вас усе працює.</h1>
+      <ul><li>Оплата при отриманні</li><li>Гарантія 1 рік</li><li>Монтаж по Києву</li></ul>
+      <div class="from">від 65 990 грн</div>
+    </div>
+    <img src="img/anenji-1.jpg" alt="Інвертор Anenji з акумулятором LiFePO4">
+  </div>
   <header>
-    <h1>Розрахунок потужності</h1>
-    <p>Відмітьте прилади — покажемо потрібну потужність інвертора та ємність АКБ.</p>
+    <h2 style="font-size:17px; margin:0 0 6px">Який комплект потрібен саме вам?</h2>
+    <p>Відмітьте прилади, які мають працювати без світла. За 1 хвилину покажемо комплект, ціну й скільки годин він протримає.</p>
   </header>
 
   <section>
@@ -143,6 +174,11 @@
   <section class="results">
     <h2>Результат</h2>
     <div id="resultsBody"><p class="empty-note">Оберіть хоча б один прилад.</p></div>
+  </section>
+
+  <section>
+    <h2>Наші комплекти</h2>
+    <div class="kits-row" id="kitsRow"></div>
   </section>
 
   <section>
@@ -211,9 +247,15 @@ const DEVICES = [
 
 // Комплекти Opdrop. Ціни оновлювати тут.
 const KITS = [
-  {name:'Anenji 6.2 кВт + 1 АКБ LiFePO4 5.12 кВт·год', inverter_w:6200, battery_wh:5120, price:65990},
-  {name:'Aninerel 11 кВт + 1 АКБ LiFePO4 5.12 кВт·год', inverter_w:11000, battery_wh:5120, price:74990},
-  {name:'Anenji 6.2 кВт + 2 АКБ LiFePO4 10.24 кВт·год', inverter_w:6200, battery_wh:10240, price:99990},
+  {name:'Anenji 6.2 кВт + 1 АКБ LiFePO4 5.12 кВт·год', inverter_w:6200, battery_wh:5120, price:65990,
+   for:'Квартира або невеликий будинок', tag:'Найпопулярніший',
+   photos:['img/anenji-1.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
+  {name:'Aninerel 11 кВт + 1 АКБ LiFePO4 5.12 кВт·год', inverter_w:11000, battery_wh:5120, price:74990,
+   for:'Будинок з насосом, кондиціонером, бойлером',
+   photos:['img/aninerel-1.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg']},
+  {name:'Anenji 6.2 кВт + 2 АКБ LiFePO4 10.24 кВт·год', inverter_w:6200, battery_wh:10240, price:99990,
+   for:'Довгі відключення: вдвічі більше годин',
+   photos:['img/anenji-2.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
 ];
 const KIT_DOD = 0.9, INVERTER_EFF = 0.9;
 
@@ -247,9 +289,26 @@ if(tg && tg.initData){
   } catch(e){}
 }
 
+const gallery = k => `<div class="gallery">${k.photos.map(p => `<img src="${p}" alt="" loading="lazy">`).join('')}</div>`;
+
+function renderKitsRow(){
+  document.getElementById('kitsRow').innerHTML = KITS.map(k => `
+    <div class="kit-card${k.tag ? ' best' : ''}">
+      <img src="${k.photos[0]}" alt="" loading="lazy">
+      <div class="kc-body">
+        ${k.tag ? `<div class="kc-tag">${k.tag}</div>` : ''}
+        <div class="kc-name">${k.name}</div>
+        <div class="kc-for">${k.for}</div>
+        <div class="kc-price">${k.price.toLocaleString('uk-UA')} грн</div>
+      </div>
+    </div>`).join('');
+}
+
 function showThanks(){
+  const kitObj = lastResult && KITS.find(x => x.name === lastResult.kit);
   const k = lastResult && lastResult.kit_price ? `
     <h2>Ваш комплект</h2>
+    ${kitObj ? gallery(kitObj) : ''}
     <div class="kit" style="margin-top:0">
       <div class="kit-name">${lastResult.kit}</div>
       <div class="kit-price">${lastResult.kit_price.toLocaleString('uk-UA')} грн</div>
@@ -309,7 +368,7 @@ function nearestInverterSize(watts){
 
 function recalc(){
   let totalRunning = 0, totalAvg = 0, biggestSurgeExtra = 0, hasSelection = false;
-  const devicesOut = [];
+  const devicesOut = [], devicesShort = [];
 
   DEVICES.forEach(d => {
     const chk = document.getElementById('chk_' + d.id);
@@ -321,6 +380,7 @@ function recalc(){
     totalRunning += power;
     totalAvg += power * (d.duty ?? 1);
     devicesOut.push(`${d.name} (${qty} шт x ${watt}Вт)`);
+    devicesShort.push(d.name);
     if(d.motor){
       const extra = power * ((d.surgeFactor || 2) - 1);
       if(extra > biggestSurgeExtra) biggestSurgeExtra = extra;
@@ -352,11 +412,14 @@ function recalc(){
     kitHtml = `
     <div class="kit">
       <div class="label">Вам підходить</div>
+      ${gallery(kit)}
+      ${kit.photos.length > 1 ? '<div class="swipe-hint">Гортайте фото →</div>' : ''}
       <div class="kit-name">${kit.name}</div>
       <div class="kit-price">${kit.price.toLocaleString('uk-UA')} грн</div>
       <div class="kit-note">${kitHours >= hours
         ? `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год без світла.`
         : `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год. Для ${hours} год додамо акумулятор — підкажемо на дзвінку.`} Оплата при отриманні.</div>
+      <div class="works">${devicesShort.map(n => `<span>✓ ${n}</span>`).join('')}</div>
     </div>`;
   } else {
     kitHtml = `
@@ -478,6 +541,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
 });
 
 renderDevices();
+renderKitsRow();
 recalc();
 </script>
 </body>
