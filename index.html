@@ -107,7 +107,7 @@
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="calcView">
 
   <header>
     <h1>Розрахунок потужності</h1>
@@ -158,7 +158,34 @@
   </section>
 </div>
 
-<div class="send-bar">
+<div class="wrap" id="thanksView" style="display:none">
+  <section class="results">
+    <h2>✅ Заявку отримано!</h2>
+    <p style="margin:0">Роман зателефонує вам протягом 15–30 хвилин (щодня з 9:00 до 21:00), уточнить деталі й відповість на питання.</p>
+  </section>
+  <section id="thanksKit"></section>
+  <section>
+    <h2>Як проходить покупка</h2>
+    <ol style="margin:0; padding-left:20px; font-size:14px; line-height:1.6">
+      <li>Дзвінок: перевіряємо, що комплект точно підходить під ваші прилади.</li>
+      <li>Відправка Новою поштою по всій Україні.</li>
+      <li>Ви перевіряєте комплект на пошті й <b>оплачуєте при отриманні</b>.</li>
+      <li>По Києву: монтаж під ключ нашою бригадою.</li>
+    </ol>
+  </section>
+  <section>
+    <h2>Чому це надійно</h2>
+    <ul style="margin:0; padding-left:20px; font-size:14px; line-height:1.6">
+      <li>LiFePO4 акумулятор: тисячі циклів заряду, безпечний для квартири.</li>
+      <li>Чиста синусоїда: безпечно для котла, холодильника й техніки.</li>
+      <li>Працює тихо й автоматично: світло зникло — ви не помітили.</li>
+      <li>Гарантія 1 рік.</li>
+    </ul>
+  </section>
+  <a id="tgLink" class="send-btn" href="https://t.me/ibp2026_bot" target="_blank" rel="noopener" style="display:block; text-align:center; text-decoration:none; line-height:1.2">Написати нам у Telegram</a>
+</div>
+
+<div class="send-bar" id="sendBar">
   <button class="send-btn" id="sendBtn" disabled>Замовити дзвінок</button>
 </div>
 
@@ -212,6 +239,24 @@ let batteryDoD = 0.9, batteryTypeName = 'LiFePO4', systemVoltage = 24, hours = 4
 let lastResult = null;
 const tg = window.Telegram ? window.Telegram.WebApp : null;
 if(tg) tg.ready();
+
+function showThanks(){
+  const k = lastResult && lastResult.kit_price ? `
+    <h2>Ваш комплект</h2>
+    <div class="kit" style="margin-top:0">
+      <div class="kit-name">${lastResult.kit}</div>
+      <div class="kit-price">${lastResult.kit_price.toLocaleString('uk-UA')} грн</div>
+      <div class="kit-note">Кабелі, автомати захисту та монтаж підберемо під ваш щиток на дзвінку.</div>
+    </div>` : `
+    <h2>Ваш підбір</h2>
+    <p style="margin:0">Навантаження більше за стандартні комплекти — підготуємо індивідуальну систему й розповімо на дзвінку.</p>`;
+  document.getElementById('thanksKit').innerHTML = k;
+  if(tg) document.getElementById('tgLink').style.display = 'none';
+  document.getElementById('calcView').style.display = 'none';
+  document.getElementById('sendBar').style.display = 'none';
+  document.getElementById('thanksView').style.display = '';
+  window.scrollTo(0, 0);
+}
 
 function renderDevices(){
   const list = document.getElementById('deviceList');
@@ -409,8 +454,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   .then(res => res.json())
   .then(data => {
     if(data.ok){
-      alert('Дякуємо! Ваші дані успішно надіслані. Менеджер зв\'яжеться з вами найближчим часом.');
-      if(tg) tg.close();
+      showThanks();
     } else {
       alert('Помилка надсилання. Спробуйте ще раз або зателефонуйте нам.\n\nTelegram: ' + (data.description || data.error_code || 'невідома помилка'));
       btn.disabled = false;
