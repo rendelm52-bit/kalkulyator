@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Розрахунок потужності</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- Meta Pixel: рахує відкриття калькулятора і заявки, щоб Facebook вчився на реальних лідах -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1604468457634397');
+fbq('track', 'PageView');
+</script>
 <style>
   :root{
     --bg: #0f1720;
@@ -526,6 +536,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   .then(res => res.json())
   .then(data => {
     if(data.ok){
+      try { if(window.fbq) fbq('track', 'Lead', { content_name: lastResult.kit, value: lastResult.kit_price || 0, currency: 'UAH' }); } catch(e){}
       showThanks();
     } else {
       alert('Помилка надсилання. Спробуйте ще раз або зателефонуйте нам.\n\nTelegram: ' + (data.description || data.error_code || 'невідома помилка'));
