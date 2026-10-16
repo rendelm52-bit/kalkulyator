@@ -142,6 +142,15 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1604468457634397');
 fbq('track', 'PageView');
+// Мітка з реклами (?src=fb_video) передається далі в калькулятор і в бот
+(function(){
+  var src = new URLSearchParams(location.search).get('src');
+  if(!src || !/^[A-Za-z0-9_-]{1,40}$/.test(src)) return;
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('a[href^="../?src="]').forEach(function(a){ a.href = '../?src=' + src; });
+    document.querySelectorAll('a[href*="t.me/ibp2026_bot?start="]').forEach(function(a){ a.href = 'https://t.me/ibp2026_bot?start=' + src; });
+  });
+})();
 document.addEventListener('click', function(e){
   var a = e.target.closest && e.target.closest('a[href*="t.me/ibp2026_bot"]');
   if(a && window.fbq) fbq('track', 'Contact');
