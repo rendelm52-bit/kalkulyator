@@ -133,6 +133,29 @@
     body{padding-bottom:76px}
   }
 </style>
+<!-- Meta Pixel ЕнергоРезерв: відвідування сайту і переходи в Telegram -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1604468457634397');
+fbq('track', 'PageView');
+// Мітка з реклами (?src=fb_video) передається далі в калькулятор і в бот
+(function(){
+  var src = new URLSearchParams(location.search).get('src');
+  if(!src || !/^[A-Za-z0-9_-]{1,40}$/.test(src)) return;
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('a[href^="../?src="]').forEach(function(a){ a.href = '../?src=' + src; });
+    document.querySelectorAll('a[href*="t.me/ibp2026_bot?start="]').forEach(function(a){ a.href = 'https://t.me/ibp2026_bot?start=' + src; });
+  });
+})();
+document.addEventListener('click', function(e){
+  var a = e.target.closest && e.target.closest('a[href*="t.me/ibp2026_bot"]');
+  if(a && window.fbq) fbq('track', 'Contact');
+});
+</script>
 </head>
 <body>
 
