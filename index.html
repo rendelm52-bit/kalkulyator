@@ -125,6 +125,9 @@ fbq('track', 'PageView');
   .kit-card .kc-tag{font-size:11px; color:#1a1305; background:var(--accent); border-radius:4px; padding:2px 6px; display:inline-block; margin-bottom:6px;}
   .empty-note{color:var(--text-dim); font-size:13px; font-style:italic;}
 
+  #proSettings summary{cursor:pointer; color:var(--muted, #9aa4b2); font-size:14px}
+  .contact-note{margin:0 0 10px; font-size:14px; opacity:.85}
+  .field input.need{outline:2px solid #ff5a5a}
   .send-bar{
     position:fixed; left:0; right:0; bottom:0;
     padding:12px 14px calc(12px + env(safe-area-inset-bottom));
@@ -174,7 +177,9 @@ fbq('track', 'PageView');
   </section>
 
   <section>
-    <h2>Тип АКБ</h2>
+    <details id="proSettings">
+    <summary>Налаштування для фахівців (тип і напруга АКБ)</summary>
+    <h2 style="margin-top:12px">Тип АКБ</h2>
     <div class="row-inline" id="batteryTypePills">
       <div class="pill" data-dod="0.5" data-name="Свинцевий">Свинцевий</div>
       <div class="pill" data-dod="0.6" data-name="AGM/Gel">AGM/Gel</div>
@@ -187,6 +192,7 @@ fbq('track', 'PageView');
         <div class="pill" data-v="48">48В</div>
       </div>
     </div>
+    </details>
   </section>
 
   <section class="results">
@@ -194,15 +200,11 @@ fbq('track', 'PageView');
     <div id="resultsBody"><p class="empty-note">Оберіть хоча б один прилад.</p></div>
   </section>
 
-  <section>
-    <h2>Наші комплекти</h2>
-    <div class="kits-row" id="kitsRow"></div>
-  </section>
-
-  <section>
-    <h2>Ваші контакти для зв'язку</h2>
+  <section id="contactsSection">
+    <h2>Куди зателефонувати?</h2>
+    <p class="contact-note">Роман передзвонить за 15–30 хвилин, підтвердить комплект і відповість на питання. Ні до чого не зобов'язує.</p>
     <div class="field">
-      <label>Ваше ім'я</label>
+      <label>Ваше ім'я (необов'язково)</label>
       <input type="text" id="userName" placeholder="Олександр">
     </div>
     <div class="field">
@@ -210,6 +212,12 @@ fbq('track', 'PageView');
       <input type="tel" id="userPhone" placeholder="+380XXXXXXXXX">
     </div>
   </section>
+
+  <section>
+    <h2>Наші комплекти</h2>
+    <div class="kits-row" id="kitsRow"></div>
+  </section>
+
 </div>
 
 <div class="wrap" id="thanksView" style="display:none">
@@ -348,6 +356,14 @@ function showThanks(){
   window.scrollTo(0, 0);
 }
 
+// Події для Microsoft Clarity: видно, на якому кроці люди зупиняються
+const tracked = {};
+function track(name, once){
+  if(once && tracked[name]) return;
+  tracked[name] = true;
+  try { if(window.clarity) clarity('event', name); } catch(e){}
+}
+
 function renderDevices(){
   const list = document.getElementById('deviceList');
   list.innerHTML = '';
@@ -357,7 +373,7 @@ function renderDevices(){
 
     const chk = document.createElement('input');
     chk.type = 'checkbox'; chk.id = 'chk_' + d.id; chk.checked = !!d.checked;
-    chk.addEventListener('change', recalc);
+    chk.addEventListener('change', () => { track('device_toggle', true); recalc(); });
 
     const label = document.createElement('label');
     label.setAttribute('for', chk.id);
@@ -484,6 +500,7 @@ function recalc(){
 }
 
 document.getElementById('hoursRange').addEventListener('input', (e) => {
+  track('hours_change', true);
   hours = parseFloat(e.target.value);
   document.getElementById('hoursLabel').textContent = hours + ' год';
   recalc();
@@ -511,10 +528,16 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   const name = document.getElementById('userName').value.trim();
   const phone = document.getElementById('userPhone').value.trim();
 
-  if(!name || !phone){
-    alert('Будь ласка, введіть ваше ім\'я та номер телефону.');
+  if(!phone){
+    track('call_click_no_phone');
+    const sec = document.getElementById('contactsSection');
+    const ph = document.getElementById('userPhone');
+    sec.scrollIntoView({ behavior:'smooth', block:'center' });
+    ph.classList.add('need');
+    setTimeout(() => ph.focus(), 400);
     return;
   }
+  track('call_submit');
 
   const tgUser = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
   const usernameText = tgUser && tgUser.username ? `@${tgUser.username}` : 'немає';
@@ -522,7 +545,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   // HTML замість Markdown: підкреслення в імені чи @username більше не ламають відправку
   const esc = v => String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const text = `📥 <b>НОВИЙ ЛІД КАЛЬКУЛЯТОРА!</b>\n\n` +
-               `👤 <b>Ім'я:</b> ${esc(name)}\n` +
+               `👤 <b>Ім'я:</b> ${esc(name || 'не вказано')}\n` +
                `📞 <b>Телефон:</b> ${esc(phone)}\n` +
                `✈️ <b>Telegram:</b> ${esc(usernameText)}\n\n` +
                `📊 <b>Результат розрахунку:</b>\n` +
@@ -551,19 +574,26 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   .then(data => {
     if(data.ok){
       try { if(window.fbq) fbq('track', 'Lead', { content_name: lastResult.kit, value: lastResult.kit_price || 0, currency: 'UAH' }); } catch(e){}
+      track('lead_sent');
       showThanks();
     } else {
+      track('lead_error');
       alert('Помилка надсилання. Спробуйте ще раз або зателефонуйте нам.\n\nTelegram: ' + (data.description || data.error_code || 'невідома помилка'));
       btn.disabled = false;
       btn.textContent = 'Замовити дзвінок';
     }
   })
   .catch(err => {
+    track('lead_error');
     alert('Помилка мережі.');
     btn.disabled = false;
     btn.textContent = 'Замовити дзвінок';
   });
 });
+
+document.getElementById('userPhone').addEventListener('focus', () => track('phone_focus', true));
+document.getElementById('userPhone').addEventListener('input', e => e.target.classList.remove('need'));
+document.getElementById('proSettings').addEventListener('toggle', () => track('pro_settings_open', true));
 
 renderDevices();
 renderKitsRow();
