@@ -127,6 +127,16 @@ fbq('track', 'PageView');
 
   #proSettings summary{cursor:pointer; color:var(--muted, #9aa4b2); font-size:14px}
   .contact-note{margin:0 0 10px; font-size:14px; opacity:.85}
+  .brandbar{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 0 12px}
+  .brandbar .logo{display:flex; align-items:center; gap:8px; text-decoration:none; color:var(--text)}
+  .brandbar .logo svg{width:32px; height:32px; flex:none}
+  .brandbar .logo b{display:block; font-size:16px; line-height:1.1}
+  .brandbar .logo small{display:block; font-size:11px; color:var(--text-dim)}
+  .brandbar .site-link{font-size:13px; color:var(--accent-2); text-decoration:none; white-space:nowrap}
+  .about p{margin:0 0 10px; font-size:14px; line-height:1.45; color:var(--text-dim)}
+  .about b{color:var(--text)}
+  .about-links{display:flex; gap:8px; flex-wrap:wrap}
+  .about-links a{flex:1 1 140px; text-align:center; text-decoration:none; border:1px solid var(--accent-2); color:var(--accent-2); border-radius:8px; padding:10px; font-size:14px; font-weight:600}
   .field input.need{outline:2px solid #ff5a5a}
   .send-bar{
     position:fixed; left:0; right:0; bottom:0;
@@ -152,6 +162,14 @@ fbq('track', 'PageView');
 </head>
 <body>
 <div class="wrap" id="calcView">
+
+  <div class="brandbar">
+    <a class="logo" href="home/?src=calc_logo" data-track="site_click">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#0b6e4f"/><path d="M20.5 5 9 20.5h8l-2.5 10.5L27 15h-8z" fill="#ffc23d"/></svg>
+      <span><b>ЕнергоРезерв</b><small>Автономні системи</small></span>
+    </a>
+    <a class="site-link" href="home/?src=calc_top" data-track="site_click">Про нас →</a>
+  </div>
 
   <div class="hero">
     <div>
@@ -210,6 +228,16 @@ fbq('track', 'PageView');
     <div class="field">
       <label>Телефон</label>
       <input type="tel" id="userPhone" placeholder="+380XXXXXXXXX">
+    </div>
+  </section>
+
+  <section class="about">
+    <h2>Хто ми</h2>
+    <p><b>ЕнергоРезерв</b> підбирає й привозить комплекти «інвертор + акумулятор» по всій Україні. Монтаж у Києві робить наша бригада.</p>
+    <p>Оплата при отриманні: спочатку оглядаєте комплект у відділенні, потім платите. Гарантія 1 рік.</p>
+    <div class="about-links">
+      <a href="home/?src=calc_about" data-track="site_click">Усі комплекти на сайті</a>
+      <a href="https://t.me/ibp2026_bot" target="_blank" rel="noopener" data-track="tg_click">Написати в Telegram</a>
     </div>
   </section>
 
@@ -591,6 +619,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   });
 });
 
+document.querySelectorAll('[data-track]').forEach(a => a.addEventListener('click', () => track(a.dataset.track)));
 document.getElementById('userPhone').addEventListener('focus', () => track('phone_focus', true));
 document.getElementById('userPhone').addEventListener('input', e => e.target.classList.remove('need'));
 document.getElementById('proSettings').addEventListener('toggle', () => track('pro_settings_open', true));
