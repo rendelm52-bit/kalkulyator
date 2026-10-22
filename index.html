@@ -34,7 +34,7 @@ fbq('track', 'PageView');
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height:1.45;
-    padding: 16px 14px 180px;
+    padding: 16px 14px 230px;
   }
   .wrap{max-width:720px; margin:0 auto;}
   header{margin-bottom:16px;}
@@ -158,6 +158,12 @@ fbq('track', 'PageView');
     border-radius:10px; padding:14px; font-size:15px; font-weight:700; cursor:pointer;
   }
   .send-btn:disabled{opacity:0.4;}
+  .mini-result{display:flex; justify-content:space-between; align-items:center; gap:8px; max-width:720px; margin:0 auto 8px; padding:8px 10px; border-radius:8px; background:var(--panel-2); border:1px solid var(--accent); color:var(--text); text-decoration:none; font-size:13px; line-height:1.3;}
+  .mini-result b{color:var(--accent); white-space:nowrap; font-size:15px;}
+  .mini-result[hidden]{display:none;}
+  .device-row.extra{display:none;}
+  #deviceList.show-all .device-row.extra{display:grid;}
+  .more-devices{display:block; width:100%; margin-top:8px; padding:9px; background:transparent; border:1px dashed var(--line); border-radius:8px; color:var(--accent-2); font-size:14px; font-family:inherit; cursor:pointer;}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -284,6 +290,7 @@ fbq('track', 'PageView');
 </div>
 
 <div class="send-bar" id="sendBar">
+  <a class="mini-result" id="miniResult" href="#resultsBody" hidden></a>
   <button class="send-btn" id="sendBtn" disabled>Замовити дзвінок</button>
 </div>
 
@@ -402,12 +409,15 @@ function track(name, once){
   try { if(window.clarity) clarity('event', name); } catch(e){}
 }
 
+// Прилади, які видно одразу; решта — під кнопкою «Ще прилади»
+const MAIN_DEVICES = ['fridge','router','lights','laptop','tv','gas_boiler'];
+
 function renderDevices(){
   const list = document.getElementById('deviceList');
   list.innerHTML = '';
   DEVICES.forEach(d => {
     const row = document.createElement('div');
-    row.className = 'device-row';
+    row.className = 'device-row' + (MAIN_DEVICES.includes(d.id) ? '' : ' extra');
 
     const chk = document.createElement('input');
     chk.type = 'checkbox'; chk.id = 'chk_' + d.id; chk.checked = !!d.checked;
@@ -435,6 +445,12 @@ function renderDevices(){
     row.appendChild(chk); row.appendChild(label); row.appendChild(qty); row.appendChild(watt);
     list.appendChild(row);
   });
+  // Довгий список приборів люди не долистують — решта ховається під кнопку
+  const more = document.createElement('button');
+  more.type = 'button'; more.className = 'more-devices';
+  more.textContent = 'Ще прилади: насоси, кондиціонер, чайник… ↓';
+  more.addEventListener('click', () => { list.classList.add('show-all'); more.remove(); track('more_devices'); });
+  list.after(more);
 }
 
 function roundUpToStep(value, step){ return Math.ceil(value / step) * step; }
@@ -470,6 +486,7 @@ function recalc(){
 
   if(!hasSelection){
     resultsBody.innerHTML = '<p class="empty-note">Оберіть хоча б один прилад.</p>';
+    document.getElementById('miniResult').hidden = true;
     sendBtn.disabled = true;
     lastResult = null;
     return;
@@ -534,8 +551,32 @@ function recalc(){
     avg_w: Math.round(totalAvg),
     devices: devicesOut.join(', ')
   };
+  const mini = document.getElementById('miniResult');
+  mini.innerHTML = kit
+    ? `<span>Вам підходить:<br>${kit.name.split(' + ')[0]} + АКБ</span><b>${kit.price.toLocaleString('uk-UA')} грн ↓</b>`
+    : `<span>Вам потрібна потужна система</span><b>Дивитись ↓</b>`;
   sendBtn.disabled = false;
+  checkResultSeen();
 }
+
+// Строка з комплектом і ціною внизу екрана, поки людина не дійшла до результату
+let resultSeen = false;
+function updateMini(){
+  const mini = document.getElementById('miniResult');
+  mini.hidden = !lastResult || resultSeen;
+}
+document.getElementById('miniResult').addEventListener('click', (e) => {
+  e.preventDefault();
+  track('mini_result_click');
+  document.querySelector('.results').scrollIntoView({ behavior:'smooth', block:'start' });
+});
+// Ховаємо, коли ціна комплекту вже на екрані або позаду
+function checkResultSeen(){
+  const price = document.querySelector('#resultsBody .kit-price, #resultsBody .kit-name');
+  resultSeen = !!price && price.getBoundingClientRect().top < window.innerHeight - 160;
+  updateMini();
+}
+window.addEventListener('scroll', checkResultSeen, { passive:true });
 
 document.getElementById('hoursRange').addEventListener('input', (e) => {
   track('hours_change', true);
