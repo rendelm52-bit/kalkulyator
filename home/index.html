@@ -17,6 +17,7 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  [id]{scroll-margin-top:110px}
   body{margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; font-size:16px}
   a{color:inherit}
   .wrap{max-width:1120px; margin:0 auto; padding:0 16px}
@@ -38,6 +39,15 @@
   .btn-sm{padding:9px 14px; font-size:14px}
   .phone-top{font-weight:700; color:var(--brand); text-decoration:none; white-space:nowrap; font-size:15px}
   .head-right{display:flex; align-items:center; gap:14px}
+  .msgbar{background:var(--brand); color:#fff; font-size:13.5px}
+  header.top .msgbar .wrap{height:auto; min-height:36px; justify-content:flex-end; gap:8px; padding-top:4px; padding-bottom:4px}
+  .msgbar .mb-label{opacity:.85; margin-right:2px}
+  .msgbar .mb{display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; text-decoration:none; font-weight:650; color:#fff; line-height:1.3}
+  .msgbar .mb-viber{background:#7360f2}
+  .msgbar .mb-wa{background:#1ea952}
+  .msgbar .mb-tg{background:#229ed9}
+  @media (max-width:820px){ header.top .msgbar .wrap{justify-content:center} }
+  @media (max-width:380px){ .msgbar .mb-label{display:none} }
   .contacts{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
   .contacts a{display:inline-flex; align-items:center; gap:6px; padding:9px 14px; border-radius:10px; background:rgba(255,255,255,.14); color:#fff; text-decoration:none; font-weight:600; font-size:14.5px; border:1px solid rgba(255,255,255,.35)}
   .contacts a:hover{background:rgba(255,255,255,.24)}
@@ -210,6 +220,12 @@ document.addEventListener('click', function(e){
 <body>
 
 <header class="top">
+  <div class="msgbar"><div class="wrap">
+    <span class="mb-label">Пишіть нам:</span>
+    <a class="mb mb-viber" href="viber://chat?number=%2B380998946286">Viber</a>
+    <a class="mb mb-wa" href="https://wa.me/380998946286" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="mb mb-tg" href="https://t.me/+380998946286" target="_blank" rel="noopener">Telegram</a>
+  </div></div>
   <div class="wrap">
     <a class="logo" href="#">
       <svg class="mark" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#0b6e4f"/><path d="M20.5 5 9 20.5h8l-2.5 10.5L27 15h-8z" fill="#ffc23d"/></svg>
@@ -224,7 +240,6 @@ document.addEventListener('click', function(e){
     </nav>
     <div class="head-right">
       <a class="phone-top" href="tel:+380998946286">📞 099 894 62 86</a>
-      <a class="btn btn-primary btn-sm" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Написати в Telegram</a>
     </div>
   </div>
 </header>
@@ -351,7 +366,7 @@ document.addEventListener('click', function(e){
           <div class="hours"><b>≈7 год</b><span>без світла</span></div>
           <ul><li>Світло, холодильник, роутер, газовий котел</li><li>Wi-Fi моніторинг зі смартфона</li><li>Вхід для сонячних панелей</li></ul>
           <div class="price">36 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji42" target="_blank" rel="noopener">Хочу цей комплект</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji42" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
       <div class="kit">
@@ -362,7 +377,7 @@ document.addEventListener('click', function(e){
           <div class="hours"><b>≈7 год</b><span>без світла</span></div>
           <ul><li>Найдоступніший комплект</li><li>2 компактні LiFePO4 по 1,28 кВт·год</li><li>Вхід для сонячних панелей</li></ul>
           <div class="price">36 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_daxtromn35" target="_blank" rel="noopener">Хочу цей комплект</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_daxtromn35" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
       <div class="kit best">
@@ -374,7 +389,7 @@ document.addEventListener('click', function(e){
           <div class="hours"><b>≈15 год</b><span>без світла</span></div>
           <ul><li>Газовий котел з насосом, холодильник, світло</li><li>Акумулятор на стіні з LCD-дисплеєм</li><li>Wi-Fi і Bluetooth моніторинг</li></ul>
           <div class="price">66 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji_srne" target="_blank" rel="noopener">Хочу цей комплект</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji_srne" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
       <div class="kit">
@@ -385,7 +400,7 @@ document.addEventListener('click', function(e){
           <div class="hours"><b>≈15 год</b><span>без світла</span></div>
           <ul><li>Акумулятор вішається на стіну, не займає підлогу</li><li>Wi-Fi модуль у комплекті</li><li>Два виходи: можна розділити прилади на групи</li></ul>
           <div class="price">66 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_humsienk" target="_blank" rel="noopener">Хочу цей комплект</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_humsienk" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
       <div class="kit">
@@ -396,7 +411,7 @@ document.addEventListener('click', function(e){
           <div class="hours"><b>≈13 год</b><span>без світла</span></div>
           <ul><li>Потужний інвертор тягне все одночасно</li><li>Насос свердловини, пральна машина</li><li>Два входи для сонячних панелей</li></ul>
           <div class="price">74 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_aninerel" target="_blank" rel="noopener">Хочу цей комплект</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_aninerel" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
       <div class="kit">
@@ -407,7 +422,7 @@ document.addEventListener('click', function(e){
           <div class="hours"><b>≈30 год</b><span>без світла</span></div>
           <ul><li>Вдвічі більше годин роботи</li><li>Магазин, кафе, офіс, СТО</li><li>Вхід для сонячних панелей</li></ul>
           <div class="price">101 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji_2srne" target="_blank" rel="noopener">Хочу цей комплект</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji_2srne" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
       <div class="kit">
@@ -418,7 +433,7 @@ document.addEventListener('click', function(e){
           <div class="hours"><b>≈28 год</b><span>без світла</span></div>
           <ul><li>Котел, насос, бойлер, кондиціонер разом</li><li>Вдвічі більше годин роботи</li><li>Два входи для сонячних панелей</li></ul>
           <div class="price">106 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_aninerel_2srne" target="_blank" rel="noopener">Хочу цей комплект</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_aninerel_2srne" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
     </div>
@@ -437,7 +452,7 @@ document.addEventListener('click', function(e){
           <p class="fits">Для 24 В інверторів (Anenji 4,2, Daxtromn 3,5): потрібно 2 шт</p>
           <ul><li>1,28 кВт·год</li><li>Вбудована BMS</li></ul>
           <div class="price">11 390 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_zeroera" target="_blank" rel="noopener">Замовити</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_zeroera" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
@@ -447,7 +462,7 @@ document.addEventListener('click', function(e){
           <p class="fits">Для 24 В інверторів: потрібно 2 шт</p>
           <ul><li>1,92 кВт·год: в 1,5 раза більше за 100 А·год</li><li>Вбудована BMS</li></ul>
           <div class="price">13 390 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_idzlldi150" target="_blank" rel="noopener">Замовити</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_idzlldi150" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
@@ -457,7 +472,7 @@ document.addEventListener('click', function(e){
           <p class="fits">Для 48 В інверторів (Anenji 6,2, Humsienk, Aninerel, Daxtromn, Anern)</p>
           <ul><li>5,12 кВт·год, вбудована BMS</li><li>LCD-дисплей, Wi-Fi і Bluetooth</li><li>Додайте другу, щоб удвічі збільшити години</li></ul>
           <div class="price">42 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_srne" target="_blank" rel="noopener">Замовити</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_srne" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
@@ -467,7 +482,7 @@ document.addEventListener('click', function(e){
           <p class="fits">Для 48 В акумуляторів</p>
           <ul><li>Сонячний контролер MPPT 120 А</li><li>Зв’язок з BMS акумулятора</li></ul>
           <div class="price">19 590 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_daxtromn62" target="_blank" rel="noopener">Замовити</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_daxtromn62" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
@@ -477,7 +492,7 @@ document.addEventListener('click', function(e){
           <p class="fits">Для 48 В акумуляторів</p>
           <ul><li>Струм заряду до 120 А</li><li>Два виходи AC, Wi-Fi</li><li>Сонячні панелі до 500 В</li></ul>
           <div class="price">20 490 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_anern65" target="_blank" rel="noopener">Замовити</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_anern65" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
@@ -487,7 +502,7 @@ document.addEventListener('click', function(e){
           <p class="fits">Для 48 В акумуляторів</p>
           <ul><li>Модель SC-HFK-5500-48</li><li>Струм заряду до 100 А</li></ul>
           <div class="price">20 490 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_daxtromn55" target="_blank" rel="noopener">Замовити</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_daxtromn55" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
@@ -497,7 +512,7 @@ document.addEventListener('click', function(e){
           <p class="fits">Для 48 В акумуляторів</p>
           <ul><li>Тягне насос, кондиціонер, бойлер одночасно</li><li>Два MPPT для сонячних панелей</li><li>Wi-Fi, низький рівень шуму</li></ul>
           <div class="price">31 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_aninerel11" target="_blank" rel="noopener">Замовити</a>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_aninerel11" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
     </div>
@@ -596,7 +611,7 @@ document.addEventListener('click', function(e){
 
 <div class="mobile-cta">
   <a class="btn btn-sun" href="../?src=site_mobile">🔋 Підібрати</a>
-  <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Telegram</a>
+  <a class="btn btn-primary" href="viber://chat?number=%2B380998946286" style="background:#7360f2">Viber</a>
   <a class="btn btn-ghost call" href="tel:+380998946286" aria-label="Подзвонити">📞</a>
 </div>
 
@@ -605,14 +620,14 @@ document.addEventListener('click', function(e){
   <div class="om-box">
     <button class="om-x" type="button" aria-label="Закрити">×</button>
     <form id="omForm" novalidate>
-      <h3 id="omTitle">Замовлення</h3>
+      <h3 id="omTitle">Безкоштовна консультація</h3>
       <p class="om-item"><span id="omName"></span> — <b id="omPrice"></b></p>
       <label for="omPhone">Телефон</label>
       <input id="omPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380 __ ___ __ __" required>
       <label for="omUser">Ім'я (необов'язково)</label>
       <input id="omUser" type="text" autocomplete="given-name" placeholder="Як до вас звертатися">
-      <button class="btn btn-primary" id="omSend" type="submit">Замовити дзвінок</button>
-      <p class="om-note">Передзвонимо за 15–30 хвилин, підтвердимо наявність і ціну. Без передоплати.</p>
+      <button class="btn btn-primary" id="omSend" type="submit">Отримати консультацію</button>
+      <p class="om-note">Передзвонимо за 15–30 хвилин, відповімо на питання й перевіримо наявність. Ні до чого не зобов'язує.</p>
     </form>
     <div class="om-done" id="omDone" hidden>
       <div style="font-size:42px">✅</div>
@@ -640,10 +655,10 @@ document.addEventListener('click', function(e){
     item = { name: card.querySelector('h3').textContent.trim(),
              price: price ? price.textContent.replace(/\s+/g,' ').trim() : '',
              part: !!btn.closest('.parts') };
-    document.getElementById('omTitle').textContent = item.part ? 'Замовити' : 'Замовити комплект';
+    document.getElementById('omTitle').textContent = 'Безкоштовна консультація';
     document.getElementById('omName').textContent = item.name;
     document.getElementById('omPrice').textContent = item.price;
-    form.hidden = false; done.hidden = true; send.disabled = false; send.textContent = 'Замовити дзвінок';
+    form.hidden = false; done.hidden = true; send.disabled = false; send.textContent = 'Отримати консультацію';
     ph.classList.remove('need');
     opener = btn; m.hidden = false; document.body.style.overflow = 'hidden';
     setTimeout(function(){ ph.focus(); }, 50);
@@ -665,7 +680,7 @@ document.addEventListener('click', function(e){
     var phone = ph.value.trim();
     if(phone.replace(/\D/g,'').length < 9){ ph.classList.add('need'); ph.focus(); return; }
     var name = nm.value.trim();
-    var text = '📥 <b>ЗАЯВКА З САЙТУ!</b>\n\n' +
+    var text = '📥 <b>ЗАЯВКА З САЙТУ (консультація)</b>\n\n' +
       '👤 <b>Ім\'я:</b> ' + esc(name || 'не вказано') + '\n' +
       '📞 <b>Телефон:</b> ' + esc(phone) + '\n\n' +
       '🛒 <b>' + (item.part ? 'Товар' : 'Комплект') + ':</b> ' + esc(item.name) + ' — ' + esc(item.price) + '\n' +
@@ -682,7 +697,7 @@ document.addEventListener('click', function(e){
     })
     .catch(function(){
       ev('site_lead_error');
-      send.disabled = false; send.textContent = 'Замовити дзвінок';
+      send.disabled = false; send.textContent = 'Отримати консультацію';
       alert('Не вдалося надіслати. Зателефонуйте нам: +38 099 894 62 86');
     });
   });
