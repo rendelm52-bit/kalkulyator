@@ -584,6 +584,16 @@ function checkResultSeen(){
   const price = document.querySelector('#resultsBody .kit-price, #resultsBody .kit-name');
   resultSeen = !!price && price.getBoundingClientRect().top < window.innerHeight - 160;
   updateMini();
+  if(resultSeen) fireCalcResult();
+}
+// Подія «дійшов до ціни»: один раз за візит, коли комплект і ціна з'явилися на екрані.
+// Потрібна для реклами з оптимізацією на конверсію CalcResult.
+let calcResultFired = false;
+function fireCalcResult(){
+  if(calcResultFired || !lastResult) return;
+  calcResultFired = true;
+  try { if(window.fbq) fbq('trackCustom', 'CalcResult', { content_name: lastResult.kit, value: lastResult.kit_price || 0, currency: 'UAH' }); } catch(e){}
+  track('CalcResult', true);
 }
 window.addEventListener('scroll', checkResultSeen, { passive:true });
 
