@@ -36,6 +36,12 @@
   .btn-sun{background:var(--sun); color:#2a1d00}
   .btn-ghost{border-color:var(--brand); color:var(--brand); background:#fff}
   .btn-sm{padding:9px 14px; font-size:14px}
+  .phone-top{font-weight:700; color:var(--brand); text-decoration:none; white-space:nowrap; font-size:15px}
+  .head-right{display:flex; align-items:center; gap:14px}
+  .contacts{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+  .contacts a{display:inline-flex; align-items:center; gap:6px; padding:9px 14px; border-radius:10px; background:rgba(255,255,255,.14); color:#fff; text-decoration:none; font-weight:600; font-size:14.5px; border:1px solid rgba(255,255,255,.35)}
+  .contacts a:hover{background:rgba(255,255,255,.24)}
+  .mobile-cta .btn.call{flex:0 0 54px; padding:12px 0; font-size:20px}
   @media (max-width:820px){ nav.menu{display:none} header.top .btn{display:none} }
 
   /* hero */
@@ -164,6 +170,12 @@ fbq('track', 'PageView');
 document.addEventListener('click', function(e){
   var a = e.target.closest && e.target.closest('a[href*="t.me/ibp2026_bot"]');
   if(a && window.fbq) fbq('track', 'Contact');
+  var c = e.target.closest && e.target.closest('a[href^="tel:"],a[href^="viber:"],a[href*="wa.me/"],a[href*="t.me/+"]');
+  if(c){
+    var kind = /^tel:/.test(c.href) ? 'Call' : /^viber:/.test(c.href) ? 'Viber' : /wa\.me/.test(c.href) ? 'WhatsApp' : 'TelegramPhone';
+    if(window.fbq) fbq('track', 'Contact');
+    if(window.clarity) clarity('event', 'Contact' + kind);
+  }
 });
 </script>
 <!-- Microsoft Clarity -->
@@ -190,7 +202,10 @@ document.addEventListener('click', function(e){
       <a href="#buy">Як купити</a>
       <a href="#faq">Питання</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Написати в Telegram</a>
+    <div class="head-right">
+      <a class="phone-top" href="tel:+380998946286">📞 099 894 62 86</a>
+      <a class="btn btn-primary btn-sm" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Написати в Telegram</a>
+    </div>
   </div>
 </header>
 
@@ -493,6 +508,13 @@ document.addEventListener('click', function(e){
       <div>
         <h2>Порахуйте свій комплект за 1 хвилину</h2>
         <p>Відмітьте прилади, і побачите комплект, ціну та скільки годин він протримає. Безкоштовно й без реєстрації. Скажемо чесно, якщо вам вистачить меншого.</p>
+        <p style="margin-top:14px">Або зв'яжіться з нами: <a href="tel:+380998946286" style="color:#fff;font-weight:700">+38 099 894 62 86</a></p>
+        <div class="contacts">
+          <a href="tel:+380998946286">📞 Подзвонити</a>
+          <a href="viber://chat?number=%2B380998946286">Viber</a>
+          <a href="https://wa.me/380998946286" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://t.me/+380998946286" target="_blank" rel="noopener">Telegram</a>
+        </div>
       </div>
       <div class="cta-row">
         <a class="btn btn-sun" href="../?src=site_bottom">🔋 Порахувати</a>
@@ -505,13 +527,14 @@ document.addEventListener('click', function(e){
 <footer>
   <div class="wrap">
     <div><b style="color:var(--brand)">ЕнергоРезерв</b> · Автономні системи · Київ, доставка по Україні</div>
-    <div><a href="https://t.me/ibp2026_bot?start=site">Telegram: @ibp2026_bot</a></div>
+    <div><a href="tel:+380998946286">+38 099 894 62 86</a> · Viber · WhatsApp · Telegram</div>
   </div>
 </footer>
 
 <div class="mobile-cta">
   <a class="btn btn-sun" href="../?src=site_mobile">🔋 Порахувати</a>
   <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Telegram</a>
+  <a class="btn btn-ghost call" href="tel:+380998946286" aria-label="Подзвонити">📞</a>
 </div>
 
 </body>
