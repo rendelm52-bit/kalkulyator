@@ -585,19 +585,19 @@ function checkResultSeen(){
   const price = document.querySelector('#resultsBody .kit-price, #resultsBody .kit-name');
   resultSeen = !!price && price.getBoundingClientRect().top < window.innerHeight - 160;
   updateMini();
-  if(resultSeen && userActed) fireCalcResult();
 }
-// Подія «дійшов до ціни» (CalcResult): один раз за візит, і тільки якщо людина
-// сама щось зробила в калькуляторі (відмітила прилад, змінила години/АКБ,
-// натиснула «Вам підходить ↓» чи «Хочу цей») і після цього побачила комплект з ціною.
-// Просто прогорнути сторінку вже не рахується — так сигнал для реклами чистіший.
+// Подія CalcResult («людина покрутила калькулятор»): один раз за візит, коли людина
+// вперше сама щось натиснула — відмітила прилад, змінила години/АКБ/напругу,
+// відкрила «Ще прилади», натиснула «Вам підходить ↓», комплект у каталозі, фото
+// чи поле телефону. Ціну свого комплекту вона в цей момент бачить у рядку внизу.
+// Просто прогорнути сторінку не рахується.
 // Назву події не міняємо: на ній стоїть конверсія «Дійшов до ціни».
 let userActed = false;
 function markActed(){
   if(userActed) return;
   userActed = true;
   track('calc_acted', true);
-  checkResultSeen();
+  fireCalcResult();
 }
 let calcResultFired = false;
 function fireCalcResult(){
@@ -711,7 +711,6 @@ document.getElementById('kitsRow').addEventListener('click', (e) => {
   chosenKit = KITS[+card.dataset.kit];
   track('kit_want');
   markActed();
-  fireCalcResult();
   document.querySelectorAll('.kit-card').forEach(c => {
     const on = c === card;
     c.classList.toggle('chosen', on);
@@ -728,6 +727,7 @@ document.addEventListener('click', (e) => {
   const img = e.target.closest('.gallery img');
   if(!img) return;
   track('photo_zoom', true);
+  markActed();
   const z = document.createElement('div');
   z.className = 'zoom';
   z.innerHTML = `<img src="${img.getAttribute('src')}" alt=""><span class="zx">×</span>`;
