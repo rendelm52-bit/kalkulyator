@@ -100,6 +100,8 @@ fbq('track', 'PageView');
   .kit .kit-name{font-size:15px; font-weight:650; margin-bottom:4px;}
   .kit .kit-price{font-size:20px; font-weight:700; color:var(--accent);}
   .kit .kit-note{font-size:12.5px; color:var(--text-dim); margin-top:6px;}
+  .honest{margin-top:10px; padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px dashed var(--text-dim); font-size:13px; line-height:1.4;}
+  .honest a{color:var(--accent); font-weight:650;}
   .hero{display:grid; grid-template-columns:1fr 42%; gap:12px; align-items:center; margin-bottom:14px;}
   .hero h1{font-size:22px; line-height:1.2; margin:0 0 8px; font-weight:750;}
   .hero h1 em{font-style:normal; color:var(--accent); display:block;}
@@ -195,7 +197,7 @@ fbq('track', 'PageView');
   </div>
   <header>
     <h2 style="font-size:17px; margin:0 0 6px">Який комплект потрібен саме вам?</h2>
-    <p>Відмітьте прилади, які мають працювати без світла. За 1 хвилину покажемо комплект, ціну й скільки годин він протримає.</p>
+    <p>Відмітьте прилади, які мають працювати без світла, і одразу самі побачите орієнтовний комплект, ціну й скільки годин він протримає. Без дзвінків і без номера телефону.</p>
   </header>
 
   <section>
@@ -234,7 +236,7 @@ fbq('track', 'PageView');
 
   <section id="contactsSection">
     <h2>Куди зателефонувати?</h2>
-    <p class="contact-note">Роман передзвонить за 15–30 хвилин, підтвердить комплект і відповість на питання. Ні до чого не зобов'язує.</p>
+    <p class="contact-note">Хочете точну ціну під ваші прилади й щиток? Роман передзвонить за 15–30 хвилин, підтвердить комплект або запропонує дешевший і відповість на питання. Ні до чого не зобов'язує.</p>
     <div class="field">
       <label>Ваше ім'я (необов'язково)</label>
       <input type="text" id="userName" placeholder="Олександр">
@@ -255,7 +257,7 @@ fbq('track', 'PageView');
     </div>
   </section>
 
-  <section>
+  <section id="kitsSection">
     <h2>Наші комплекти</h2>
     <div class="kits-row" id="kitsRow"></div>
   </section>
@@ -506,7 +508,7 @@ function recalc(){
     const kitHours = Math.floor((kit.battery_wh * KIT_DOD * INVERTER_EFF / totalAvg) * 2) / 2;
     kitHtml = `
     <div class="kit">
-      <div class="label">Вам підходить</div>
+      <div class="label">Орієнтовно вам підходить</div>
       ${gallery(kit)}
       ${kit.photos.length > 1 ? '<div class="swipe-hint">Гортайте фото →</div>' : ''}
       <div class="kit-name">${kit.name}</div>
@@ -515,11 +517,12 @@ function recalc(){
         ? `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год без світла.`
         : `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год. Для ${hours} год додамо акумулятор — підкажемо на дзвінку.`} Оплата при отриманні.</div>
       <div class="works">${devicesShort.map(n => `<span>✓ ${n}</span>`).join('')}</div>
+      <div class="honest">Це підбір навскидку, не остаточна ціна. Є й інші комплекти: від ${Math.min(...KITS.map(x=>x.price)).toLocaleString('uk-UA')} до ${Math.max(...KITS.map(x=>x.price)).toLocaleString('uk-UA')} грн. Чесно скажемо, якщо вам вистачить меншого, або підберемо потужніше. <a href="#kitsSection">Усі комплекти ↓</a></div>
     </div>`;
   } else {
     kitHtml = `
     <div class="kit">
-      <div class="label">Вам підходить</div>
+      <div class="label">Орієнтовно вам підходить</div>
       <div class="kit-name">Потужна система під ваш об'єкт</div>
       <div class="kit-note">Потужність більша за стандартні комплекти (до 11 кВт). Залиште номер — підберемо систему індивідуально.</div>
     </div>`;

@@ -52,6 +52,8 @@
   .hero h1 span{color:var(--brand)}
   .hero p.lead{font-size:18px; color:var(--ink-2); margin:0 0 24px; max-width:520px}
   .cta-row{display:flex; gap:12px; flex-wrap:wrap}
+  .self-hint{font-size:14px; color:var(--ink-2); margin:10px 0 0; max-width:500px}
+  .self-hint b{color:var(--ink)}
   .trust{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:22px; font-size:14px; color:var(--ink-2)}
   .trust span::before{content:"✓ "; color:var(--brand-2); font-weight:800}
   .scene{width:100%; height:auto; display:block}
@@ -216,9 +218,10 @@ document.addEventListener('click', function(e){
       <h1>Світло вдома, <span>навіть коли його вимкнули</span></h1>
       <p class="lead">Інвертор з LiFePO4 акумулятором вмикається сам за мить після відключення. Холодильник, світло, котел, роутер і ноутбук працюють тихо, без генератора й бензину.</p>
       <div class="cta-row">
-        <a class="btn btn-sun" href="../?src=site">🔋 Порахувати комплект за 1 хв</a>
+        <a class="btn btn-sun" href="../?src=site">🔋 Підібрати комплект самому</a>
         <a class="btn btn-ghost" href="#kits">Подивитись комплекти</a>
       </div>
+      <p class="self-hint"><b>Без дзвінків і без номера телефону:</b> відмітьте свої прилади й одразу побачите, який комплект підходить, скільки коштує й скільки годин протримає.</p>
       <div class="trust">
         <span>Оплата при отриманні</span>
         <span>Гарантія 1 рік</span>
@@ -320,7 +323,7 @@ document.addEventListener('click', function(e){
 <section id="kits" style="background:#eef6f2">
   <div class="wrap">
     <h2>Готові комплекти</h2>
-    <p class="sub">Чиста синусоїда, Wi-Fi моніторинг зі смартфона, літієві акумулятори LiFePO4 з вбудованою BMS. Не знаєте, який потрібен? <a href="../?src=site_kits">Калькулятор підбере за 1 хвилину</a>.<br><small>Години вказані при навантаженні ≈300 Вт разом з інвертором: котел, холодильник, роутер і світло.</small></p>
+    <p class="sub">Чиста синусоїда, Wi-Fi моніторинг зі смартфона, літієві акумулятори LiFePO4 з вбудованою BMS. Не знаєте, який потрібен? <a href="../?src=site_kits">Підберіть самі за 1 хвилину</a>: відмітьте прилади, і калькулятор покаже комплект і ціну, без дзвінків.<br><small>Години вказані при навантаженні ≈300 Вт разом з інвертором: котел, холодильник, роутер і світло.</small></p>
     <div class="kits">
       <div class="kit">
         <img src="../img/anenji42-1.jpg" alt="Інвертор Anenji 4,2 кВт з двома акумуляторами FLYFOREE" loading="lazy">
@@ -447,7 +450,7 @@ document.addEventListener('click', function(e){
     <h2>Як проходить покупка</h2>
     <p class="sub">Без передоплати й ризику: спершу бачите комплект, потім платите.</p>
     <div class="steps">
-      <div class="step"><h3>Розрахунок</h3><p>Відмічаєте прилади в калькуляторі або пишете нам у Telegram.</p></div>
+      <div class="step"><h3>Розрахунок</h3><p>Самі відмічаєте прилади в калькуляторі й одразу бачите орієнтовний комплект і ціну. Або пишете нам.</p></div>
       <div class="step"><h3>Дзвінок</h3><p>Роман уточнює, що має працювати, просить фото щитка й підтверджує, що комплект точно підходить.</p></div>
       <div class="step"><h3>Доставка</h3><p>Нова пошта по всій Україні. Перевіряєте на відділенні й оплачуєте при отриманні.</p></div>
       <div class="step"><h3>Монтаж</h3><p>По Києву й області наша бригада підключає під ключ до вашого щитка.</p></div>
@@ -506,8 +509,8 @@ document.addEventListener('click', function(e){
   <div class="wrap">
     <div class="final">
       <div>
-        <h2>Порахуйте свій комплект за 1 хвилину</h2>
-        <p>Відмітьте прилади, і побачите комплект, ціну та скільки годин він протримає. Безкоштовно й без реєстрації. Скажемо чесно, якщо вам вистачить меншого.</p>
+        <h2>Підберіть комплект самі за 1 хвилину</h2>
+        <p>Відмітьте прилади, і одразу побачите комплект, ціну та скільки годин він протримає. Без номера телефону. Це орієнтовний підбір: є варіанти дешевше й потужніше, і ми чесно скажемо, якщо вам вистачить меншого.</p>
         <p style="margin-top:14px">Або зв'яжіться з нами: <a href="tel:+380998946286" style="color:#fff;font-weight:700">+38 099 894 62 86</a></p>
         <div class="contacts">
           <a href="tel:+380998946286">📞 Подзвонити</a>
@@ -517,7 +520,7 @@ document.addEventListener('click', function(e){
         </div>
       </div>
       <div class="cta-row">
-        <a class="btn btn-sun" href="../?src=site_bottom">🔋 Порахувати</a>
+        <a class="btn btn-sun" href="../?src=site_bottom">🔋 Підібрати самому</a>
         <a class="btn btn-ghost" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Telegram</a>
       </div>
     </div>
@@ -532,7 +535,7 @@ document.addEventListener('click', function(e){
 </footer>
 
 <div class="mobile-cta">
-  <a class="btn btn-sun" href="../?src=site_mobile">🔋 Порахувати</a>
+  <a class="btn btn-sun" href="../?src=site_mobile">🔋 Підібрати</a>
   <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site" target="_blank" rel="noopener">Telegram</a>
   <a class="btn btn-ghost call" href="tel:+380998946286" aria-label="Подзвонити">📞</a>
 </div>
