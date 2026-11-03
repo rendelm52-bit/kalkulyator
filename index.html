@@ -429,7 +429,7 @@ function renderDevices(){
 
     const chk = document.createElement('input');
     chk.type = 'checkbox'; chk.id = 'chk_' + d.id; chk.checked = !!d.checked;
-    chk.addEventListener('change', () => { track('device_toggle', true); recalc(); });
+    chk.addEventListener('change', () => { track('device_toggle', true); markActed(); recalc(); });
 
     const label = document.createElement('label');
     label.setAttribute('for', chk.id);
@@ -457,7 +457,7 @@ function renderDevices(){
   const more = document.createElement('button');
   more.type = 'button'; more.className = 'more-devices';
   more.textContent = 'Ще прилади: насоси, кондиціонер, чайник… ↓';
-  more.addEventListener('click', () => { list.classList.add('show-all'); more.remove(); track('more_devices'); });
+  more.addEventListener('click', () => { list.classList.add('show-all'); more.remove(); track('more_devices'); markActed(); });
   list.after(more);
 }
 
@@ -577,6 +577,7 @@ function updateMini(){
 document.getElementById('miniResult').addEventListener('click', (e) => {
   e.preventDefault();
   track('mini_result_click');
+  markActed();
   document.querySelector('.results').scrollIntoView({ behavior:'smooth', block:'start' });
 });
 // Ховаємо, коли ціна комплекту вже на екрані або позаду
@@ -584,13 +585,23 @@ function checkResultSeen(){
   const price = document.querySelector('#resultsBody .kit-price, #resultsBody .kit-name');
   resultSeen = !!price && price.getBoundingClientRect().top < window.innerHeight - 160;
   updateMini();
-  if(resultSeen) fireCalcResult();
+  if(resultSeen && userActed) fireCalcResult();
 }
-// Подія «дійшов до ціни»: один раз за візит, коли комплект і ціна з'явилися на екрані.
-// Потрібна для реклами з оптимізацією на конверсію CalcResult.
+// Подія «дійшов до ціни» (CalcResult): один раз за візит, і тільки якщо людина
+// сама щось зробила в калькуляторі (відмітила прилад, змінила години/АКБ,
+// натиснула «Вам підходить ↓» чи «Хочу цей») і після цього побачила комплект з ціною.
+// Просто прогорнути сторінку вже не рахується — так сигнал для реклами чистіший.
+// Назву події не міняємо: на ній стоїть конверсія «Дійшов до ціни».
+let userActed = false;
+function markActed(){
+  if(userActed) return;
+  userActed = true;
+  track('calc_acted', true);
+  checkResultSeen();
+}
 let calcResultFired = false;
 function fireCalcResult(){
-  if(calcResultFired || !lastResult) return;
+  if(calcResultFired || !lastResult || !userActed) return;
   calcResultFired = true;
   try { if(window.fbq) fbq('trackCustom', 'CalcResult', { content_name: lastResult.kit, value: lastResult.kit_price || 0, currency: 'UAH' }); } catch(e){}
   track('CalcResult', true);
@@ -599,6 +610,7 @@ window.addEventListener('scroll', checkResultSeen, { passive:true });
 
 document.getElementById('hoursRange').addEventListener('input', (e) => {
   track('hours_change', true);
+  markActed();
   hours = parseFloat(e.target.value);
   document.getElementById('hoursLabel').textContent = hours + ' год';
   recalc();
@@ -608,6 +620,7 @@ document.getElementById('batteryTypePills').addEventListener('click', (e) => {
   const pill = e.target.closest('.pill'); if(!pill) return;
   document.querySelectorAll('#batteryTypePills .pill').forEach(p => p.classList.remove('active'));
   pill.classList.add('active');
+  markActed();
   batteryDoD = parseFloat(pill.dataset.dod);
   batteryTypeName = pill.dataset.name;
   recalc();
@@ -617,6 +630,7 @@ document.getElementById('voltagePills').addEventListener('click', (e) => {
   const pill = e.target.closest('.pill'); if(!pill) return;
   document.querySelectorAll('#voltagePills .pill').forEach(p => p.classList.remove('active'));
   pill.classList.add('active');
+  markActed();
   systemVoltage = parseFloat(pill.dataset.v);
   recalc();
 });
@@ -696,6 +710,8 @@ document.getElementById('kitsRow').addEventListener('click', (e) => {
   if(!card) return;
   chosenKit = KITS[+card.dataset.kit];
   track('kit_want');
+  markActed();
+  fireCalcResult();
   document.querySelectorAll('.kit-card').forEach(c => {
     const on = c === card;
     c.classList.toggle('chosen', on);
@@ -719,8 +735,12 @@ document.addEventListener('click', (e) => {
   document.body.appendChild(z);
 });
 
-document.querySelectorAll('[data-track]').forEach(a => a.addEventListener('click', () => track(a.dataset.track)));
-document.getElementById('userPhone').addEventListener('focus', () => track('phone_focus', true));
+document.querySelectorAll('[data-track]').forEach(a => a.addEventListener('click', () => {
+  track(a.dataset.track);
+  // Написати в Telegram — це теж контакт, як кнопки месенджерів на сайті
+  if(a.dataset.track === 'tg_click') try { if(window.fbq) fbq('track', 'Contact'); } catch(e){}
+}));
+document.getElementById('userPhone').addEventListener('focus', () => { track('phone_focus', true); markActed(); });
 document.getElementById('userPhone').addEventListener('input', e => e.target.classList.remove('need'));
 document.getElementById('proSettings').addEventListener('toggle', () => track('pro_settings_open', true));
 
