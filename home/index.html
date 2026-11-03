@@ -150,6 +150,24 @@
     .mobile-cta .btn{flex:1; padding:12px 10px; font-size:14.5px}
     body{padding-bottom:76px}
   }
+
+  /* order modal */
+  .om{position:fixed; inset:0; z-index:50; background:rgba(16,38,29,.55); display:flex; align-items:flex-end; justify-content:center; padding:16px}
+  .om[hidden]{display:none}
+  .om-box{background:#fff; border-radius:20px; width:100%; max-width:420px; padding:22px 20px 20px; position:relative; box-shadow:var(--shadow); max-height:calc(100vh - 32px); overflow:auto}
+  @media (min-width:600px){ .om{align-items:center} }
+  .om-x{position:absolute; top:8px; right:10px; border:0; background:none; font-size:28px; line-height:1; color:var(--ink-2); cursor:pointer; padding:6px}
+  .om h3{margin:0 28px 4px 0; font-size:19px}
+  .om .om-item{margin:0 0 14px; color:var(--ink-2); font-size:15px}
+  .om .om-item b{color:var(--ink)}
+  .om label{display:block; font-size:14px; font-weight:600; margin:10px 0 4px}
+  .om input{width:100%; font-size:17px; padding:12px 14px; border:1.5px solid var(--line); border-radius:12px; font-family:inherit}
+  .om input:focus{outline:none; border-color:var(--brand)}
+  .om input.need{border-color:#d33}
+  .om .btn{width:100%; margin-top:16px; font-size:16.5px; cursor:pointer}
+  .om .om-note{font-size:13px; color:var(--ink-2); margin:10px 0 0; text-align:center}
+  .om .om-done{text-align:center; padding:10px 0}
+  .om .om-done b{display:block; font-size:20px; margin:6px 0}
 </style>
 <!-- Meta Pixel ЕнергоРезерв: відвідування сайту і переходи в Telegram -->
 <script>
@@ -582,5 +600,93 @@ document.addEventListener('click', function(e){
   <a class="btn btn-ghost call" href="tel:+380998946286" aria-label="Подзвонити">📞</a>
 </div>
 
+
+<div class="om" id="orderModal" hidden role="dialog" aria-modal="true" aria-labelledby="omTitle">
+  <div class="om-box">
+    <button class="om-x" type="button" aria-label="Закрити">×</button>
+    <form id="omForm" novalidate>
+      <h3 id="omTitle">Замовлення</h3>
+      <p class="om-item"><span id="omName"></span> — <b id="omPrice"></b></p>
+      <label for="omPhone">Телефон</label>
+      <input id="omPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380 __ ___ __ __" required>
+      <label for="omUser">Ім'я (необов'язково)</label>
+      <input id="omUser" type="text" autocomplete="given-name" placeholder="Як до вас звертатися">
+      <button class="btn btn-primary" id="omSend" type="submit">Замовити дзвінок</button>
+      <p class="om-note">Передзвонимо за 15–30 хвилин, підтвердимо наявність і ціну. Без передоплати.</p>
+    </form>
+    <div class="om-done" id="omDone" hidden>
+      <div style="font-size:42px">✅</div>
+      <b>Дякуємо! Заявку прийнято</b>
+      <p>Передзвонимо найближчим часом. Якщо терміново: <a href="tel:+380998946286">+38 099 894 62 86</a></p>
+      <button class="btn btn-ghost" type="button" id="omClose">Закрити</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Кнопки «Хочу цей комплект» / «Замовити»: замість переходу в Telegram — форма заявки на сайті
+(function(){
+  var LEAD_URL = 'https://ibp-leads.rendelm52.workers.dev/';
+  var m = document.getElementById('orderModal'), form = document.getElementById('omForm'),
+      done = document.getElementById('omDone'), ph = document.getElementById('omPhone'),
+      nm = document.getElementById('omUser'), send = document.getElementById('omSend');
+  var item = null, opener = null;
+  function srcTag(){ var s = new URLSearchParams(location.search).get('src'); return (s && /^[A-Za-z0-9_-]{1,40}$/.test(s)) ? s : 'site'; }
+  function esc(v){ return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function ev(n){ try { if(window.clarity) clarity('event', n); } catch(e){} }
+  function open(btn){
+    var card = btn.closest('.kit');
+    var price = card.querySelector('.price');
+    item = { name: card.querySelector('h3').textContent.trim(),
+             price: price ? price.textContent.replace(/\s+/g,' ').trim() : '',
+             part: !!btn.closest('.parts') };
+    document.getElementById('omTitle').textContent = item.part ? 'Замовити' : 'Замовити комплект';
+    document.getElementById('omName').textContent = item.name;
+    document.getElementById('omPrice').textContent = item.price;
+    form.hidden = false; done.hidden = true; send.disabled = false; send.textContent = 'Замовити дзвінок';
+    ph.classList.remove('need');
+    opener = btn; m.hidden = false; document.body.style.overflow = 'hidden';
+    setTimeout(function(){ ph.focus(); }, 50);
+    ev(item.part ? 'order_open_part' : 'order_open_kit');
+    try { if(window.fbq) fbq('track', 'InitiateCheckout', { content_name: item.name, currency: 'UAH' }); } catch(e){}
+  }
+  function close(){ m.hidden = true; document.body.style.overflow = ''; if(opener) opener.focus(); }
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest && e.target.closest('.kit .body a.btn-primary');
+    if(!btn) return;
+    e.preventDefault(); e.stopPropagation();
+    open(btn);
+  }, true);
+  m.addEventListener('click', function(e){ if(e.target === m || e.target.closest('.om-x') || e.target.id === 'omClose') close(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !m.hidden) close(); });
+  ph.addEventListener('input', function(){ ph.classList.remove('need'); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var phone = ph.value.trim();
+    if(phone.replace(/\D/g,'').length < 9){ ph.classList.add('need'); ph.focus(); return; }
+    var name = nm.value.trim();
+    var text = '📥 <b>ЗАЯВКА З САЙТУ!</b>\n\n' +
+      '👤 <b>Ім\'я:</b> ' + esc(name || 'не вказано') + '\n' +
+      '📞 <b>Телефон:</b> ' + esc(phone) + '\n\n' +
+      '🛒 <b>' + (item.part ? 'Товар' : 'Комплект') + ':</b> ' + esc(item.name) + ' — ' + esc(item.price) + '\n' +
+      '📣 <b>Джерело:</b> <code>' + esc(srcTag()) + '</code>';
+    send.disabled = true; send.textContent = 'Надсилання...';
+    fetch(LEAD_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ text: text, initData: '', src: srcTag() }) })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d.ok) throw new Error(d.description || 'error');
+      try { if(window.fbq) fbq('track', 'Lead', { content_name: item.name, value: parseInt(item.price.replace(/\D/g,''),10) || 0, currency: 'UAH' }); } catch(e){}
+      ev('site_lead_sent');
+      form.hidden = true; done.hidden = false; ph.value = ''; nm.value = '';
+    })
+    .catch(function(){
+      ev('site_lead_error');
+      send.disabled = false; send.textContent = 'Замовити дзвінок';
+      alert('Не вдалося надіслати. Зателефонуйте нам: +38 099 894 62 86');
+    });
+  });
+})();
+</script>
 </body>
 </html>
