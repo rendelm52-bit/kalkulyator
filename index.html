@@ -191,9 +191,9 @@ fbq('track', 'PageView');
     <div>
       <h1><em>Світло зникло?</em>А у вас усе працює.</h1>
       <ul><li>Оплата при отриманні</li><li>Гарантія 1 рік</li><li>Монтаж по Києву</li></ul>
-      <div class="from">від 41 490 грн</div>
+      <div class="from">від 36 990 грн</div>
     </div>
-    <img src="img/anenji-1.jpg" alt="Інвертор Anenji з акумулятором LiFePO4">
+    <img src="img/kit-anenji-srne.jpg" alt="Інвертор Anenji з акумулятором SRNE LiFePO4">
   </div>
   <header>
     <h2 style="font-size:17px; margin:0 0 6px">Який комплект потрібен саме вам?</h2>
@@ -318,21 +318,27 @@ const DEVICES = [
 
 // Комплекти Opdrop. Ціни оновлювати тут.
 const KITS = [
-  {name:'Anenji 4.2 кВт + 2 АКБ LiFePO4 2.56 кВт·год', inverter_w:4200, battery_wh:2560, price:41490,
-   for:'Квартира: світло, холодильник, роутер, котел',
-   photos:['img/anenji42-1.jpg']},
-  {name:'Anenji 6.2 кВт + 1 АКБ LiFePO4 5.12 кВт·год', inverter_w:6200, battery_wh:5120, price:65990,
+  {name:'Anenji 4,2 кВт + 2 АКБ Foursun 2,56 кВт·год', inverter_w:4200, battery_wh:2560, price:36990,
+   for:'Квартира: найнеобхідніше без світла',
+   photos:['img/kit-anenji42-foursun.jpg']},
+  {name:'Daxtromn 3,5 кВт + 2 АКБ GoKWh 2,56 кВт·год', inverter_w:3500, battery_wh:2560, price:36990,
+   for:'Квартира: світло, роутер, холодильник',
+   photos:['img/kit-daxtromn35-gokwh.jpg']},
+  {name:'Anenji 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:66990,
    for:'Квартира або невеликий будинок', tag:'Найпопулярніший',
-   photos:['img/anenji-1.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
-  {name:'Humsienk 6.2 кВт + настінна АКБ LiFePO4 5.12 кВт·год', inverter_w:6200, battery_wh:5120, price:68490,
-   for:'Будинок: акумулятор вішається на стіну',
-   photos:['img/humsienk-1.jpg','img/humsienk-specs.jpg','img/genforce-battery.jpg']},
-  {name:'Aninerel 11 кВт + 1 АКБ LiFePO4 5.12 кВт·год', inverter_w:11000, battery_wh:5120, price:74990,
+   photos:['img/kit-anenji-srne.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
+  {name:'Humsienk 6,2 кВт + настінна АКБ GENFORCE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:66990,
+   for:'Будинок або квартира, акумулятор на стіні',
+   photos:['img/kit-humsienk-genforce.jpg','img/humsienk-specs.jpg','img/genforce-battery.jpg']},
+  {name:'Aninerel 11 кВт + настінна АКБ SRNE 5,12 кВт·год', inverter_w:11000, battery_wh:5120, price:74990,
    for:'Будинок з насосом, кондиціонером, бойлером',
-   photos:['img/aninerel-1.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg']},
-  {name:'Anenji 6.2 кВт + 2 АКБ LiFePO4 10.24 кВт·год', inverter_w:6200, battery_wh:10240, price:99990,
-   for:'Довгі відключення: вдвічі більше годин',
-   photos:['img/anenji-2.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
+   photos:['img/kit-aninerel-srne.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg']},
+  {name:'Anenji 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год', inverter_w:6200, battery_wh:10240, price:101990,
+   for:'Довгі відключення та невеликий бізнес',
+   photos:['img/kit-anenji-2srne.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
+  {name:'Aninerel 11 кВт + 2 АКБ SRNE 10,24 кВт·год', inverter_w:11000, battery_wh:10240, price:106990,
+   for:'Великий будинок: усе й надовго',
+   photos:['img/kit-aninerel-2srne.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg']},
 ];
 const KIT_DOD = 0.9, INVERTER_EFF = 0.9;
 
