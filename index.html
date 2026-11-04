@@ -639,24 +639,29 @@ document.getElementById('miniResult').addEventListener('click', (e) => {
 function checkResultSeen(){
   const price = document.querySelector('#resultsBody .kit-price, #resultsBody .kit-name');
   resultSeen = !!price && price.getBoundingClientRect().top < window.innerHeight - 160;
+  if(resultSeen && !resultReached){ resultReached = true; fireCalcResult(); }
   updateMini();
 }
 // Подія CalcResult («людина покрутила калькулятор»): один раз за візит, коли людина
-// вперше сама щось натиснула — відмітила прилад, змінила години/АКБ/напругу,
-// відкрила «Ще прилади», натиснула «Вам підходить ↓», комплект у каталозі, фото,
-// поле телефону або перейшла на сайт / в Telegram. Ціну свого комплекту вона в цей момент бачить у рядку внизу.
-// Просто прогорнути сторінку не рахується.
+// 1) зробила щонайменше 2 своїх натискання в калькуляторі — відмітила прилад, змінила
+//    години/АКБ/напругу, відкрила «Ще прилади», натиснула «Вам підходить ↓», комплект, фото,
+//    поле телефону або перейшла на сайт / в Telegram (рух повзунка годин = 1 натискання), і
+// 2) хоч раз долистала до результату (ціна комплекту на екрані).
+// Просто прогорнути сторінку або одне випадкове натискання не рахується.
 // Назву події не міняємо: на ній стоїть конверсія «Дійшов до ціни».
-let userActed = false;
+const CALC_MIN_ACTS = 2;
+let userActed = false, actCount = 0, lastActAt = 0, resultReached = false;
 function markActed(){
-  if(userActed) return;
-  userActed = true;
-  track('calc_acted', true);
+  const now = Date.now();
+  if(now - lastActAt < 700) return; // повзунок/подвійний тап рахуємо як одне натискання
+  lastActAt = now;
+  actCount++;
+  if(!userActed){ userActed = true; track('calc_acted', true); }
   fireCalcResult();
 }
 let calcResultFired = false;
 function fireCalcResult(){
-  if(calcResultFired || !lastResult || !userActed) return;
+  if(calcResultFired || !lastResult || actCount < CALC_MIN_ACTS || !resultReached) return;
   calcResultFired = true;
   try { if(window.fbq) fbq('trackCustom', 'CalcResult', { content_name: lastResult.kit, value: lastResult.kit_price || 0, currency: 'UAH' }); } catch(e){}
   track('CalcResult', true);
