@@ -82,6 +82,7 @@ fbq('track', 'PageView');
     color:var(--text); border-radius:8px; padding:9px 10px; font-size:13px;
     text-align:center; cursor:pointer; user-select:none;
   }
+  .have-note{margin:8px 0 0; font-size:13px; color:var(--text-dim);}
   .pill.active{border-color: var(--accent); color: var(--accent); background: rgba(255,176,32,0.08);}
   input[type="range"]{width:100%; accent-color: var(--accent);}
   .range-value{color:var(--accent); font-weight:650;}
@@ -108,6 +109,7 @@ fbq('track', 'PageView');
   .hero ul{list-style:none; margin:0; padding:0; font-size:12.5px;}
   .hero li{margin:3px 0;} .hero li::before{content:'✓ '; color:var(--accent-2); font-weight:700;}
   .hero img{width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; border-radius:12px; display:block;}
+  .hero .from-parts{margin-top:6px; font-size:12px; color:var(--text-dim);}
   .hero .from{display:inline-block; margin-top:8px; background:var(--accent); color:#1a1305; font-weight:700; border-radius:8px; padding:5px 10px; font-size:14px;}
   .gallery{display:flex; gap:8px; overflow-x:auto; scroll-snap-type:x mandatory; margin:0 -12px 10px; padding:0 12px; scrollbar-width:none;}
   .gallery::-webkit-scrollbar{display:none;}
@@ -115,6 +117,7 @@ fbq('track', 'PageView');
   .swipe-hint{font-size:11.5px; color:var(--text-dim); margin:-4px 0 8px;}
   .works{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
   .works span{font-size:12.5px; background:rgba(79,209,197,0.12); color:var(--accent-2); border-radius:20px; padding:4px 10px;}
+  .parts-row{margin:10px 0 0; font-size:13.5px;} .parts-row a{color:var(--accent); font-weight:650;}
   .kits-row{display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; margin:0 -14px; padding:0 14px 4px; scrollbar-width:none;}
   .kits-row::-webkit-scrollbar{display:none;}
   .kit-card{flex:0 0 70%; max-width:260px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; overflow:hidden; scroll-snap-align:start;}
@@ -192,6 +195,7 @@ fbq('track', 'PageView');
       <h1><em>Світло зникло?</em>А у вас усе працює.</h1>
       <ul><li>Оплата при отриманні</li><li>Гарантія 1 рік</li><li>Монтаж по Києву</li></ul>
       <div class="from">від 36 990 грн</div>
+      <div class="from-parts">Інвертори окремо від 19 590 · АКБ від 11 390 грн</div>
     </div>
     <img src="img/kit-anenji-srne.jpg" alt="Інвертор Anenji з акумулятором SRNE LiFePO4">
   </div>
@@ -208,6 +212,16 @@ fbq('track', 'PageView');
   <section>
     <h2>Автономність: <span class="range-value" id="hoursLabel">4 год</span></h2>
     <input type="range" id="hoursRange" min="0.5" max="24" step="0.5" value="4">
+  </section>
+
+  <section>
+    <h2>У вас уже є інвертор чи акумулятор?</h2>
+    <div class="row-inline" id="havePills">
+      <div class="pill active" data-have="none">Нічого немає</div>
+      <div class="pill" data-have="inverter">Є інвертор</div>
+      <div class="pill" data-have="battery">Є акумулятор</div>
+    </div>
+    <p class="have-note" id="haveNote" hidden></p>
   </section>
 
   <section>
@@ -260,6 +274,7 @@ fbq('track', 'PageView');
   <section id="kitsSection">
     <h2>Наші комплекти</h2>
     <div class="kits-row" id="kitsRow"></div>
+    <p class="parts-row">Потрібен лише інвертор чи акумулятор? <a href="home/?src=calc_parts#parts" data-track="site_click">Інвертори й АКБ окремо →</a></p>
   </section>
 
 </div>
@@ -342,6 +357,28 @@ const KITS = [
 ];
 const KIT_DOD = 0.9, INVERTER_EFF = 0.9;
 
+// Окремі інвертори й акумулятори (для тих, у кого вже є частина системи). Ціни оновлювати тут і на сайті.
+const INVERTERS = [
+  {name:'Інвертор Daxtromn 6,2 кВт, 48 В', inverter_w:6200, price:19590, photos:['img/p-daxtromn62.jpg']},
+  {name:'Інвертор Anern 6,5 кВт, 48 В', inverter_w:6500, price:20490, photos:['img/p-anern65.jpg']},
+  {name:'Інвертор Aninerel 11 кВт, 48 В', inverter_w:11000, price:31990, photos:['img/p-aninerel11.jpg']},
+];
+const BATTERIES = [
+  // для 24 В інверторів — пара 12,8 В; для 48 В — SRNE 51,2 В (можна кілька)
+  {name:'2 × АКБ ZeroEra LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:22780, photos:['img/p-zeroera.jpg']},
+  {name:'2 × АКБ Idzlldi LiFePO4 12,8 В 150 А·год (для 24 В)', battery_wh:3840, price:26780, photos:['img/p-idzlldi150.jpg']},
+  {name:'АКБ SRNE LiFePO4 51,2 В 5,12 кВт·год (для 48 В)', battery_wh:5120, price:42990, photos:['img/p-srne-battery.jpg']},
+  {name:'2 × АКБ SRNE LiFePO4 51,2 В, 10,24 кВт·год (для 48 В)', battery_wh:10240, price:85980, photos:['img/p-srne-battery.jpg']},
+];
+let have = 'none'; // 'none' | 'inverter' | 'battery'
+function pickInverter(needW){
+  return INVERTERS.filter(x => x.inverter_w >= needW).sort((a, b) => a.price - b.price)[0] || null;
+}
+function pickBattery(needWh){
+  const ok = BATTERIES.filter(x => x.battery_wh * KIT_DOD >= needWh).sort((a, b) => a.price - b.price);
+  return ok[0] || BATTERIES[BATTERIES.length - 1];
+}
+
 // Найдешевший комплект, що тягне і потужність, і автономність.
 // Якщо автономності не вистачає жодному — найбільша ємність серед тих, що тягнуть потужність.
 // Якщо потужність більша за всі комплекти — null (індивідуальний підбір).
@@ -390,9 +427,9 @@ function renderKitsRow(){
 }
 
 function showThanks(){
-  const kitObj = chosenKit || (lastResult && KITS.find(x => x.name === lastResult.kit));
+  const kitObj = chosenKit || (lastResult && [...KITS, ...INVERTERS, ...BATTERIES].find(x => x.name === lastResult.kit));
   const k = kitObj ? `
-    <h2>Ваш комплект</h2>
+    <h2>${!chosenKit && lastResult && lastResult.have ? 'Ваш підбір' : 'Ваш комплект'}</h2>
     ${gallery(kitObj)}
     <div class="kit" style="margin-top:0">
       <div class="kit-name">${kitObj.name}</div>
@@ -508,10 +545,27 @@ function recalc(){
   const whTotalNeeded = (loadWh / 0.9) / batteryDoD;
   const ahRounded = roundUpToStep(whTotalNeeded / systemVoltage, 10);
 
-  const kit = pickKit(inverterSize, loadWh / INVERTER_EFF);
+  const kit = have === 'inverter' ? pickBattery(loadWh / INVERTER_EFF)
+            : have === 'battery' ? pickInverter(inverterSize)
+            : pickKit(inverterSize, loadWh / INVERTER_EFF);
+  const isPart = have !== 'none';
   let kitHtml;
   if(kit){
-    const kitHours = Math.floor((kit.battery_wh * KIT_DOD * INVERTER_EFF / totalAvg) * 2) / 2;
+    const kitHours = kit.battery_wh ? Math.floor((kit.battery_wh * KIT_DOD * INVERTER_EFF / totalAvg) * 2) / 2 : 0;
+    if(isPart){
+      kitHtml = `
+    <div class="kit">
+      <div class="label">${have === 'inverter' ? 'Вам потрібен акумулятор' : 'Вам потрібен інвертор'}</div>
+      ${gallery(kit)}
+      <div class="kit-name">${kit.name}</div>
+      <div class="kit-price">${kit.price.toLocaleString('uk-UA')} грн</div>
+      <div class="kit-note">${have === 'inverter'
+        ? `З вашим інвертором прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год без світла. Яку напругу (24 чи 48 В) підтримує ваш інвертор, уточнимо на дзвінку.`
+        : `Потужності вистачить на всі ваші прилади. Інвертор на 48 В; якщо ваш акумулятор 12 чи 24 В, підберемо інший варіант на дзвінку.`} Оплата при отриманні.</div>
+      <div class="works">${devicesShort.map(n => `<span>✓ ${n}</span>`).join('')}</div>
+      <div class="honest">Підбір навскидку. Перевіримо сумісність з тим, що у вас уже є, і чесно скажемо, якщо підійде дешевший варіант.</div>
+    </div>`;
+    } else
     kitHtml = `
     <div class="kit">
       <div class="label">Орієнтовно вам підходить</div>
@@ -530,7 +584,7 @@ function recalc(){
     <div class="kit">
       <div class="label">Орієнтовно вам підходить</div>
       <div class="kit-name">Потужна система під ваш об'єкт</div>
-      <div class="kit-note">Потужність більша за стандартні комплекти (до 11 кВт). Залиште номер — підберемо систему індивідуально.</div>
+      <div class="kit-note">Потужність більша за стандартні ${isPart ? 'інвертори' : 'комплекти'} (до 11 кВт). Залиште номер — підберемо систему індивідуально.</div>
     </div>`;
   }
 
@@ -550,6 +604,7 @@ function recalc(){
 
   lastResult = {
     kit: kit ? kit.name : 'індивідуальний підбір',
+    have: have === 'inverter' ? 'інвертор' : have === 'battery' ? 'акумулятор' : '',
     kit_price: kit ? kit.price : null,
     inverter_w: inverterSize,
     battery_ah: Math.round(ahRounded),
@@ -562,7 +617,7 @@ function recalc(){
   };
   const mini = document.getElementById('miniResult');
   mini.innerHTML = kit
-    ? `<span>Вам підходить:<br>${kit.name.split(' + ')[0]} + АКБ</span><b>${kit.price.toLocaleString('uk-UA')} грн ↓</b>`
+    ? `<span>Вам підходить:<br>${isPart ? kit.name.replace(/ \(.*\)$/, '') : kit.name.split(' + ')[0] + ' + АКБ'}</span><b>${kit.price.toLocaleString('uk-UA')} грн ↓</b>`
     : `<span>Вам потрібна потужна система</span><b>Дивитись ↓</b>`;
   sendBtn.disabled = false;
   checkResultSeen();
@@ -607,6 +662,20 @@ function fireCalcResult(){
   track('CalcResult', true);
 }
 window.addEventListener('scroll', checkResultSeen, { passive:true });
+
+document.getElementById('havePills').addEventListener('click', (e) => {
+  const pill = e.target.closest('.pill'); if(!pill) return;
+  document.querySelectorAll('#havePills .pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  have = pill.dataset.have;
+  const note = document.getElementById('haveNote');
+  note.hidden = have === 'none';
+  note.textContent = have === 'inverter' ? 'Добре, підберемо лише акумулятор під ваші прилади й години.'
+                   : have === 'battery' ? 'Добре, підберемо лише інвертор під ваші прилади.' : '';
+  track('have_' + have);
+  markActed();
+  recalc();
+});
 
 document.getElementById('hoursRange').addEventListener('input', (e) => {
   track('hours_change', true);
@@ -666,7 +735,8 @@ document.getElementById('sendBtn').addEventListener('click', () => {
                `• Автономність: <b>${lastResult.hours} год</b>\n` +
                `• Навантаження: <b>${lastResult.running_w} Вт</b> (в середньому ${lastResult.avg_w} Вт)\n` +
                `• Прилади: ${esc(lastResult.devices)}\n\n` +
-               `🎯 <b>Комплект:</b> ${esc(lastResult.kit)}${lastResult.kit_price ? ' — ' + lastResult.kit_price + ' грн' : ''}\n` +
+               (lastResult.have ? `🔧 <b>Вже є:</b> ${lastResult.have} (потрібна лише інша частина)\n` : '') +
+               `🎯 <b>${lastResult.have ? 'Підібрано' : 'Комплект'}:</b> ${esc(lastResult.kit)}${lastResult.kit_price ? ' — ' + lastResult.kit_price + ' грн' : ''}\n` +
                (chosenKit ? `🛒 <b>Сам обрав у каталозі:</b> ${esc(chosenKit.name)} — ${chosenKit.price} грн\n` : '') +
                `📣 <b>Джерело:</b> <code>${esc(leadSource())}</code>`;
 

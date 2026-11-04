@@ -117,8 +117,11 @@
   .kit .price small{font-size:14px; font-weight:500; color:var(--ink-2)}
   .kit .fits{font-size:13px; background:#fff7e0; border:1px solid #f0d58a; color:#6b5200; border-radius:8px; padding:6px 9px; margin:0 0 12px}
   .parts .kit .price{font-size:22px}
+  .parts-link{margin:12px 0 0; font-size:15px; color:var(--ink-2)} .parts-link a{color:var(--brand); font-weight:700}
+  .parts-h{margin:28px 0 14px; font-size:21px; text-align:center}
   .parts-note{margin:18px auto 0; max-width:760px; text-align:center; font-size:14.5px; color:var(--ink-2)}
   @media (max-width:900px){ .kits{grid-template-columns:1fr; max-width:460px; margin:0 auto} }
+  @media (max-width:900px){ .kits.parts{grid-template-columns:1fr 1fr; gap:12px; max-width:none} .parts .kit .body{padding:12px} .parts .kit h3{font-size:15px} .parts .kit ul{display:none} .parts .kit .fits{font-size:12px} .parts .kit .price{font-size:19px} .parts .kit .btn{padding:10px 8px; font-size:14px} }
 
   .steps{counter-reset:s; display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
   .step{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px 18px 18px}
@@ -234,7 +237,7 @@ document.addEventListener('click', function(e){
     <nav class="menu">
       <a href="#how">Як це працює</a>
       <a href="#kits">Комплекти</a>
-      <a href="#parts">Окремо</a>
+      <a href="#parts">Інвертори й АКБ</a>
       <a href="#buy">Як купити</a>
       <a href="#faq">Питання</a>
     </nav>
@@ -254,6 +257,7 @@ document.addEventListener('click', function(e){
         <a class="btn btn-sun" href="../?src=site">🔋 Підібрати комплект самому</a>
         <a class="btn btn-ghost" href="#kits">Подивитись комплекти</a>
       </div>
+      <p class="parts-link">Потрібен лише інвертор чи акумулятор? <a href="#inverters">Інвертори</a> · <a href="#batteries">Акумулятори</a></p>
       <p class="self-hint"><b>Без дзвінків і без номера телефону:</b> відмітьте свої прилади й одразу побачите, який комплект підходить, скільки коштує й скільки годин протримає.</p>
       <div class="trust">
         <span>Оплата при отриманні</span>
@@ -356,7 +360,7 @@ document.addEventListener('click', function(e){
 <section id="kits" style="background:#eef6f2">
   <div class="wrap">
     <h2>Готові комплекти</h2>
-    <p class="sub">Чиста синусоїда, Wi-Fi моніторинг зі смартфона, літієві акумулятори LiFePO4 з вбудованою BMS. Не знаєте, який потрібен? <a href="../?src=site_kits">Підберіть самі за 1 хвилину</a>: відмітьте прилади, і калькулятор покаже комплект і ціну, без дзвінків.<br><small>Години вказані при навантаженні ≈300 Вт разом з інвертором: котел, холодильник, роутер і світло.</small></p>
+    <p class="sub">Чиста синусоїда, Wi-Fi моніторинг зі смартфона, літієві акумулятори LiFePO4 з вбудованою BMS. Не знаєте, який потрібен? <a href="../?src=site_kits">Підберіть самі за 1 хвилину</a>: відмітьте прилади, і калькулятор покаже комплект і ціну, без дзвінків.<br><small>Години вказані при навантаженні ≈300 Вт разом з інвертором: котел, холодильник, роутер і світло.</small><br>Потрібен лише інвертор чи акумулятор? <a href="#parts">Дивіться нижче</a>.</p>
     <div class="kits">
       <div class="kit">
         <img src="../img/kit-anenji42-foursun.jpg" alt="Anenji 4,2 кВт + 2 АКБ Foursun 2,56 кВт·год" loading="lazy">
@@ -442,47 +446,18 @@ document.addEventListener('click', function(e){
 
 <section id="parts">
   <div class="wrap">
-    <h2>Докупити окремо</h2>
-    <p class="sub">Вже маєте інвертор чи акумулятор? Докупіть те, чого бракує. Не впевнені, що підійде, — <a href="https://t.me/ibp2026_bot?start=site_parts" target="_blank" rel="noopener">напишіть нам</a>, перевіримо сумісність.</p>
+    <h2>Інвертори та акумулятори окремо</h2>
+    <p class="sub">Не обов'язково брати весь комплект. Вже маєте інвертор чи акумулятор? Докупіть те, чого бракує. Не впевнені, що підійде, — <a href="https://t.me/ibp2026_bot?start=site_parts" target="_blank" rel="noopener">напишіть нам</a>, перевіримо сумісність.</p>
+    <h3 class="parts-h" id="inverters">⚡ Інвертори</h3>
     <div class="kits parts">
       <div class="kit">
-        <img src="../img/p-zeroera.jpg" alt="АКБ ZeroEra LiFePO4 12,8 В 100 А·год" loading="lazy">
+        <img src="../img/p-aninerel11.jpg" alt="Інвертор Aninerel 11 кВт, 48 В" loading="lazy">
         <div class="body">
-          <h3>АКБ ZeroEra LiFePO4 12,8 В 100 А·год</h3>
-          <p class="fits">Для 24 В інверторів (Anenji 4,2, Daxtromn 3,5): потрібно 2 шт</p>
-          <ul><li>1,28 кВт·год</li><li>Вбудована BMS</li></ul>
-          <div class="price">11 390 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_zeroera" target="_blank" rel="noopener">Консультація</a>
-        </div>
-      </div>
-      <div class="kit">
-        <img src="../img/p-idzlldi150.jpg" alt="АКБ Idzlldi LiFePO4 12,8 В 150 А·год" loading="lazy">
-        <div class="body">
-          <h3>АКБ Idzlldi LiFePO4 12,8 В 150 А·год</h3>
-          <p class="fits">Для 24 В інверторів: потрібно 2 шт</p>
-          <ul><li>1,92 кВт·год: в 1,5 раза більше за 100 А·год</li><li>Вбудована BMS</li></ul>
-          <div class="price">13 390 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_idzlldi150" target="_blank" rel="noopener">Консультація</a>
-        </div>
-      </div>
-      <div class="kit">
-        <img src="../img/p-srne-battery.jpg" alt="АКБ SRNE LiFePO4 51,2 В 100 А·год, настінна" loading="lazy">
-        <div class="body">
-          <h3>АКБ SRNE LiFePO4 51,2 В 100 А·год, настінна</h3>
-          <p class="fits">Для 48 В інверторів (Anenji 6,2, Humsienk, Aninerel, Daxtromn, Anern)</p>
-          <ul><li>5,12 кВт·год, вбудована BMS</li><li>LCD-дисплей, Wi-Fi і Bluetooth</li><li>Додайте другу, щоб удвічі збільшити години</li></ul>
-          <div class="price">42 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_srne" target="_blank" rel="noopener">Консультація</a>
-        </div>
-      </div>
-      <div class="kit">
-        <img src="../img/p-daxtromn62.jpg" alt="Інвертор Daxtromn 6,2 кВт, 48 В" loading="lazy">
-        <div class="body">
-          <h3>Інвертор Daxtromn 6,2 кВт, 48 В</h3>
+          <h3>Інвертор Aninerel 11 кВт, 48 В</h3>
           <p class="fits">Для 48 В акумуляторів</p>
-          <ul><li>Сонячний контролер MPPT 120 А</li><li>Зв’язок з BMS акумулятора</li></ul>
-          <div class="price">19 590 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_daxtromn62" target="_blank" rel="noopener">Консультація</a>
+          <ul><li>Тягне насос, кондиціонер, бойлер одночасно</li><li>Два MPPT для сонячних панелей</li><li>Wi-Fi, низький рівень шуму</li></ul>
+          <div class="price">31 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_aninerel11" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
@@ -506,13 +481,46 @@ document.addEventListener('click', function(e){
         </div>
       </div>
       <div class="kit">
-        <img src="../img/p-aninerel11.jpg" alt="Інвертор Aninerel 11 кВт, 48 В" loading="lazy">
+        <img src="../img/p-daxtromn62.jpg" alt="Інвертор Daxtromn 6,2 кВт, 48 В" loading="lazy">
         <div class="body">
-          <h3>Інвертор Aninerel 11 кВт, 48 В</h3>
+          <h3>Інвертор Daxtromn 6,2 кВт, 48 В</h3>
           <p class="fits">Для 48 В акумуляторів</p>
-          <ul><li>Тягне насос, кондиціонер, бойлер одночасно</li><li>Два MPPT для сонячних панелей</li><li>Wi-Fi, низький рівень шуму</li></ul>
-          <div class="price">31 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_aninerel11" target="_blank" rel="noopener">Консультація</a>
+          <ul><li>Сонячний контролер MPPT 120 А</li><li>Зв’язок з BMS акумулятора</li></ul>
+          <div class="price">19 590 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_daxtromn62" target="_blank" rel="noopener">Консультація</a>
+        </div>
+      </div>
+    </div>
+    <h3 class="parts-h" id="batteries">🔋 Акумулятори LiFePO4</h3>
+    <div class="kits parts">
+      <div class="kit">
+        <img src="../img/p-srne-battery.jpg" alt="АКБ SRNE LiFePO4 51,2 В 100 А·год, настінна" loading="lazy">
+        <div class="body">
+          <h3>АКБ SRNE LiFePO4 51,2 В 100 А·год, настінна</h3>
+          <p class="fits">Для 48 В інверторів (Anenji 6,2, Humsienk, Aninerel, Daxtromn, Anern)</p>
+          <ul><li>5,12 кВт·год, вбудована BMS</li><li>LCD-дисплей, Wi-Fi і Bluetooth</li><li>Додайте другу, щоб удвічі збільшити години</li></ul>
+          <div class="price">42 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_srne" target="_blank" rel="noopener">Консультація</a>
+        </div>
+      </div>
+      <div class="kit">
+        <img src="../img/p-idzlldi150.jpg" alt="АКБ Idzlldi LiFePO4 12,8 В 150 А·год" loading="lazy">
+        <div class="body">
+          <h3>АКБ Idzlldi LiFePO4 12,8 В 150 А·год</h3>
+          <p class="fits">Для 24 В інверторів: потрібно 2 шт</p>
+          <ul><li>1,92 кВт·год: в 1,5 раза більше за 100 А·год</li><li>Вбудована BMS</li></ul>
+          <div class="price">13 390 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_idzlldi150" target="_blank" rel="noopener">Консультація</a>
+        </div>
+      </div>
+      <div class="kit">
+        <img src="../img/p-zeroera.jpg" alt="АКБ ZeroEra LiFePO4 12,8 В 100 А·год" loading="lazy">
+        <div class="body">
+          <h3>АКБ ZeroEra LiFePO4 12,8 В 100 А·год</h3>
+          <p class="fits">Для 24 В інверторів (Anenji 4,2, Daxtromn 3,5): потрібно 2 шт</p>
+          <ul><li>1,28 кВт·год</li><li>Вбудована BMS</li></ul>
+          <div class="price">11 390 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_zeroera" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
     </div>
