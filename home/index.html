@@ -107,6 +107,8 @@
   .kits{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
   .kit{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; box-shadow:var(--shadow)}
   .kit.best{border:2px solid var(--brand)}
+  .kit .tag.tag-out{background:#eef0f2; color:var(--ink-2); border:1px dashed #b8c0c8; font-weight:600}
+  .kit.out img{opacity:.8}
   .kit img{width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; display:block; border-bottom:1px solid var(--line)}
   .kit .body{padding:18px; display:flex; flex-direction:column; flex:1}
   .kit .tag{align-self:flex-start; font-size:12px; font-weight:700; background:var(--brand); color:#fff; border-radius:6px; padding:3px 8px; margin-bottom:8px}
@@ -373,27 +375,28 @@ document.addEventListener('click', function(e){
           <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_daxtromn35" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
-      <div class="kit best">
-        <img src="../img/kit-anenji-srne.jpg" alt="Anenji 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год" loading="lazy">
+      <div class="kit">
+        <img src="../img/kit-aninerel42-powinver.jpg" alt="Aninerel 4,2 кВт + 2 АКБ Powinver 2,56 кВт·год" loading="lazy">
         <div class="body">
-          <span class="tag">Найпопулярніший</span>
-          <h3>Anenji 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год</h3>
-          <p class="for">Квартира або невеликий будинок</p>
-          <div class="hours"><b>≈15 год</b><span>без світла</span></div>
-          <ul><li>Газовий котел з насосом, холодильник, світло</li><li>Акумулятор на стіні з LCD-дисплеєм</li><li>Wi-Fi і Bluetooth моніторинг</li></ul>
-          <div class="price">66 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji_srne" target="_blank" rel="noopener">Консультація по комплекту</a>
+          <span class="tag">Новинка</span>
+          <h3>Aninerel 4,2 кВт + 2 АКБ Powinver 2,56 кВт·год</h3>
+          <p class="for">Квартира: світло, холодильник, котел, ноутбук</p>
+          <div class="hours"><b>≈7 год</b><span>без світла</span></div>
+          <ul><li>Інвертор з Wi-Fi і кольоровим дисплеєм</li><li>Захист IP54 від пилу й бризок</li><li>2 LiFePO4 по 1,28 кВт·год з BMS</li></ul>
+          <div class="price">37 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_aninerel42" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
       <div class="kit">
-        <img src="../img/kit-humsienk-genforce.jpg" alt="Humsienk 6,2 кВт + настінна АКБ GENFORCE 5,12 кВт·год" loading="lazy">
+        <img src="../img/kit-datouboss-srne.jpg" alt="Datouboss 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год" loading="lazy">
         <div class="body">
-          <h3>Humsienk 6,2 кВт + настінна АКБ GENFORCE 5,12 кВт·год</h3>
-          <p class="for">Будинок або квартира, акумулятор на стіні</p>
+          <span class="tag">Новинка</span>
+          <h3>Datouboss 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год</h3>
+          <p class="for">Квартира або будинок</p>
           <div class="hours"><b>≈15 год</b><span>без світла</span></div>
-          <ul><li>Акумулятор вішається на стіну, не займає підлогу</li><li>Wi-Fi модуль у комплекті</li><li>Два виходи: можна розділити прилади на групи</li></ul>
-          <div class="price">66 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_humsienk" target="_blank" rel="noopener">Консультація по комплекту</a>
+          <ul><li>Газовий котел з насосом, холодильник, світло</li><li>Акумулятор на стіні з LCD-дисплеєм</li><li>Wi-Fi і Bluetooth моніторинг</li></ul>
+          <div class="price">64 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_datouboss_srne" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
       <div class="kit">
@@ -408,17 +411,6 @@ document.addEventListener('click', function(e){
         </div>
       </div>
       <div class="kit">
-        <img src="../img/kit-anenji-2srne.jpg" alt="Anenji 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год" loading="lazy">
-        <div class="body">
-          <h3>Anenji 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год</h3>
-          <p class="for">Довгі відключення та невеликий бізнес</p>
-          <div class="hours"><b>≈30 год</b><span>без світла</span></div>
-          <ul><li>Вдвічі більше годин роботи</li><li>Магазин, кафе, офіс, СТО</li><li>Вхід для сонячних панелей</li></ul>
-          <div class="price">101 990 <small>грн</small></div>
-          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji_2srne" target="_blank" rel="noopener">Консультація по комплекту</a>
-        </div>
-      </div>
-      <div class="kit">
         <img src="../img/kit-aninerel-2srne.jpg" alt="Aninerel 11 кВт + 2 АКБ SRNE 10,24 кВт·год" loading="lazy">
         <div class="body">
           <h3>Aninerel 11 кВт + 2 АКБ SRNE 10,24 кВт·год</h3>
@@ -427,6 +419,54 @@ document.addEventListener('click', function(e){
           <ul><li>Котел, насос, бойлер, кондиціонер разом</li><li>Вдвічі більше годин роботи</li><li>Два входи для сонячних панелей</li></ul>
           <div class="price">106 990 <small>грн</small></div>
           <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_aninerel_2srne" target="_blank" rel="noopener">Консультація по комплекту</a>
+        </div>
+      </div>
+      <div class="kit">
+        <img src="../img/kit-datouboss-2srne.jpg" alt="Datouboss 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год" loading="lazy">
+        <div class="body">
+          <span class="tag">Новинка</span>
+          <h3>Datouboss 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год</h3>
+          <p class="for">Довгі відключення: будинок, невеликий бізнес</p>
+          <div class="hours"><b>≈30 год</b><span>без світла</span></div>
+          <ul><li>Вдвічі більше годин роботи</li><li>Магазин, кафе, офіс, СТО</li><li>Сонячні панелі до 8500 Вт</li></ul>
+          <div class="price">108 980 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_datouboss_2srne" target="_blank" rel="noopener">Консультація по комплекту</a>
+        </div>
+      </div>
+      <div class="kit out">
+        <img src="../img/kit-anenji-srne.jpg" alt="Anenji 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год" loading="lazy">
+        <div class="body">
+          <span class="tag tag-out">Уточнюйте наявність</span>
+          <h3>Anenji 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год</h3>
+          <p class="for">Квартира або невеликий будинок</p>
+          <div class="hours"><b>≈15 год</b><span>без світла</span></div>
+          <ul><li>Газовий котел з насосом, холодильник, світло</li><li>Акумулятор на стіні з LCD-дисплеєм</li><li>Wi-Fi і Bluetooth моніторинг</li></ul>
+          <div class="price">66 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji_srne" target="_blank" rel="noopener">Консультація по комплекту</a>
+        </div>
+      </div>
+      <div class="kit out">
+        <img src="../img/kit-humsienk-genforce.jpg" alt="Humsienk 6,2 кВт + настінна АКБ GENFORCE 5,12 кВт·год" loading="lazy">
+        <div class="body">
+          <span class="tag tag-out">Уточнюйте наявність</span>
+          <h3>Humsienk 6,2 кВт + настінна АКБ GENFORCE 5,12 кВт·год</h3>
+          <p class="for">Будинок або квартира, акумулятор на стіні</p>
+          <div class="hours"><b>≈15 год</b><span>без світла</span></div>
+          <ul><li>Акумулятор вішається на стіну, не займає підлогу</li><li>Wi-Fi модуль у комплекті</li><li>Два виходи: можна розділити прилади на групи</li></ul>
+          <div class="price">66 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_humsienk" target="_blank" rel="noopener">Консультація по комплекту</a>
+        </div>
+      </div>
+      <div class="kit out">
+        <img src="../img/kit-anenji-2srne.jpg" alt="Anenji 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год" loading="lazy">
+        <div class="body">
+          <span class="tag tag-out">Уточнюйте наявність</span>
+          <h3>Anenji 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год</h3>
+          <p class="for">Довгі відключення та невеликий бізнес</p>
+          <div class="hours"><b>≈30 год</b><span>без світла</span></div>
+          <ul><li>Вдвічі більше годин роботи</li><li>Магазин, кафе, офіс, СТО</li><li>Вхід для сонячних панелей</li></ul>
+          <div class="price">101 990 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_kit_anenji_2srne" target="_blank" rel="noopener">Консультація по комплекту</a>
         </div>
       </div>
     </div>
@@ -447,6 +487,17 @@ document.addEventListener('click', function(e){
           <ul><li>Тягне насос, кондиціонер, бойлер одночасно</li><li>Два MPPT для сонячних панелей</li><li>Wi-Fi, низький рівень шуму</li></ul>
           <div class="price">31 990 <small>грн</small></div>
           <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_aninerel11" target="_blank" rel="noopener">Консультація</a>
+        </div>
+      </div>
+      <div class="kit">
+        <img src="../img/p-datouboss62.jpg" alt="Інвертор Datouboss 6,2 кВт, 48 В" loading="lazy">
+        <div class="body">
+          <span class="tag">Новинка</span>
+          <h3>Інвертор Datouboss 6,2 кВт, 48 В</h3>
+          <p class="fits">Для 48 В акумуляторів</p>
+          <ul><li>Модель DT4862L, чиста синусоїда</li><li>Сонячні панелі до 8500 Вт, MPPT 120 А</li><li>Працює з LiFePO4, AGM і гелевими АКБ</li></ul>
+          <div class="price">23 000 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_datouboss62" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
@@ -486,7 +537,7 @@ document.addEventListener('click', function(e){
         <img src="../img/p-srne-battery.jpg" alt="АКБ SRNE LiFePO4 51,2 В 100 А·год, настінна" loading="lazy">
         <div class="body">
           <h3>АКБ SRNE LiFePO4 51,2 В 100 А·год, настінна</h3>
-          <p class="fits">Для 48 В інверторів (Anenji 6,2, Humsienk, Aninerel, Daxtromn, Anern)</p>
+          <p class="fits">Для 48 В інверторів (Datouboss, Aninerel 11, Daxtromn, Anern)</p>
           <ul><li>5,12 кВт·год, вбудована BMS</li><li>LCD-дисплей, Wi-Fi і Bluetooth</li><li>Додайте другу, щоб удвічі збільшити години</li></ul>
           <div class="price">42 990 <small>грн</small></div>
           <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_srne" target="_blank" rel="noopener">Консультація</a>
@@ -497,14 +548,26 @@ document.addEventListener('click', function(e){
         <div class="body">
           <h3>АКБ Idzlldi LiFePO4 12,8 В 150 А·год</h3>
           <p class="fits">Для 24 В інверторів: потрібно 2 шт</p>
-          <ul><li>1,92 кВт·год: в 1,5 раза більше за 100 А·год</li><li>Вбудована BMS</li></ul>
+          <ul><li>1,92 кВт·год: в 1,5 раза більше за 100 А·год</li><li>Вбудована BMS 100 А, захист від заряду на морозі</li></ul>
           <div class="price">13 390 <small>грн</small></div>
           <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_idzlldi150" target="_blank" rel="noopener">Консультація</a>
         </div>
       </div>
       <div class="kit">
+        <img src="../img/powinver-battery.jpg" alt="АКБ Powinver LiFePO4 12,8 В 100 А·год" loading="lazy">
+        <div class="body">
+          <span class="tag">Новинка</span>
+          <h3>АКБ Powinver LiFePO4 12,8 В 100 А·год</h3>
+          <p class="fits">Для 24 В інверторів (Daxtromn 3,5, Aninerel 4,2): потрібно 2 шт</p>
+          <ul><li>1,28 кВт·год</li><li>Вбудована BMS: захист від замикання й перегріву</li></ul>
+          <div class="price">11 390 <small>грн</small></div>
+          <a class="btn btn-primary" href="https://t.me/ibp2026_bot?start=site_part_powinver" target="_blank" rel="noopener">Консультація</a>
+        </div>
+      </div>
+      <div class="kit out">
         <img src="../img/p-zeroera.jpg" alt="АКБ ZeroEra LiFePO4 12,8 В 100 А·год" loading="lazy">
         <div class="body">
+          <span class="tag tag-out">Уточнюйте наявність</span>
           <h3>АКБ ZeroEra LiFePO4 12,8 В 100 А·год</h3>
           <p class="fits">Для 24 В інверторів (Daxtromn 3,5): потрібно 2 шт</p>
           <ul><li>1,28 кВт·год</li><li>Вбудована BMS</li></ul>
