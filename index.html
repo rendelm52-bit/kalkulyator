@@ -140,6 +140,9 @@ fbq('track', 'PageView');
 
   #proSettings summary{cursor:pointer; color:var(--muted, #9aa4b2); font-size:14px}
   .contact-note{margin:0 0 10px; font-size:14px; opacity:.85}
+  .offer-list{list-style:none; margin:0 0 12px; padding:10px 12px; border:1px solid var(--accent); border-radius:10px; background:var(--panel-2); font-size:14px; line-height:1.5}
+  .offer-list li{margin:2px 0}
+  .lock-link{display:block; margin-top:8px; padding:9px 10px; border-radius:8px; background:var(--panel-2); border:1px dashed var(--accent); color:var(--accent); text-decoration:none; font-size:14px; font-weight:600; text-align:center}
   .brandbar{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 0 12px}
   .brandbar .logo{display:flex; align-items:center; gap:8px; text-decoration:none; color:var(--text)}
   .brandbar .logo svg{width:32px; height:32px; flex:none}
@@ -249,8 +252,13 @@ fbq('track', 'PageView');
   </section>
 
   <section id="contactsSection">
-    <h2>Куди зателефонувати?</h2>
-    <p class="contact-note">Хочете точну ціну під ваші прилади й щиток? Роман передзвонить за 15–30 хвилин, підтвердить комплект або запропонує дешевший і відповість на питання. Ні до чого не зобов'язує.</p>
+    <h2>Безкоштовний підбір + ціна на 3 дні</h2>
+    <ul class="offer-list">
+      <li>✅ Перевіримо, що комплект точно підходить під ваші прилади (або чи вистачить дешевшого)</li>
+      <li>✅ Розрахуємо монтаж: у Києві — нашою бригадою, в інших містах — підкажемо, як підключити</li>
+      <li>🔒 <b>Зафіксуємо ціну на 3 дні</b> — ціни в постачальників змінюються щотижня</li>
+    </ul>
+    <p class="contact-note">Роман передзвонить за 15–30 хвилин. Безкоштовно й ні до чого не зобов'язує.</p>
     <div class="field">
       <label>Ваше ім'я (необов'язково)</label>
       <input type="text" id="userName" placeholder="Олександр">
@@ -282,7 +290,7 @@ fbq('track', 'PageView');
 <div class="wrap" id="thanksView" style="display:none">
   <section class="results">
     <h2>✅ Заявку отримано!</h2>
-    <p style="margin:0">Роман зателефонує вам протягом 15–30 хвилин (щодня з 9:00 до 21:00), уточнить деталі й відповість на питання.</p>
+    <p style="margin:0">Роман зателефонує вам протягом 15–30 хвилин (щодня з 9:00 до 21:00), безкоштовно перевірить підбір і зафіксує для вас ціну на 3 дні.</p>
   </section>
   <section id="thanksKit"></section>
   <section>
@@ -308,7 +316,7 @@ fbq('track', 'PageView');
 
 <div class="send-bar" id="sendBar">
   <a class="mini-result" id="miniResult" href="#resultsBody" hidden></a>
-  <button class="send-btn" id="sendBtn" disabled>Замовити дзвінок</button>
+  <button class="send-btn" id="sendBtn" disabled>Отримати безкоштовний підбір</button>
 </div>
 
 <script>
@@ -563,6 +571,7 @@ function recalc(){
         ? `З вашим інвертором прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год без світла. Яку напругу (24 чи 48 В) підтримує ваш інвертор, уточнимо на дзвінку.`
         : `Потужності вистачить на всі ваші прилади. Інвертор на 48 В; якщо ваш акумулятор 12 чи 24 В, підберемо інший варіант на дзвінку.`} Оплата при отриманні.</div>
       <div class="works">${devicesShort.map(n => `<span>✓ ${n}</span>`).join('')}</div>
+      <a class="lock-link" href="#contactsSection" data-lock="1">🔒 Зафіксувати цю ціну на 3 дні — безкоштовно ↓</a>
       <div class="honest">Підбір навскидку. Перевіримо сумісність з тим, що у вас уже є, і чесно скажемо, якщо підійде дешевший варіант.</div>
     </div>`;
     } else
@@ -577,6 +586,7 @@ function recalc(){
         ? `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год без світла.`
         : `Ваші прилади пропрацюють близько ${kitHours.toLocaleString('uk-UA')} год. Для ${hours} год додамо акумулятор — підкажемо на дзвінку.`} Оплата при отриманні.</div>
       <div class="works">${devicesShort.map(n => `<span>✓ ${n}</span>`).join('')}</div>
+      <a class="lock-link" href="#contactsSection" data-lock="1">🔒 Зафіксувати цю ціну на 3 дні — безкоштовно ↓</a>
       <div class="honest">Це підбір навскидку, не остаточна ціна. Є й інші комплекти: від ${Math.min(...KITS.map(x=>x.price)).toLocaleString('uk-UA')} до ${Math.max(...KITS.map(x=>x.price)).toLocaleString('uk-UA')} грн. Чесно скажемо, якщо вам вистачить меншого, або підберемо потужніше. <a href="#kitsSection">Усі комплекти ↓</a></div>
     </div>`;
   } else {
@@ -668,6 +678,16 @@ function fireCalcResult(){
 }
 window.addEventListener('scroll', checkResultSeen, { passive:true });
 
+// «Зафіксувати ціну на 3 дні» під ціною комплекту → до форми з телефоном
+document.getElementById('resultsBody').addEventListener('click', (e) => {
+  const a = e.target.closest('[data-lock]'); if(!a) return;
+  e.preventDefault();
+  track('lock_click');
+  markActed();
+  document.getElementById('contactsSection').scrollIntoView({ behavior:'smooth', block:'center' });
+  setTimeout(() => document.getElementById('userPhone').focus(), 400);
+});
+
 document.getElementById('havePills').addEventListener('click', (e) => {
   const pill = e.target.closest('.pill'); if(!pill) return;
   document.querySelectorAll('#havePills .pill').forEach(p => p.classList.remove('active'));
@@ -743,6 +763,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
                (lastResult.have ? `🔧 <b>Вже є:</b> ${lastResult.have} (потрібна лише інша частина)\n` : '') +
                `🎯 <b>${lastResult.have ? 'Підібрано' : 'Комплект'}:</b> ${esc(lastResult.kit)}${lastResult.kit_price ? ' — ' + lastResult.kit_price + ' грн' : ''}\n` +
                (chosenKit ? `🛒 <b>Сам обрав у каталозі:</b> ${esc(chosenKit.name)} — ${chosenKit.price} грн\n` : '') +
+               `🔒 <b>Ціну обіцяли зафіксувати до:</b> ${new Date(Date.now()+3*864e5).toLocaleDateString('uk-UA')}\n` +
                `📣 <b>Джерело:</b> <code>${esc(leadSource())}</code>`;
 
   const btn = document.getElementById('sendBtn');
@@ -768,14 +789,14 @@ document.getElementById('sendBtn').addEventListener('click', () => {
       track('lead_error');
       alert('Помилка надсилання. Спробуйте ще раз або зателефонуйте нам.\n\nTelegram: ' + (data.description || data.error_code || 'невідома помилка'));
       btn.disabled = false;
-      btn.textContent = 'Замовити дзвінок';
+      btn.textContent = 'Отримати безкоштовний підбір';
     }
   })
   .catch(err => {
     track('lead_error');
     alert('Помилка мережі.');
     btn.disabled = false;
-    btn.textContent = 'Замовити дзвінок';
+    btn.textContent = 'Отримати безкоштовний підбір';
   });
 });
 
@@ -792,7 +813,7 @@ document.getElementById('kitsRow').addEventListener('click', (e) => {
     c.querySelector('.kc-want').textContent = on ? '✓ Обрано' : 'Хочу цей';
   });
   const sec = document.getElementById('contactsSection');
-  sec.querySelector('.contact-note').textContent = `Ви обрали: ${chosenKit.name}. Залиште номер — Роман передзвонить за 15–30 хвилин і підтвердить наявність.`;
+  sec.querySelector('.contact-note').textContent = `Ви обрали: ${chosenKit.name}. Залиште номер — Роман передзвонить за 15–30 хвилин, підтвердить наявність і зафіксує ціну на 3 дні.`;
   sec.scrollIntoView({ behavior:'smooth', block:'center' });
   setTimeout(() => document.getElementById('userPhone').focus(), 400);
 });
