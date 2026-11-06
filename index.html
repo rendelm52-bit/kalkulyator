@@ -129,6 +129,8 @@ fbq('track', 'PageView');
   .kits-row::-webkit-scrollbar{display:none;}
   .kit-card{flex:0 0 70%; max-width:260px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; overflow:hidden; scroll-snap-align:start;}
   .kit-card.best{border-color:var(--accent);}
+  .kit-card .kc-out{display:inline-block; font-size:11px; color:var(--text-dim); border:1px dashed var(--line); border-radius:6px; padding:1px 6px; margin-bottom:4px;}
+  .kit-card.out img{opacity:.75;}
   .kit-card img{width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; display:block;}
   .kit-card .kc-body{padding:10px;}
   .kit-card .kc-name{font-size:13.5px; font-weight:650; line-height:1.3;}
@@ -351,22 +353,33 @@ const KITS = [
   {name:'Daxtromn 3,5 кВт + 2 АКБ GoKWh 2,56 кВт·год', inverter_w:3500, battery_wh:2560, price:36990,
    for:'Квартира: світло, роутер, холодильник, котел',
    photos:['img/kit-daxtromn35-gokwh.jpg','img/daxtromn35-specs.jpg','img/scheme-daxtromn35.jpg','img/gokwh-battery.jpg','img/daxtromn35-view.jpg']},
+  {name:'Aninerel 4,2 кВт + 2 АКБ Powinver 2,56 кВт·год', inverter_w:4200, battery_wh:2560, price:37990,
+   for:'Квартира: світло, холодильник, котел, ноутбук', tag:'Новинка',
+   photos:['img/kit-aninerel42-powinver.jpg','img/aninerel42-specs.jpg','img/scheme-aninerel42.jpg','img/powinver-battery.jpg','img/aninerel42-ports.jpg']},
+  {name:'Datouboss 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:64990,
+   for:'Квартира або будинок', tag:'Новинка',
+   photos:['img/kit-datouboss-srne.jpg','img/datouboss-specs.jpg','img/scheme-datouboss.jpg','img/srne-wall.jpg','img/datouboss-features.jpg']},
   {name:'Anenji 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:66990,
-   for:'Квартира або невеликий будинок', tag:'Найпопулярніший',
+   for:'Квартира або невеликий будинок', out:true,
    photos:['img/kit-anenji-srne.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
   {name:'Humsienk 6,2 кВт + настінна АКБ GENFORCE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:66990,
-   for:'Будинок або квартира, акумулятор на стіні',
+   for:'Будинок або квартира, акумулятор на стіні', out:true,
    photos:['img/kit-humsienk-genforce.jpg','img/humsienk-specs.jpg','img/genforce-battery.jpg']},
   {name:'Aninerel 11 кВт + настінна АКБ SRNE 5,12 кВт·год', inverter_w:11000, battery_wh:5120, price:74990,
    for:'Будинок з насосом, кондиціонером, бойлером',
    photos:['img/kit-aninerel-srne.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg']},
   {name:'Anenji 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год', inverter_w:6200, battery_wh:10240, price:101990,
-   for:'Довгі відключення та невеликий бізнес',
+   for:'Довгі відключення та невеликий бізнес', out:true,
    photos:['img/kit-anenji-2srne.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
   {name:'Aninerel 11 кВт + 2 АКБ SRNE 10,24 кВт·год', inverter_w:11000, battery_wh:10240, price:106990,
    for:'Великий будинок: усе й надовго',
    photos:['img/kit-aninerel-2srne.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg']},
+  {name:'Datouboss 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год', inverter_w:6200, battery_wh:10240, price:108980,
+   for:'Довгі відключення: будинок, невеликий бізнес', tag:'Новинка',
+   photos:['img/kit-datouboss-2srne.jpg','img/datouboss-specs.jpg','img/scheme-datouboss.jpg','img/srne-wall.jpg','img/datouboss-features.jpg']},
 ];
+// out:true — постачальник зараз не має; показуємо з позначкою «Уточнюйте наявність», але калькулятор їх сам не підбирає
+const avail = x => !x.out;
 const KIT_DOD = 0.9, INVERTER_EFF = 0.9;
 
 // Окремі інвертори й акумулятори (для тих, у кого вже є частина системи). Ціни оновлювати тут і на сайті.
@@ -375,6 +388,8 @@ const SPEC_INV = {
   'Daxtromn 3,5': ['Daxtromn EOH-3.5KW: 3,5 кВт, 24 В','Чиста синусоїда — безпечно для котла, холодильника й техніки','Сонячні панелі: до 500 В, заряд до 100 А','Живлення від мережі, генератора або сонця'],
   'Anenji 6,2': ['Anenji ANJ-HHP-II-6.2KP: 6,2 кВт, 48 В','Чиста синусоїда 230 В','Wi-Fi модуль: стан системи в смартфоні','Сонячні панелі до 6500 Вт / 500 В, MPPT 120 А','Працює навіть без акумулятора'],
   'Humsienk 6,2': ['Humsienk 6,2 кВт, 48 В','Чиста синусоїда 230 В','Wi-Fi + Bluetooth: стан системи в смартфоні','Сонячні панелі до 6500 Вт / 500 В, MPPT 120 А','Заряд від мережі до 100 А, 2 виходи навантаження'],
+  'Aninerel 4,2': ['Aninerel ANL-4200W-IP54: 4,2 кВт, 24 В','Чиста синусоїда — безпечно для котла, холодильника й техніки','Wi-Fi та кольоровий дисплей','Захист IP54 від пилу й бризок','Сонячні панелі до 6200 Вт / 60–500 В, MPPT 120 А'],
+  'Datouboss 6,2': ['Datouboss DT4862L: 6,2 кВт, 48 В','Чиста синусоїда 230 В','Сонячні панелі до 8500 Вт / 60–500 В, MPPT 120 А','Заряд від мережі або генератора до 120 А','Працює з LiFePO4, AGM і гелевими АКБ, моніторинг у смартфоні'],
   'Aninerel 11': ['Aninerel 11 кВт (пік 22 кВА), 48 В','Чиста синусоїда, перемикання 10–20 мс','Wi-Fi модуль у комплекті','2 входи для сонячних панелей по 5500 Вт','Заряд АКБ до 160 А, 2 виходи (11 + 5,5 кВт)'],
   'Daxtromn 6,2': ['Daxtromn 6,2 кВт, 48 В','Чиста синусоїда','Сонячні панелі: MPPT 120 А','Підтримка BMS літієвих акумуляторів'],
   'Anern 6,5': ['Anern AN-FGI-S6500: 6,5 кВт, 48 В','Чиста синусоїда','Заряд акумулятора до 120 А','Вхід для сонячних панелей'],
@@ -384,8 +399,9 @@ const SPEC_BAT = {
   'SRNE 10,24': ['2 × SRNE LiFePO4 51,2 В 100 А·год = 10,24 кВт·год','Настінні, з LCD-дисплеєм','Wi-Fi та Bluetooth: заряд видно в телефоні','Вбудована BMS'],
   'SRNE': ['SRNE LiFePO4 51,2 В 100 А·год = 5,12 кВт·год','Настінна, з LCD-дисплеєм','Wi-Fi та Bluetooth: заряд видно в телефоні','Вбудована BMS'],
   'GENFORCE': ['GENFORCE LiFePO4 51,2 В 100 А·год = 5,12 кВт·год','6000+ циклів заряду','Настінна, вбудована BMS','Можна додати ще акумулятори'],
+  'Powinver': ['2 × Powinver LiFePO4 12,8 В 100 А·год = 2,56 кВт·год','Для 24 В інверторів: 2 шт послідовно','Вбудована BMS: захист від замикання, перегріву, перерозряду','Міцний корпус з посиленою внутрішньою конструкцією'],
   'ZeroEra': ['2 × LiFePO4 12,8 В 100 А·год = 2,56 кВт·год','Для 24 В інверторів: 2 шт послідовно','Вбудована BMS'],
-  'Idzlldi': ['2 × LiFePO4 12,8 В 150 А·год = 3,84 кВт·год','Для 24 В інверторів: 2 шт послідовно','Вбудована BMS'],
+  'Idzlldi': ['2 × Idzlldi LiFePO4 12,8 В 150 А·год = 3,84 кВт·год','Для 24 В інверторів: 2 шт послідовно','Вбудована BMS 100 А, 4000+ циклів заряду','Захист від заряду на морозі (нижче 0 °C)','Один акумулятор: 32 × 16,5 × 21,5 см, 10 кг'],
 };
 function specsHtml(name){
   const pick = (map) => { const k = Object.keys(map).find(k => name.includes(k)); return k ? map[k] : null; };
@@ -403,29 +419,31 @@ function specsHtml(name){
 const INVERTERS = [
   {name:'Інвертор Daxtromn 6,2 кВт, 48 В', inverter_w:6200, price:19590, photos:['img/p-daxtromn62.jpg']},
   {name:'Інвертор Anern 6,5 кВт, 48 В', inverter_w:6500, price:20490, photos:['img/p-anern65.jpg']},
+  {name:'Інвертор Datouboss 6,2 кВт, 48 В', inverter_w:6200, price:23000, photos:['img/p-datouboss62.jpg','img/datouboss-specs.jpg','img/scheme-datouboss.jpg','img/datouboss-features.jpg']},
   {name:'Інвертор Aninerel 11 кВт, 48 В', inverter_w:11000, price:31990, photos:['img/p-aninerel11.jpg']},
 ];
 const BATTERIES = [
   // для 24 В інверторів — пара 12,8 В; для 48 В — SRNE 51,2 В (можна кілька)
-  {name:'2 × АКБ ZeroEra LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:22780, photos:['img/p-zeroera.jpg']},
-  {name:'2 × АКБ Idzlldi LiFePO4 12,8 В 150 А·год (для 24 В)', battery_wh:3840, price:26780, photos:['img/p-idzlldi150.jpg']},
+  {name:'2 × АКБ Powinver LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:22780, photos:['img/powinver-battery.jpg']},
+  {name:'2 × АКБ ZeroEra LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:22780, photos:['img/p-zeroera.jpg'], out:true},
+  {name:'2 × АКБ Idzlldi LiFePO4 12,8 В 150 А·год (для 24 В)', battery_wh:3840, price:26780, photos:['img/p-idzlldi150.jpg','img/idzlldi-specs.jpg','img/idzlldi-vs.jpg']},
   {name:'АКБ SRNE LiFePO4 51,2 В 5,12 кВт·год (для 48 В)', battery_wh:5120, price:42990, photos:['img/p-srne-battery.jpg']},
   {name:'2 × АКБ SRNE LiFePO4 51,2 В, 10,24 кВт·год (для 48 В)', battery_wh:10240, price:85980, photos:['img/p-srne-battery.jpg']},
 ];
 let have = 'none'; // 'none' | 'inverter' | 'battery'
 function pickInverter(needW){
-  return INVERTERS.filter(x => x.inverter_w >= needW).sort((a, b) => a.price - b.price)[0] || null;
+  return INVERTERS.filter(x => avail(x) && x.inverter_w >= needW).sort((a, b) => a.price - b.price)[0] || null;
 }
 function pickBattery(needWh){
-  const ok = BATTERIES.filter(x => x.battery_wh * KIT_DOD >= needWh).sort((a, b) => a.price - b.price);
-  return ok[0] || BATTERIES[BATTERIES.length - 1];
+  const ok = BATTERIES.filter(x => avail(x) && x.battery_wh * KIT_DOD >= needWh).sort((a, b) => a.price - b.price);
+  return ok[0] || BATTERIES.filter(avail).sort((a, b) => b.battery_wh - a.battery_wh)[0];
 }
 
 // Найдешевший комплект, що тягне і потужність, і автономність.
 // Якщо автономності не вистачає жодному — найбільша ємність серед тих, що тягнуть потужність.
 // Якщо потужність більша за всі комплекти — null (індивідуальний підбір).
 function pickKit(needW, needWh){
-  const powerOk = KITS.filter(k => k.inverter_w >= needW);
+  const powerOk = KITS.filter(k => avail(k) && k.inverter_w >= needW);
   if(!powerOk.length) return null;
   const full = powerOk.filter(k => k.battery_wh * KIT_DOD >= needWh).sort((a, b) => a.price - b.price);
   if(full.length) return full[0];
@@ -455,17 +473,18 @@ if(tg && tg.initData){
 const gallery = k => `<div class="gallery">${k.photos.map(p => `<img src="${p}" alt="" loading="lazy">`).join('')}</div>`;
 
 function renderKitsRow(){
-  document.getElementById('kitsRow').innerHTML = KITS.map((k, i) => `
-    <div class="kit-card${k.tag ? ' best' : ''}" data-kit="${i}">
+  const order = KITS.map((k, i) => i).sort((a, b) => (!!KITS[a].out - !!KITS[b].out) || (KITS[a].price - KITS[b].price));
+  document.getElementById('kitsRow').innerHTML = order.map(i => KITS[i]).map((k, j) => { const i = order[j]; return `
+    <div class="kit-card${k.tag ? ' best' : ''}${k.out ? ' out' : ''}" data-kit="${i}">
       <img src="${k.photos[0]}" alt="" loading="lazy">
       <div class="kc-body">
-        ${k.tag ? `<div class="kc-tag">${k.tag}</div>` : ''}
+        ${k.tag ? `<div class="kc-tag">${k.tag}</div>` : ''}${k.out ? '<div class="kc-out">Уточнюйте наявність</div>' : ''}
         <div class="kc-name">${k.name}</div>
         <div class="kc-for">${k.for}</div>
         <div class="kc-price">${k.price.toLocaleString('uk-UA')} грн</div>
         <button type="button" class="kc-want">Хочу цей</button>
       </div>
-    </div>`).join('');
+    </div>`; }).join('');
 }
 
 function showThanks(){
@@ -623,7 +642,7 @@ function recalc(){
       <div class="works">${devicesShort.map(n => `<span>✓ ${n}</span>`).join('')}</div>
       ${specsHtml(kit.name)}
       <a class="lock-link" href="#contactsSection" data-lock="1">🔒 Зафіксувати цю ціну на 3 дні — безкоштовно ↓</a>
-      <div class="honest">Це підбір навскидку, не остаточна ціна. Є й інші комплекти: від ${Math.min(...KITS.map(x=>x.price)).toLocaleString('uk-UA')} до ${Math.max(...KITS.map(x=>x.price)).toLocaleString('uk-UA')} грн. Чесно скажемо, якщо вам вистачить меншого, або підберемо потужніше. <a href="#kitsSection">Усі комплекти ↓</a></div>
+      <div class="honest">Це підбір навскидку, не остаточна ціна. Є й інші комплекти: від ${Math.min(...KITS.filter(avail).map(x=>x.price)).toLocaleString('uk-UA')} до ${Math.max(...KITS.filter(avail).map(x=>x.price)).toLocaleString('uk-UA')} грн. Чесно скажемо, якщо вам вистачить меншого, або підберемо потужніше. <a href="#kitsSection">Усі комплекти ↓</a></div>
     </div>`;
   } else {
     kitHtml = `
