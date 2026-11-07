@@ -161,7 +161,11 @@ fbq('track', 'PageView');
   .brandbar .logo svg{width:32px; height:32px; flex:none}
   .brandbar .logo b{display:block; font-size:16px; line-height:1.1}
   .brandbar .logo small{display:block; font-size:11px; color:var(--text-dim)}
-  .brandbar .site-link{font-size:13px; color:var(--accent-2); text-decoration:none; white-space:nowrap}
+  .brandbar .site-link{font-size:13.5px; font-weight:650; color:var(--accent-2); text-decoration:none; white-space:nowrap; border:1px solid var(--accent-2); border-radius:999px; padding:6px 12px}
+  .trust{margin-top:12px; padding:10px; border-radius:10px; background:var(--panel-2); border:1px solid var(--line); text-align:center}
+  .trust .tr-row{font-size:13px; color:var(--text-dim); line-height:1.5}
+  .trust a{display:block; margin-top:8px; padding:10px; border-radius:8px; border:1px solid var(--accent-2); color:var(--accent-2); text-decoration:none; font-weight:650; font-size:14px}
+  .form-site{margin:4px 0 12px; font-size:13.5px; color:var(--text-dim)} .form-site a{color:var(--accent-2); font-weight:650}
   .about p{margin:0 0 10px; font-size:14px; line-height:1.45; color:var(--text-dim)}
   .about b{color:var(--text)}
   .about-links{display:flex; gap:8px; flex-wrap:wrap}
@@ -203,7 +207,7 @@ fbq('track', 'PageView');
       <svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#0b6e4f"/><path d="M20.5 5 9 20.5h8l-2.5 10.5L27 15h-8z" fill="#ffc23d"/></svg>
       <span><b>ЕнергоРезерв</b><small>Автономні системи</small></span>
     </a>
-    <a class="site-link" href="home/?src=calc_top" data-track="site_click">Про нас →</a>
+    <a class="site-link" href="home/?src=calc_top" data-track="site_click">Хто ми →</a>
   </div>
 
   <div class="hero">
@@ -272,6 +276,7 @@ fbq('track', 'PageView');
       <li>🔒 <b>Зафіксуємо ціну на 3 дні</b> — ціни в постачальників змінюються щотижня</li>
     </ul>
     <p class="contact-note">Роман передзвонить за 15–30 хвилин. Безкоштовно й ні до чого не зобов'язує.</p>
+    <p class="form-site">Хочете спершу дізнатися, хто ми? <a href="home/?src=calc_form#trust" data-site="form">Наш сайт: монтаж, гарантія, питання →</a></p>
     <div class="field">
       <label>Ваше ім'я (необов'язково)</label>
       <input type="text" id="userName" placeholder="Олександр">
@@ -515,6 +520,11 @@ function showThanks(){
 const tracked = {};
 // Кнопки «написати / подзвонити» під ціною: не всі хочуть лишати номер, а написати готові
 const BIZ_PHONE = '380998946286';
+// Блок довіри під ціною з помітним переходом на сайт (хто ми, монтаж, гарантія)
+function trustBox(){
+  return `<div class="trust"><div class="tr-row">🛠 Своя бригада в Києві · 💳 Оплата при отриманні · 🛡 Гарантія 1 рік</div>
+    <a href="home/?src=calc_result#trust" data-site="result">Хто ми і як працюємо →</a></div>`;
+}
 function askBtns(){
   return `<div class="ask">Не хочете лишати номер? Напишіть або подзвоніть — відповімо одразу:
     <div class="ask-btns">
@@ -523,6 +533,10 @@ function askBtns(){
       <a class="ab-call" href="tel:+${BIZ_PHONE}" data-ask="call">📞 Дзвінок</a>
     </div></div>`;
 }
+document.addEventListener('click', (e) => {
+  const sl = e.target.closest && e.target.closest('[data-site]');
+  if(sl){ track('site_click'); track('site_' + sl.dataset.site); markActed(); }
+});
 document.addEventListener('click', (e) => {
   const a = e.target.closest && e.target.closest('[data-ask]');
   if(!a) return;
@@ -649,6 +663,7 @@ function recalc(){
       ${specsHtml(kit.name)}
       <a class="lock-link" href="#contactsSection" data-lock="1">🔒 Зафіксувати цю ціну на 3 дні — безкоштовно ↓</a>
       ${askBtns()}
+      ${trustBox()}
       <div class="honest">Підбір навскидку. Перевіримо сумісність з тим, що у вас уже є, і чесно скажемо, якщо підійде дешевший варіант.</div>
     </div>`;
     } else
@@ -666,6 +681,7 @@ function recalc(){
       ${specsHtml(kit.name)}
       <a class="lock-link" href="#contactsSection" data-lock="1">🔒 Зафіксувати цю ціну на 3 дні — безкоштовно ↓</a>
       ${askBtns()}
+      ${trustBox()}
       <div class="honest">Це підбір навскидку, не остаточна ціна. Є й інші комплекти: від ${Math.min(...KITS.filter(avail).map(x=>x.price)).toLocaleString('uk-UA')} до ${Math.max(...KITS.filter(avail).map(x=>x.price)).toLocaleString('uk-UA')} грн. Чесно скажемо, якщо вам вистачить меншого, або підберемо потужніше. <a href="#kitsSection">Усі комплекти ↓</a></div>
     </div>`;
   } else {
