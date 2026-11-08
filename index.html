@@ -535,13 +535,14 @@ function askBtns(){
 }
 document.addEventListener('click', (e) => {
   const sl = e.target.closest && e.target.closest('[data-site]');
-  if(sl){ track('site_click'); track('site_' + sl.dataset.site); markActed(); }
+  if(sl){ track('site_click'); track('site_' + sl.dataset.site); markActed(); fireSerious('site'); }
 });
 document.addEventListener('click', (e) => {
   const a = e.target.closest && e.target.closest('[data-ask]');
   if(!a) return;
   track('ask_' + a.dataset.ask);
   markActed();
+  fireSerious(a.dataset.ask);
   try { if(window.fbq) fbq('track', 'Contact', { content_name: (lastResult && lastResult.kit) || '', method: a.dataset.ask }); } catch(err){}
 });
 
@@ -771,6 +772,18 @@ function fireCalcResult(){
   try { if(window.fbq) fbq('trackCustom', 'CalcResult', { content_name: lastResult.kit, value: lastResult.kit_price || 0, currency: 'UAH' }); } catch(e){}
   track('CalcResult', true);
 }
+// Подія SeriousInterest («Серйозний інтерес»): один раз за візит, коли людина ВЖЕ пройшла
+// калькулятор (спрацював CalcResult) І після цього зробила тепле дію: перейшла на сайт,
+// натиснула Viber / Telegram / Дзвінок, почала вводити телефон або надіслала заявку.
+// Під неї в Facebook створюється окрема конверсія для оптимізації й аудиторія для ретаргетингу.
+let seriousFired = false;
+function fireSerious(how){
+  if(seriousFired || !calcResultFired) return;
+  seriousFired = true;
+  try { if(window.fbq) fbq('trackCustom', 'SeriousInterest', { method: how, content_name: (lastResult && lastResult.kit) || '', value: (lastResult && lastResult.kit_price) || 0, currency: 'UAH' }); } catch(e){}
+  track('serious_interest', true);
+  track('serious_' + how, true);
+}
 window.addEventListener('scroll', checkResultSeen, { passive:true });
 
 // «Зафіксувати ціну на 3 дні» під ціною комплекту → до форми з телефоном
@@ -880,6 +893,7 @@ document.getElementById('sendBtn').addEventListener('click', () => {
   .then(res => res.json())
   .then(data => {
     if(data.ok){
+      fireSerious('lead');
       try { if(window.fbq) fbq('track', 'Lead', { content_name: lastResult.kit, value: lastResult.kit_price || 0, currency: 'UAH' }); } catch(e){}
       track('lead_sent');
       showThanks();
@@ -933,11 +947,15 @@ document.querySelectorAll('[data-track]').forEach(a => a.addEventListener('click
   track(a.dataset.track);
   // Перехід на сайт чи в Telegram — теж «людина щось натиснула»
   markActed();
+  fireSerious(a.dataset.track === 'tg_click' ? 'telegram' : 'site');
   // Написати в Telegram — це теж контакт, як кнопки месенджерів на сайті
   if(a.dataset.track === 'tg_click') try { if(window.fbq) fbq('track', 'Contact'); } catch(e){}
 }));
 document.getElementById('userPhone').addEventListener('focus', () => { track('phone_focus', true); markActed(); });
-document.getElementById('userPhone').addEventListener('input', e => e.target.classList.remove('need'));
+document.getElementById('userPhone').addEventListener('input', e => {
+  e.target.classList.remove('need');
+  if((e.target.value.match(/\d/g) || []).length >= 3) fireSerious('phone');
+});
 document.getElementById('proSettings').addEventListener('toggle', () => track('pro_settings_open', true));
 
 renderDevices();
