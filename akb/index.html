@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LiFePO4 акумулятор 12,8 В 150 А·год · ЕнергоРезерв</title>
 <meta name="description" content="Літій-залізо-фосфатний акумулятор Idzlldi 12,8 В 150 А·год, 1920 Вт·год. Для інверторів і ДБЖ. Оплата при отриманні, доставка Новою поштою, гарантія.">
-<meta property="og:title" content="LiFePO4 акумулятор 12,8 В 150 А·год — 14 990 грн">
+<meta property="og:title" content="LiFePO4 акумулятор 12,8 В 150 А·год — від 14 990 грн за шт у парі">
 <meta property="og:description" content="1920 Вт·год: на 50% більше енергії, ніж у звичайних 100 А·год. Оплата при отриманні.">
 <meta property="og:image" content="https://rendelm52-bit.github.io/kalkulyator/img/p-idzlldi150.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b6e4f'/%3E%3Cpath d='M18 4 8 18h7l-2 10 11-15h-7z' fill='%23ffc23d'/%3E%3C/svg%3E">
@@ -65,10 +65,32 @@
   ul.ticks{padding-left:0;list-style:none;margin:0} ul.ticks li{padding:4px 0 4px 28px;position:relative} ul.ticks li:before{content:"✓";position:absolute;left:4px;color:var(--brand-2);font-weight:800}
   .bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;align-items:center;z-index:5}
   .bar .p{font-weight:800;font-size:18px;white-space:nowrap} .bar .btn{flex:1;padding:12px}
+  .flow{display:flex;align-items:stretch;gap:10px}
+  .flow .st{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+  .flow .st .ico{font-size:34px} .flow .st b{display:block;font-size:16px;margin:4px 0} .flow .st span{color:var(--ink-2);font-size:14px}
+  .flow .ar{display:flex;align-items:center;font-size:28px;color:var(--brand)}
+  .charge{margin-top:12px;background:#fff8e1;border:1px solid #ffe08a;border-radius:14px;padding:14px;font-size:15px}
+  .cards{grid-template-columns:repeat(3,1fr)}
+  .models{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;align-items:start}
+  .m{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+  .m>img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#fff}
+  .m .mb{padding:14px 16px 16px}
+  .m .tag{display:inline-block;background:var(--sun);color:#2a1d00;font-size:12px;font-weight:700;border-radius:8px;padding:2px 8px}
+  .m h3{margin:6px 0 8px;font-size:19px;line-height:1.2}
+  .m ul{list-style:none;padding:0;margin:0 0 10px;font-size:14.5px} .m ul li{padding:2px 0 2px 22px;position:relative} .m ul li:before{content:"✓";position:absolute;left:2px;color:var(--brand-2);font-weight:800}
+  .m .hrs{background:#eef6f2;border-radius:10px;padding:8px 10px;font-size:14px;margin-bottom:10px}
+  .m .mp{font-size:26px;font-weight:800} .m .sv{color:var(--brand);white-space:nowrap} .m .mp small{display:block;font-size:13px;font-weight:500;color:var(--ink-2)}
+  .m .btn{width:100%;margin-top:10px}
+  .m details{margin-top:10px;font-size:14px} .m summary{cursor:pointer;color:var(--brand);font-weight:700;padding:6px 0}
+  .gal{display:flex;gap:8px;overflow-x:auto;margin:6px 0 10px;scroll-snap-type:x mandatory} .gal img{width:78%;flex:none;border-radius:12px;scroll-snap-align:start}
+  .spec{box-shadow:none;border:1px solid var(--line)} .spec td{font-size:13.5px;padding:7px 8px} .spec td:first-child{color:var(--ink-2)}
+  .mods{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .mods button{padding:10px 8px;border:2px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-size:14px;cursor:pointer;text-align:left;line-height:1.3}
+  .mods button b{display:block;font-size:14.5px} .mods button.on{border-color:var(--brand);background:#e7f4ee}
   footer{padding:20px 0 30px;color:var(--ink-2);font-size:13px;text-align:center}
   @media (max-width:760px){
     .hero .wrap{grid-template-columns:1fr;gap:16px} h1{font-size:28px}
-    .cards{grid-template-columns:1fr} .imgs{grid-template-columns:1fr} .fit{grid-template-columns:1fr 1fr 1fr}
+    .cards,.models{grid-template-columns:1fr} .card .ico{float:left;font-size:24px;margin:0 10px 0 0;line-height:1.2} .card h3{margin-top:0} .flow{flex-direction:column} .flow .ar{justify-content:center;transform:rotate(90deg)} .imgs{grid-template-columns:1fr} .fit{grid-template-columns:1fr 1fr 1fr}
     .fit b{font-size:18px} th,td{padding:9px 8px;font-size:14px}
   }
 </style>
@@ -81,7 +103,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1472486328280300');
 fbq('track', 'PageView');
-fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А·год', value:14990, currency:'UAH'});
+fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А·год', value:15090, currency:'UAH'});
 </script>
 <script>
 (function(c,l,a,r,i,t,y){
@@ -107,31 +129,154 @@ fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А
     <p class="lead">1920 Вт·год — на 50% більше енергії, ніж у звичайних 100 А·год, а ціна майже та сама. Для інвертора, ДБЖ, котла чи роутера.</p>
     <ul class="badges"><li>Оплата при отриманні</li><li>Гарантія</li><li>Нова пошта 1–2 дні</li></ul>
     <div class="offers">
-      <button class="offer" type="button" data-q="1"><b>1 акумулятор</b><div class="p">14 990 ₴</div><small>для 12 В інвертора або ДБЖ</small></button>
-      <button class="offer on" type="button" data-q="2"><span class="tag">Для 24 В</span><b>Пара, 3,84 кВт·год</b><div class="p">29 980 ₴</div><small>2 шт для 24 В інвертора</small></button>
+      <button class="offer" type="button" data-q="1"><b>1 акумулятор</b><div class="p">15 090 ₴</div><small>для 12 В інвертора або ДБЖ</small></button>
+      <button class="offer on" type="button" data-q="2"><span class="tag">Для 24 В</span><b>Пара, 3,84 кВт·год</b><div class="p">29 980 ₴</div><small>2 шт для 24 В інвертора · <b style="color:var(--brand)">економія 200 ₴</b></small></button>
     </div>
     <a class="btn btn-sun btn-block" href="#order" data-c="hero">Замовити з оплатою при отриманні</a>
+    <a href="#all" data-c="others" style="display:block;text-align:center;margin-top:10px;color:var(--brand);font-weight:700">Інші моделі від 11 490 ₴ ↓</a>
   </div>
 </div></div>
+
+<section id="all"><div class="wrap">
+  <h2>Усі акумулятори в наявності</h2>
+  <p class="lead" style="margin-bottom:14px">Усі — LiFePO4 12,8 В з вбудованою BMS. Різниця в ємності, ресурсі та ціні.</p>
+  <div class="models">
+    <div class="m">
+      <img src="../img/akb-foursun-1.jpg" alt="Акумулятор Foursun LiFePO4 12,8 В 100 А·год" loading="lazy">
+      <div class="mb">
+        <span class="tag">Найвигідніший</span>
+        <h3>Foursun 12,8 В 100 А·год</h3>
+        <ul><li><b>1280 Вт·год</b> енергії</li><li>4500+ циклів, розряд до 100%</li><li>Корпус IP67, струм до 120 А</li></ul>
+        <div class="hrs">Холодильник + роутер + світло: <b>≈7 год</b></div>
+        <div class="mp">11 490 ₴<small>пара для 24 В — 22 780 ₴ <b class="sv">економія 200 ₴</b></small></div>
+        <button class="btn btn-primary" type="button" data-m="foursun">Замовити Foursun</button>
+        <details><summary>Усі характеристики і фото</summary>
+          <div class="gal"><img src="../img/akb-foursun-2.jpg" alt="BMS Foursun" loading="lazy"><img src="../img/akb-foursun-3.jpg" alt="Переваги Foursun" loading="lazy"></div>
+          <table class="spec">
+            <tr><td>Напруга / ємність</td><td>12,8 В / 100 А·год</td></tr>
+            <tr><td>Енергія</td><td>1280 Вт·год</td></tr>
+            <tr><td>Ресурс</td><td>4500+ циклів, глибина розряду до 100%</td></tr>
+            <tr><td>BMS</td><td>захист від перезаряду, глибокого розряду, замикання, перегріву, перевантаження понад 130 А</td></tr>
+            <tr><td>Струм розряду / заряду</td><td>до 120 А / до 100 А (стандартний 20 А)</td></tr>
+            <tr><td>Напруга заряду</td><td>14,4 В</td></tr>
+            <tr><td>Корпус</td><td>ABS-пластик, IP67</td></tr>
+            <tr><td>Розміри</td><td>33,2 × 17,2 × 22 см</td></tr>
+            <tr><td>З'єднання</td><td>до 4 шт паралельно (400 А·год) або послідовно (48 В)</td></tr>
+          </table>
+        </details>
+      </div>
+    </div>
+    <div class="m">
+      <img src="../img/akb-yulongne-1.jpg" alt="Акумулятор Yulongne LiFePO4 12,8 В 100 А·год" loading="lazy">
+      <div class="mb">
+        <span class="tag" style="background:#e7f4ee;color:var(--brand)">100 А·год</span>
+        <h3>Yulongne 12,8 В 100 А·год</h3>
+        <ul><li><b>1280 Вт·год</b> енергії</li><li>BMS, розряд до 100 А</li><li>Латунні клеми, 10,5 кг</li></ul>
+        <div class="hrs">Холодильник + роутер + світло: <b>≈7 год</b></div>
+        <div class="mp">12 490 ₴<small>пара для 24 В — 24 780 ₴ <b class="sv">економія 200 ₴</b></small></div>
+        <button class="btn btn-primary" type="button" data-m="yulongne">Замовити Yulongne</button>
+        <details><summary>Усі характеристики і фото</summary>
+          <div class="gal"><img src="../img/akb-yulongne-2.jpg" alt="Розміри і характеристики Yulongne" loading="lazy"><img src="../img/akb-yulongne-3.jpg" alt="BMS Yulongne" loading="lazy"></div>
+          <table class="spec">
+            <tr><td>Напруга / ємність</td><td>12,8 В / 100 А·год</td></tr>
+            <tr><td>Енергія</td><td>1280 Вт·год</td></tr>
+            <tr><td>BMS</td><td>захист від перевантаження, короткого замикання та інших небезпечних режимів</td></tr>
+            <tr><td>Струм розряду / заряду</td><td>до 100 А / до 50 А</td></tr>
+            <tr><td>Напруга заряду</td><td>14,4 ± 0,2 В</td></tr>
+            <tr><td>Температура</td><td>заряд 0…+45 °C, розряд −20…+65 °C</td></tr>
+            <tr><td>Корпус / клеми</td><td>ABS-пластик / латунь</td></tr>
+            <tr><td>Розміри, вага</td><td>33,9 × 18,5 × 21,8 см, 10,5 кг</td></tr>
+            <tr><td>З'єднання</td><td>до 4 шт паралельно і послідовно (4P4S)</td></tr>
+          </table>
+        </details>
+      </div>
+    </div>
+    <div class="m">
+      <img src="../img/akb-ameisentech-1.jpg" alt="Акумулятор Ameisentech LiFePO4 12,8 В 100 А·год" loading="lazy">
+      <div class="mb">
+        <span class="tag">10 000+ циклів</span>
+        <h3>Ameisentech 12,8 В 100 А·год</h3>
+        <ul><li><b>1280 Вт·год</b> енергії</li><li>Понад 10 000 циклів</li><li>BMS 100 А, струм до 120 А</li></ul>
+        <div class="hrs">Холодильник + роутер + світло: <b>≈7 год</b></div>
+        <div class="mp">12 490 ₴<small>пара для 24 В — 24 780 ₴ <b class="sv">економія 200 ₴</b></small></div>
+        <button class="btn btn-primary" type="button" data-m="ameisentech">Замовити Ameisentech</button>
+        <details><summary>Усі характеристики</summary>
+          <table class="spec">
+            <tr><td>Модель</td><td>A121, 12,8 В / 100 А·год</td></tr>
+            <tr><td>Енергія</td><td>1280 Вт·год</td></tr>
+            <tr><td>Ресурс</td><td>понад 10 000 циклів</td></tr>
+            <tr><td>BMS</td><td>вбудована, 100 А: захист від перевантаження, замикання, перегріву</td></tr>
+            <tr><td>Струм розряду / заряду</td><td>до 120 А / до 50 А (стандартний 20 А)</td></tr>
+            <tr><td>Напруга заряду</td><td>14,4 ± 0,2 В</td></tr>
+            <tr><td>Температура</td><td>заряд 0…+45 °C, розряд −20…+65 °C</td></tr>
+            <tr><td>Корпус / клеми</td><td>ABS-пластик з ручкою / латунь</td></tr>
+            <tr><td>Розміри, вага</td><td>33 × 17 × 21 см, 10,9 кг</td></tr>
+            <tr><td>З'єднання</td><td>до 4 шт паралельно і послідовно (4P/4S)</td></tr>
+          </table>
+        </details>
+      </div>
+    </div>
+    <div class="m">
+      <img src="../img/p-idzlldi150.jpg" alt="Акумулятор Idzlldi LiFePO4 12,8 В 150 А·год" loading="lazy">
+      <div class="mb">
+        <span class="tag">+50% енергії</span>
+        <h3>Idzlldi 12,8 В 150 А·год</h3>
+        <ul><li><b>1920 Вт·год</b> енергії</li><li>6000 циклів (при розряді до 80%)</li><li>Захист від морозу, BMS 100 А</li></ul>
+        <div class="hrs">Холодильник + роутер + світло: <b>≈10 год</b></div>
+        <div class="mp">15 090 ₴<small>пара для 24 В — 29 980 ₴ <b class="sv">економія 200 ₴</b></small></div>
+        <button class="btn btn-primary" type="button" data-m="idzlldi">Замовити Idzlldi</button>
+        <details><summary>Усі характеристики і фото</summary>
+          <div class="gal"><img src="../img/akb-idzlldi-cold.jpg" alt="Захист від низьких температур" loading="lazy"><img src="../img/akb-idzlldi-bms.jpg" alt="BMS 100 А" loading="lazy"></div>
+          <table class="spec">
+            <tr><td>Напруга / ємність</td><td>12,8 В / 150 А·год</td></tr>
+            <tr><td>Енергія</td><td>1920 Вт·год</td></tr>
+            <tr><td>Ресурс</td><td>4000 циклів при 100% розряду, 6000 при 80%, до 15000 при 60%</td></tr>
+            <tr><td>BMS</td><td>вбудована, 100 А</td></tr>
+            <tr><td>Захист від морозу</td><td>заряд вимикається при ≤0 °C (вмикається при ≥10 °C), розряд — при ≤−20 °C</td></tr>
+            <tr><td>Розміри, вага</td><td>32,5 × 16,5 × 21,5 см, 10 кг</td></tr>
+            <tr><td>Клеми</td><td>M8</td></tr>
+          </table>
+        </details>
+      </div>
+    </div>
+  </div>
+</div></section>
 
 <section><div class="wrap">
   <h2>На скільки вистачить</h2>
   <table>
-    <tr><th>Що працює</th><th>1 шт</th><th>2 шт</th></tr>
-    <tr><td>Роутер + світло (~50 Вт)</td><td><b>≈30 год</b></td><td><b>≈60 год</b></td></tr>
-    <tr><td>Холодильник + роутер + світло (~150 Вт)</td><td><b>≈10 год</b></td><td><b>≈20 год</b></td></tr>
-    <tr><td>Газовий котел + холодильник + роутер + ноутбук (~300 Вт)</td><td><b>≈5 год</b></td><td><b>≈10 год</b></td></tr>
+    <tr><th>Що працює</th><th>100 А·год</th><th>150 А·год</th></tr>
+    <tr><td>Роутер + світло (~50 Вт)</td><td><b>≈20 год</b></td><td><b>≈30 год</b></td></tr>
+    <tr><td>Холодильник + роутер + світло (~150 Вт)</td><td><b>≈7 год</b></td><td><b>≈10 год</b></td></tr>
+    <tr><td>Газовий котел + холодильник + роутер + ноутбук (~300 Вт)</td><td><b>≈3,5 год</b></td><td><b>≈5 год</b></td></tr>
   </table>
-  <p class="note">Орієнтовно, з урахуванням втрат інвертора. Не знаєте, скільки треба? Залиште номер — порахуємо під ваші прилади безкоштовно.</p>
+  <p class="note">Для одного акумулятора, орієнтовно, з урахуванням втрат інвертора. Два акумулятори — удвічі довше. Не знаєте, скільки треба? Залиште номер — порахуємо під ваші прилади безкоштовно.</p>
 </div></section>
 
 <section style="background:#eef6f2"><div class="wrap">
-  <h2>Чому LiFePO4, а не гелевий</h2>
+  <h2>Що таке LiFePO4 простими словами</h2>
+  <p class="lead" style="margin-bottom:14px">LiFePO4 — це літій-залізо-фосфатний акумулятор. Той самий тип, що ставлять у сонячні станції та резервне живлення будинків. Головне, що треба знати:</p>
   <div class="cards">
-    <div class="card"><div class="ico">🔁</div><h3>4000+ циклів</h3><p>Приблизно 10 років щоденних відключень. Гелевий витримує 300–500.</p></div>
-    <div class="card"><div class="ico">🛡️</div><h3>Вбудована BMS 100 А</h3><p>Захист від перезаряду, глибокого розряду, замикання і заряду на морозі.</p></div>
-    <div class="card"><div class="ico">⚖️</div><h3>10 кг замість 30</h3><p>32 × 16,5 × 21,5 см, клеми M8. Без газу і запаху — можна ставити в квартирі.</p></div>
+    <div class="card"><div class="ico">🔥</div><h3>Безпечний</h3><p>Не горить і не вибухає навіть при пошкодженні, не виділяє газ і не пахне. Можна тримати в квартирі, у шафі чи коридорі.</p></div>
+    <div class="card"><div class="ico">🔁</div><h3>До 10 років служби</h3><p>4000–6000+ циклів заряд-розряд: це близько 10 років щоденних відключень. Звичайний гелевий чи кислотний витримує 300–500 циклів (1–3 роки).</p></div>
+    <div class="card"><div class="ico">🧠</div><h3>Вбудована BMS</h3><p>«Мозок» усередині акумулятора. Сам захищає від перезаряду, глибокого розряду, замикання, перегріву.</p></div>
+    <div class="card"><div class="ico">⚖️</div><h3>У 3 рази легший</h3><p>10–11 кг замість 30 у кислотного тієї ж ємності. Розмір як у звичайного автомобільного.</p></div>
+    <div class="card"><div class="ico">🔋</div><h3>Віддає всю енергію</h3><p>Можна використати 90% ємності без шкоди. Кислотний бажано не розряджати нижче половини.</p></div>
+    <div class="card"><div class="ico">🛠️</div><h3>Без обслуговування</h3><p>Не треба доливати, перевіряти чи «тренувати». Поставив, підключив і забув.</p></div>
   </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Як це працює</h2>
+  <p class="lead" style="margin-bottom:14px">Найпростіший варіант для квартири: акумулятор + невеликий інвертор 12 В. Без електрика і без переробки проводки.</p>
+  <div class="flow">
+    <div class="st"><div class="ico">🔋</div><b>Акумулятор 12,8 В</b><span>зберігає енергію</span></div>
+    <div class="ar">➜</div>
+    <div class="st"><div class="ico">🔌</div><b>Інвертор 12 В → 230 В</b><span>чиста синусоїда, 1–2 кВт</span></div>
+    <div class="ar">➜</div>
+    <div class="st"><div class="ico">🏠</div><b>Звичайна розетка</b><span>холодильник, телевізор, ноутбук, роутер, світло</span></div>
+  </div>
+  <div class="charge"><b>⚡ Звідки береться заряд?</b> Простий інвертор акумулятор не заряджає. Потрібен або зарядний пристрій для LiFePO4 (коли є світло, він заряджає акумулятор), або інвертор/ДБЖ із вбудованою зарядкою — тоді все перемикається саме. Підкажемо, що підійде саме вам, і допоможемо підібрати.</div>
 </div></section>
 
 <section><div class="wrap">
@@ -152,7 +297,14 @@ fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А
   <h2 style="text-align:center">Замовлення</h2>
   <div class="order">
     <form id="f" novalidate>
-      <label>Кількість</label>
+      <label>Модель</label>
+      <div class="mods">
+        <button type="button" class="mod" data-m="foursun"><b>Foursun 100 А·год</b>11 490 ₴</button>
+        <button type="button" class="mod" data-m="yulongne"><b>Yulongne 100 А·год</b>12 490 ₴</button>
+        <button type="button" class="mod" data-m="ameisentech"><b>Ameisentech 100 А·год</b>12 490 ₴</button>
+        <button type="button" class="mod on" data-m="idzlldi"><b>Idzlldi 150 А·год</b>15 090 ₴</button>
+      </div>
+      <label>Кількість <small style="font-weight:500;color:var(--ink-2)">(від 2 шт — мінус 100 ₴ з кожного)</small></label>
       <div class="qty">
         <button type="button" data-q="1">1 шт</button>
         <button type="button" data-q="2" class="on">2 шт</button>
@@ -163,6 +315,7 @@ fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А
       <label for="nm">Ім'я (необов'язково)</label>
       <input id="nm" type="text" autocomplete="given-name">
       <div class="sum"><span>Разом:</span><b id="sum">29 980 ₴</b></div>
+      <div class="note" id="save" style="text-align:right;color:var(--brand);font-weight:700;margin-top:2px">Знижка 100 ₴ з кожного: економія 200 ₴</div>
       <button class="btn btn-primary btn-block" id="send" type="submit">Замовити</button>
       <ul class="ticks" style="margin-top:12px;font-size:14.5px">
         <li>Передзвонимо, уточнимо інвертор і відділення НП</li>
@@ -186,7 +339,16 @@ fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А
 <script>
 (function(){
   var LEAD_URL = 'https://ibp-leads.rendelm52.workers.dev/';
-  var PRICE = 14990, NAME = 'АКБ Idzlldi LiFePO4 12,8 В 150 А·год';
+  var MODELS = {
+    foursun:     { price: 11490, name: 'АКБ Foursun LiFePO4 12,8 В 100 А·год' },
+    yulongne:    { price: 12490, name: 'АКБ Yulongne LiFePO4 12,8 В 100 А·год' },
+    ameisentech: { price: 12490, name: 'АКБ Ameisentech LiFePO4 12,8 В 100 А·год' },
+    idzlldi:     { price: 15090, name: 'АКБ Idzlldi LiFePO4 12,8 В 150 А·год' }
+  };
+  var DISC = 100; // знижка з кожного акумулятора від 2 шт
+  function unit(){ return q >= 2 ? PRICE - DISC : PRICE; }
+  function total(){ return unit()*q; }
+  var PRICE = 15090, NAME = MODELS.idzlldi.name;
   var q = 2;
   function fmt(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ₴'; }
   function src(){ var s = new URLSearchParams(location.search).get('src'); return (s && /^[A-Za-z0-9_-]{1,40}$/.test(s)) ? s : 'akb'; }
@@ -195,9 +357,23 @@ fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А
   function setQ(n){
     q = n;
     document.querySelectorAll('[data-q]').forEach(function(b){ b.classList.toggle('on', +b.dataset.q === n); });
-    document.getElementById('sum').textContent = fmt(PRICE*n);
-    document.getElementById('barP').textContent = fmt(PRICE*n);
+    document.getElementById('sum').textContent = fmt(total());
+    document.getElementById('barP').textContent = fmt(total());
+    var sv = document.getElementById('save');
+    sv.textContent = n >= 2 ? 'Знижка 100 ₴ з кожного: економія ' + fmt(DISC*n) : 'Від 2 шт — мінус 100 ₴ з кожного';
   }
+  function setM(m){
+    PRICE = MODELS[m].price; NAME = MODELS[m].name;
+    document.querySelectorAll('.mod').forEach(function(b){ b.classList.toggle('on', b.dataset.m === m); });
+    setQ(q);
+  }
+  document.querySelectorAll('[data-m]').forEach(function(b){
+    b.addEventListener('click', function(){
+      setM(b.dataset.m); ev('akb_model_' + b.dataset.m);
+      if(!b.classList.contains('mod')) document.getElementById('order').scrollIntoView({behavior:'smooth'});
+    });
+  });
+  document.querySelectorAll('.offer').forEach(function(b){ b.addEventListener('click', function(){ setM('idzlldi'); }); });
   document.querySelectorAll('[data-q]').forEach(function(b){
     b.addEventListener('click', function(){ setQ(+b.dataset.q); ev('akb_qty_' + b.dataset.q); });
   });
@@ -210,7 +386,7 @@ fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А
   var ph = document.getElementById('ph'), nm = document.getElementById('nm'), send = document.getElementById('send'), started = false;
   ph.addEventListener('input', function(){
     ph.classList.remove('need');
-    if(!started && ph.value.replace(/\D/g,'').length >= 3){ started = true; ev('akb_phone'); try { if(window.fbq) fbq('track','InitiateCheckout',{content_name:NAME,value:PRICE*q,currency:'UAH'}); } catch(e){} }
+    if(!started && ph.value.replace(/\D/g,'').length >= 3){ started = true; ev('akb_phone'); try { if(window.fbq) fbq('track','InitiateCheckout',{content_name:NAME,value:total(),currency:'UAH'}); } catch(e){} }
   });
   document.getElementById('f').addEventListener('submit', function(e){
     e.preventDefault();
@@ -219,14 +395,14 @@ fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А
     var text = '🔋 <b>ЗАМОВЛЕННЯ АКБ (сторінка /akb)</b>\n\n' +
       '👤 <b>Ім\'я:</b> ' + esc(nm.value.trim() || 'не вказано') + '\n' +
       '📞 <b>Телефон:</b> ' + esc(phone) + '\n\n' +
-      '🛒 <b>Товар:</b> ' + esc(NAME) + ' × ' + q + ' шт = ' + fmt(PRICE*q) + '\n' +
+      '🛒 <b>Товар:</b> ' + esc(NAME) + ' × ' + q + ' шт по ' + fmt(unit()) + ' = ' + fmt(total()) + (q >= 2 ? ' (знижка ' + fmt(DISC*q) + ')' : '') + '\n' +
       '📣 <b>Джерело:</b> <code>' + esc(src()) + '</code>';
     send.disabled = true; send.textContent = 'Надсилання...';
     fetch(LEAD_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ text: text, initData: '', src: src() }) })
     .then(function(r){ return r.json(); })
     .then(function(d){
       if(!d.ok) throw new Error('error');
-      try { if(window.fbq) fbq('track','Lead',{content_name:NAME, value:PRICE*q, currency:'UAH'}); } catch(e){}
+      try { if(window.fbq) fbq('track','Lead',{content_name:NAME, value:total(), currency:'UAH'}); } catch(e){}
       ev('akb_lead_sent');
       document.getElementById('f').style.display = 'none';
       document.getElementById('ok').style.display = 'block';
