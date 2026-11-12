@@ -87,11 +87,15 @@
   .mods{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .mods button{padding:10px 8px;border:2px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-size:14px;cursor:pointer;text-align:left;line-height:1.3}
   .mods button b{display:block;font-size:14.5px} .mods button.on{border-color:var(--brand);background:#e7f4ee}
+  .fast{background:linear-gradient(135deg,#0b6e4f,#13a06f);color:#fff;border-radius:20px;padding:20px;display:flex;gap:16px;align-items:center;box-shadow:var(--shadow)}
+  .fast .big{font-size:44px;line-height:1} .fast b{display:block;font-size:22px;line-height:1.2;margin-bottom:4px} .fast p{margin:0;font-size:15px;opacity:.92}
+  .fast .vs{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap} .fast .vs span{background:rgba(255,255,255,.16);border-radius:10px;padding:5px 10px;font-size:14px}
   footer{padding:20px 0 30px;color:var(--ink-2);font-size:13px;text-align:center}
   @media (max-width:760px){
     .hero .wrap{grid-template-columns:1fr;gap:16px} h1{font-size:28px}
     .cards,.models{grid-template-columns:1fr} .card .ico{float:left;font-size:24px;margin:0 10px 0 0;line-height:1.2} .card h3{margin-top:0} .flow{flex-direction:column} .flow .ar{justify-content:center;transform:rotate(90deg)} .imgs{grid-template-columns:1fr} .fit{grid-template-columns:1fr 1fr 1fr}
     .fit b{font-size:18px} th,td{padding:9px 8px;font-size:14px}
+    .fast{flex-direction:column;align-items:flex-start;gap:6px} .fast .big{font-size:34px} .fast b{font-size:20px}
   }
 </style>
 <!-- Meta Pixel ЕнергоРезерв -->
@@ -136,6 +140,18 @@ fbq('track', 'ViewContent', {content_name:'АКБ Idzlldi LiFePO4 12,8 В 150 А
     <a href="#all" data-c="others" style="display:block;text-align:center;margin-top:10px;color:var(--brand);font-weight:700">Інші моделі від 11 490 ₴ ↓</a>
   </div>
 </div></div>
+
+<section style="padding-bottom:0"><div class="wrap">
+  <div class="fast">
+    <div class="big">⚡</div>
+    <div>
+      <b>Дали світло на 1–2 години — і акумулятор знову повний</b>
+      <p>LiFePO4 приймає великий струм заряду, тому встигає зарядитися навіть між короткими вмиканнями світла.</p>
+      <div class="vs"><span>LiFePO4: 1–2 год</span><span>Гелевий/кислотний: 8–10 год</span></div>
+    </div>
+  </div>
+  <p class="note">Час повного заряду з потужним зарядним пристроєм або інвертором: Foursun — від ≈1 год (струм заряду до 100 А), Yulongne і Ameisentech — від ≈2 год (до 50 А). Зі слабшою зарядкою — довше. Підкажемо, яка зарядка потрібна.</p>
+</div></section>
 
 <section id="all"><div class="wrap">
   <h2>Усі акумулятори в наявності</h2>
