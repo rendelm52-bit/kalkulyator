@@ -119,6 +119,13 @@
   .kit .price small{font-size:14px; font-weight:500; color:var(--ink-2)}
   .kit .fits{font-size:13px; background:#fff7e0; border:1px solid #f0d58a; color:#6b5200; border-radius:8px; padding:6px 9px; margin:0 0 12px}
   .parts .kit .price{font-size:22px}
+  .kit .specs{margin:0 0 14px; border:1px solid var(--line); border-radius:10px; background:#f7faf9}
+  .kit .specs summary{cursor:pointer; padding:10px 12px; font-size:14px; font-weight:700; color:var(--brand); list-style:none}
+  .kit .specs summary::-webkit-details-marker{display:none}
+  .kit .specs[open] summary{border-bottom:1px solid var(--line)}
+  .kit .specs .sp{padding:6px 12px 10px; font-size:13.5px; line-height:1.5}
+  .kit .specs h4{margin:8px 0 2px; font-size:13.5px}
+  .kit .specs ul{display:block; margin:0 0 4px; font-size:13.5px}
   .parts-link{margin:12px 0 0; font-size:15px; color:var(--ink-2)} .parts-link a{color:var(--brand); font-weight:700}
   .parts-h{margin:28px 0 14px; font-size:21px; text-align:center}
   .parts-note{margin:18px auto 0; max-width:760px; text-align:center; font-size:14.5px; color:var(--ink-2)}
@@ -819,6 +826,22 @@ document.addEventListener('click', function(e){
       ev('site_lead_error');
       send.disabled = false; send.textContent = 'Отримати консультацію';
       alert('Не вдалося надіслати. Зателефонуйте нам: +38 099 894 62 86');
+    });
+  });
+})();
+</script>
+<script src="../specs.js"></script>
+<script>
+// Блок «Що входить і характеристики» під кожним комплектом (дані з ../specs.js, ті самі, що в калькуляторі)
+(function(){
+  if (typeof specsHtml !== 'function') return;
+  document.querySelectorAll('.kits:not(.parts) .kit .body').forEach(function(body){
+    var h = body.querySelector('h3'), price = body.querySelector('.price');
+    if (!h || !price) return;
+    price.insertAdjacentHTML('beforebegin', specsHtml(h.textContent.trim()).replace(' ▾', ''));
+    var d = price.previousElementSibling;
+    d.addEventListener('toggle', function(){
+      if (d.open) { try { window.clarity && clarity('event','site_specs_open'); } catch(e){} }
     });
   });
 })();
