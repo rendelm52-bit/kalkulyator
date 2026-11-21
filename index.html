@@ -214,8 +214,8 @@ fbq('track', 'PageView');
     <div>
       <h1><em>Світло зникло?</em>А у вас усе працює.</h1>
       <ul><li>Оплата при отриманні</li><li>Гарантія</li><li>Монтаж по Києву</li></ul>
-      <div class="from">від 38 990 грн</div>
-      <div class="from-parts">Інвертори окремо від 19 590 · АКБ від 12 390 грн</div>
+      <div class="from">від 25 490 грн</div>
+      <div class="from-parts">Інвертори окремо від 19 590 · АКБ від 12 090 грн</div>
     </div>
     <img src="img/kit-anenji-srne.jpg" alt="Інвертор Anenji з акумулятором SRNE LiFePO4">
   </div>
@@ -360,12 +360,27 @@ const DEVICES = [
 
 // Комплекти Opdrop. Ціни оновлювати тут.
 const KITS = [
+  {name:'GSIKE 2,5 кВт + АКБ Yulongne 1,28 кВт·год', inverter_w:2000, battery_wh:1280, price:25490,
+   for:'Квартира: роутер, світло, телевізор, холодильник', tag:'Новинка',
+   photos:['img/kit-gsike25-yulongne.jpg','img/gsike25-view.jpg','img/gsike25-loads.jpg','img/yulongne-bms.jpg']},
+  {name:'GSIKE 2,5 кВт + АКБ Supcelion 1,28 кВт·год', inverter_w:2000, battery_wh:1280, price:26990,
+   for:'Квартира: роутер, світло, телевізор, холодильник', tag:'Новинка',
+   photos:['img/kit-gsike25-supcelion.jpg','img/gsike25-view.jpg','img/p-supcelion.jpg','img/supcelion-info.jpg','img/gsike25-loads.jpg']},
   {name:'Daxtromn 3,5 кВт + 2 АКБ GoKWh 2,56 кВт·год', inverter_w:3500, battery_wh:2560, price:37990,
    for:'Квартира: світло, роутер, холодильник, котел', out:true,
    photos:['img/kit-daxtromn35-gokwh.jpg','img/daxtromn35-specs.jpg','img/scheme-daxtromn35.jpg','img/gokwh-battery.jpg','img/daxtromn35-view.jpg']},
   {name:'Aninerel 4,2 кВт + 2 АКБ Powinver 2,56 кВт·год', inverter_w:4200, battery_wh:2560, price:38990,
    for:'Квартира: світло, холодильник, котел, ноутбук', tag:'Новинка',
    photos:['img/kit-aninerel42-powinver.jpg','img/aninerel42-specs.jpg','img/scheme-aninerel42.jpg','img/powinver-battery.jpg','img/aninerel42-ports.jpg']},
+  {name:'ZeroEra 3,3 кВт + 2 АКБ ZeroEra 2,56 кВт·год', inverter_w:3300, battery_wh:2560, price:39640,
+   for:'Квартира: світло, холодильник, котел, роутер', tag:'Новинка',
+   photos:['img/kit-zeroera33.jpg','img/p-zeroera.jpg']},
+  {name:'GSIKE Power 4,2 кВт + 2 АКБ Daxtromn HBA 2,56 кВт·год', inverter_w:4200, battery_wh:2560, price:39780,
+   for:'Квартира: світло, холодильник, котел, ноутбук', tag:'Новинка',
+   photos:['img/kit-gsike42-daxtromn.jpg','img/p-daxtromn-hba.jpg']},
+  {name:'GSIKE Power 4,2 кВт + АКБ ZOD 24 В 2,56 кВт·год', inverter_w:4200, battery_wh:2560, price:40490,
+   for:'Квартира: світло, холодильник, котел, ноутбук', tag:'Новинка',
+   photos:['img/kit-gsike42-zod.jpg']},
   {name:'Aninerel 6,2 кВт + АКБ CFE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:61990,
    for:'Квартира або будинок з котлом', tag:'Новинка',
    photos:['img/kit-aninerel62-cfe.jpg','img/p-aninerel62.jpg','img/scheme-aninerel62.jpg','img/aninerel62-views.jpg','img/p-cfe-battery.jpg','img/cfe-size.jpg']},
@@ -411,11 +426,14 @@ const INVERTERS = [
   {name:'Інвертор Daxtromn 6,2 кВт, 48 В', inverter_w:6200, price:19590, photos:['img/p-daxtromn62.jpg']},
   {name:'Інвертор Anern 6,5 кВт, 48 В', inverter_w:6500, price:20490, photos:['img/p-anern65.jpg']},
   {name:'Інвертор Datouboss 6,2 кВт, 48 В', inverter_w:6200, price:23000, photos:['img/p-datouboss62.jpg','img/datouboss-specs.jpg','img/scheme-datouboss.jpg','img/datouboss-features.jpg']},
+  {name:'Інвертор Aninerel 6,2 кВт, 48 В', inverter_w:6200, price:20590, photos:['img/p-aninerel62.jpg','img/aninerel62-views.jpg','img/scheme-aninerel62.jpg']},
   {name:'Інвертор Aninerel 11 кВт, 48 В', inverter_w:11000, price:31990, photos:['img/p-aninerel11.jpg']},
 ];
 const BATTERIES = [
   // для 24 В інверторів — пара 12,8 В; для 48 В — CFE або SRNE 51,2 В (можна кілька)
   {name:'2 × АКБ Powinver LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24780, photos:['img/powinver-battery.jpg']},
+  {name:'2 × АКБ Daxtromn HBA LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24180, photos:['img/p-daxtromn-hba.jpg']},
+  {name:'2 × АКБ EverExceed LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24580, photos:['img/p-everexceed.jpg']},
   {name:'2 × АКБ ZeroEra LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24780, photos:['img/p-zeroera.jpg'], out:true},
   {name:'2 × АКБ Idzlldi LiFePO4 12,8 В 150 А·год (для 24 В)', battery_wh:3840, price:29980, photos:['img/p-idzlldi150.jpg','img/idzlldi-specs.jpg','img/idzlldi-vs.jpg']},
   {name:'АКБ CFE LiFePO4 51,2 В 5,12 кВт·год, Wi-Fi (для 48 В)', battery_wh:5120, price:40990, photos:['img/p-cfe-battery.jpg','img/cfe-wifi.jpg','img/cfe-size.jpg','img/cfe-stack.jpg']},
