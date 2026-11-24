@@ -215,7 +215,7 @@ fbq('track', 'PageView');
       <h1><em>Світло зникло?</em>А у вас усе працює.</h1>
       <ul><li>Оплата при отриманні</li><li>Гарантія</li><li>Монтаж по Києву</li></ul>
       <div class="from">від 25 490 грн</div>
-      <div class="from-parts">Інвертори окремо від 19 590 · АКБ від 12 090 грн</div>
+      <div class="from-parts">Інвертори окремо від 20 590 · АКБ від 12 090 грн</div>
     </div>
     <img src="img/kit-anenji-srne.jpg" alt="Інвертор Anenji з акумулятором SRNE LiFePO4">
   </div>
@@ -384,17 +384,17 @@ const KITS = [
   {name:'Aninerel 6,2 кВт + АКБ CFE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:59990,
    for:'Квартира або будинок з котлом', tag:'Новинка',
    photos:['img/kit-aninerel62-cfe.jpg','img/p-aninerel62.jpg','img/scheme-aninerel62.jpg','img/aninerel62-views.jpg','img/p-cfe-battery.jpg','img/cfe-size.jpg']},
-  {name:'Aninerel 11 кВт + АКБ CFE 5,12 кВт·год', inverter_w:11000, battery_wh:5120, price:72990,
+  {name:'Aninerel 11 кВт + АКБ CFE 5,12 кВт·год', inverter_w:11000, battery_wh:5120, price:70990,
    for:'Будинок з насосом, кондиціонером, бойлером', tag:'Новинка',
    photos:['img/kit-aninerel11-cfe.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg','img/p-cfe-battery.jpg','img/cfe-size.jpg']},
   {name:'Aninerel 6,2 кВт + 2 АКБ CFE 10,24 кВт·год', inverter_w:6200, battery_wh:10240, price:97990,
    for:'Довгі відключення: будинок, невеликий бізнес', tag:'Новинка',
    photos:['img/kit-aninerel62-2cfe.jpg','img/p-aninerel62.jpg','img/scheme-aninerel62.jpg','img/cfe-stack.jpg','img/p-cfe-battery.jpg']},
-  {name:'Aninerel 11 кВт + 2 АКБ CFE 10,24 кВт·год', inverter_w:11000, battery_wh:10240, price:104990,
+  {name:'Aninerel 11 кВт + 2 АКБ CFE 10,24 кВт·год', inverter_w:11000, battery_wh:10240, price:100990,
    for:'Великий будинок: усе й надовго', tag:'Новинка',
    photos:['img/kit-aninerel11-2cfe.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg','img/cfe-stack.jpg']},
   {name:'Datouboss 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:66990,
-   for:'Квартира або будинок', tag:'Новинка',
+   for:'Квартира або будинок', out:true,
    photos:['img/kit-datouboss-srne.jpg','img/datouboss-specs.jpg','img/scheme-datouboss.jpg','img/srne-wall.jpg','img/datouboss-features.jpg']},
   {name:'Anenji 6,2 кВт + настінна АКБ SRNE 5,12 кВт·год', inverter_w:6200, battery_wh:5120, price:68990,
    for:'Квартира або невеликий будинок', out:true,
@@ -403,16 +403,16 @@ const KITS = [
    for:'Будинок або квартира, акумулятор на стіні', out:true,
    photos:['img/kit-humsienk-genforce.jpg','img/humsienk-specs.jpg','img/genforce-battery.jpg']},
   {name:'Aninerel 11 кВт + настінна АКБ SRNE 5,12 кВт·год', inverter_w:11000, battery_wh:5120, price:76990,
-   for:'Будинок з насосом, кондиціонером, бойлером',
+   for:'Будинок з насосом, кондиціонером, бойлером', out:true,
    photos:['img/kit-aninerel-srne.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg']},
   {name:'Anenji 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год', inverter_w:6200, battery_wh:10240, price:103990,
    for:'Довгі відключення та невеликий бізнес', out:true,
    photos:['img/kit-anenji-2srne.jpg','img/anenji-specs.jpg','img/scheme-anenji.jpg']},
   {name:'Aninerel 11 кВт + 2 АКБ SRNE 10,24 кВт·год', inverter_w:11000, battery_wh:10240, price:108990,
-   for:'Великий будинок: усе й надовго',
+   for:'Великий будинок: усе й надовго', out:true,
    photos:['img/kit-aninerel-2srne.jpg','img/aninerel-specs.jpg','img/scheme-aninerel.jpg']},
   {name:'Datouboss 6,2 кВт + 2 АКБ SRNE 10,24 кВт·год', inverter_w:6200, battery_wh:10240, price:110980,
-   for:'Довгі відключення: будинок, невеликий бізнес', tag:'Новинка',
+   for:'Довгі відключення: будинок, невеликий бізнес', out:true,
    photos:['img/kit-datouboss-2srne.jpg','img/datouboss-specs.jpg','img/scheme-datouboss.jpg','img/srne-wall.jpg','img/datouboss-features.jpg']},
 ];
 // out:true — постачальник зараз не має; показуємо з позначкою «Уточнюйте наявність», але калькулятор їх сам не підбирає
@@ -423,23 +423,23 @@ const KIT_DOD = 0.9, INVERTER_EFF = 0.9;
 // SPEC_INV, SPEC_BAT, specsHtml() — у specs.js (спільні для калькулятора й сайту)
 
 const INVERTERS = [
-  {name:'Інвертор Daxtromn 6,2 кВт, 48 В', inverter_w:6200, price:19590, photos:['img/p-daxtromn62.jpg']},
-  {name:'Інвертор Anern 6,5 кВт, 48 В', inverter_w:6500, price:20490, photos:['img/p-anern65.jpg']},
-  {name:'Інвертор Datouboss 6,2 кВт, 48 В', inverter_w:6200, price:23000, photos:['img/p-datouboss62.jpg','img/datouboss-specs.jpg','img/scheme-datouboss.jpg','img/datouboss-features.jpg']},
+  {name:'Інвертор Daxtromn 6,2 кВт, 48 В', inverter_w:6200, price:19590, photos:['img/p-daxtromn62.jpg'], out:true},
+  {name:'Інвертор Anern 6,5 кВт, 48 В', inverter_w:6500, price:20490, photos:['img/p-anern65.jpg'], out:true},
+  {name:'Інвертор Datouboss 6,2 кВт, 48 В', inverter_w:6200, price:23000, photos:['img/p-datouboss62.jpg','img/datouboss-specs.jpg','img/scheme-datouboss.jpg','img/datouboss-features.jpg'], out:true},
   {name:'Інвертор Aninerel 6,2 кВт, 48 В', inverter_w:6200, price:20590, photos:['img/p-aninerel62.jpg','img/aninerel62-views.jpg','img/scheme-aninerel62.jpg']},
   {name:'Інвертор Aninerel 11 кВт, 48 В', inverter_w:11000, price:31990, photos:['img/p-aninerel11.jpg']},
 ];
 const BATTERIES = [
   // для 24 В інверторів — пара 12,8 В; для 48 В — CFE або SRNE 51,2 В (можна кілька)
-  {name:'2 × АКБ Powinver LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24780, photos:['img/powinver-battery.jpg']},
+  {name:'2 × АКБ Powinver LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24780, photos:['img/powinver-battery.jpg'], out:true},
   {name:'2 × АКБ Daxtromn HBA LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24180, photos:['img/p-daxtromn-hba.jpg']},
   {name:'2 × АКБ EverExceed LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24580, photos:['img/p-everexceed.jpg']},
   {name:'2 × АКБ ZeroEra LiFePO4 12,8 В 100 А·год (для 24 В)', battery_wh:2560, price:24780, photos:['img/p-zeroera.jpg'], out:true},
-  {name:'2 × АКБ Idzlldi LiFePO4 12,8 В 150 А·год (для 24 В)', battery_wh:3840, price:29980, photos:['img/p-idzlldi150.jpg','img/idzlldi-specs.jpg','img/idzlldi-vs.jpg']},
+  {name:'2 × АКБ Idzlldi LiFePO4 12,8 В 150 А·год (для 24 В)', battery_wh:3840, price:29980, photos:['img/p-idzlldi150.jpg','img/idzlldi-specs.jpg','img/idzlldi-vs.jpg'], out:true},
   {name:'АКБ CFE LiFePO4 51,2 В 5,12 кВт·год, Wi-Fi (для 48 В)', battery_wh:5120, price:40990, photos:['img/p-cfe-battery.jpg','img/cfe-wifi.jpg','img/cfe-size.jpg','img/cfe-stack.jpg']},
   {name:'2 × АКБ CFE LiFePO4 51,2 В, 10,24 кВт·год, Wi-Fi (для 48 В)', battery_wh:10240, price:81980, photos:['img/cfe-stack.jpg','img/p-cfe-battery.jpg','img/cfe-size.jpg']},
-  {name:'АКБ SRNE LiFePO4 51,2 В 5,12 кВт·год (для 48 В)', battery_wh:5120, price:43990, photos:['img/p-srne-battery.jpg']},
-  {name:'2 × АКБ SRNE LiFePO4 51,2 В, 10,24 кВт·год (для 48 В)', battery_wh:10240, price:87980, photos:['img/p-srne-battery.jpg']},
+  {name:'АКБ SRNE LiFePO4 51,2 В 5,12 кВт·год (для 48 В)', battery_wh:5120, price:43990, photos:['img/p-srne-battery.jpg'], out:true},
+  {name:'2 × АКБ SRNE LiFePO4 51,2 В, 10,24 кВт·год (для 48 В)', battery_wh:10240, price:87980, photos:['img/p-srne-battery.jpg'], out:true},
 ];
 let have = 'none'; // 'none' | 'inverter' | 'battery'
 function pickInverter(needW){
