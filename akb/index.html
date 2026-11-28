@@ -29,7 +29,19 @@
   .lead{color:var(--ink-2);margin:0 0 16px;font-size:17px}
   .badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px;padding:0;list-style:none}
   .badges li{background:#e7f4ee;color:var(--brand);font-weight:650;font-size:14px;padding:6px 12px;border-radius:999px}
-  .offers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .offers{display:grid;grid-template-columns:1fr;gap:10px}
+  .offer{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .offer .ol{min-width:0}
+  .offer .p{white-space:nowrap}
+  .cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch}
+  .cmp .c{background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px}
+  .cmp .c.win{border-color:var(--brand);box-shadow:0 0 0 3px rgba(11,110,79,.12)}
+  .cmp .c b{display:block;font-size:16px}
+  .cmp .c ul{margin:8px 0;padding-left:18px;font-size:14.5px;color:var(--ink-2)}
+  .cmp .c .p{font-size:24px;font-weight:800}
+  .cmp .eq{align-self:center;font-size:26px;font-weight:800;color:var(--brand)}
+  .cmp-save{margin-top:12px;background:#fff6dc;border:2px dashed var(--sun);color:#2a1d00;border-radius:14px;padding:10px 14px;font-weight:800;text-align:center;font-size:17px}
+  @media (max-width:560px){.cmp{grid-template-columns:1fr}.cmp .eq{text-align:center}}
   .offer{background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;text-align:left;font:inherit;color:inherit}
   .offer.on{border-color:var(--brand);box-shadow:0 0 0 3px rgba(11,110,79,.12)}
   .offer b{display:block;font-size:15px}
@@ -133,16 +145,30 @@ fbq('track', 'ViewContent', {content_name:'АКБ Yulongne LiFePO4 12,8 В 100 �
   <div>
     <h1>LiFePO4 акумулятор<br><span>12,8 В 100 А·год</span></h1>
     <span class="stk in">✓ Є в наявності</span>
-    <p class="lead">1280 Вт·год: холодильник, роутер і світло працюють ≈7 годин. Для інвертора, ДБЖ, котла чи роутера. Для 24 В інвертора беріть пару.</p>
+    <p class="lead">1280 Вт·год: холодильник, роутер і світло працюють ≈7 годин. Для інвертора, ДБЖ, котла чи роутера. Для 24 В інвертора — один ZOD 25,6 В або пара по 12 В.</p>
     <ul class="badges"><li>Оплата при отриманні</li><li>Гарантія</li><li>Нова пошта 1–2 дні</li></ul>
     <div class="offers">
-      <button class="offer" type="button" data-q="1"><b>1 акумулятор</b><div class="p">12 040 ₴</div><small>для 12 В інвертора або ДБЖ</small></button>
-      <button class="offer on" type="button" data-q="2"><span class="tag">Для 24 В</span><b>Пара, 2,56 кВт·год</b><div class="p">23 580 ₴</div><small>2 шт для 24 В інвертора · <b style="color:var(--brand)">економія 500 ₴</b></small></button>
+      <button class="offer" type="button" data-o="1"><span class="ol"><b>1 акумулятор 12 В</b><small>для 12 В інвертора, ДБЖ або котла</small></span><span class="p">12 040 ₴</span></button>
+      <button class="offer" type="button" data-o="zod"><span class="ol"><span class="tag">Вигідно для 24 В</span><b>1 ZOD на 24 В, 2,56 кВт·год</b><small>замість пари по 12 В · <b style="color:var(--brand)">економія 4 590 ₴</b></small></span><span class="p">18 990 ₴</span></button>
+      <button class="offer on" type="button" data-o="2"><span class="ol"><b>Пара 12 В для 24 В</b><small>2 шт, 2,56 кВт·год · <b style="color:var(--brand)">економія 500 ₴</b></small></span><span class="p">23 580 ₴</span></button>
     </div>
     <a class="btn btn-sun btn-block" href="#order" data-c="hero">Замовити з оплатою при отриманні</a>
     <a href="#all" data-c="others" style="display:block;text-align:center;margin-top:10px;color:var(--brand);font-weight:700">Інші моделі, в наявності від 12 040 ₴ ↓</a>
   </div>
 </div></div>
+
+<section id="zod" style="padding-bottom:0"><div class="wrap">
+  <h2>1 ZOD = 2 акумулятори по 12 В</h2>
+  <p class="lead" style="margin-bottom:14px">Для 24 В інвертора потрібно 24 В. Можна з'єднати два акумулятори по 12,8 В, а можна поставити один ZOD 25,6 В. Енергії стільки ж, а коштує менше.</p>
+  <div class="cmp">
+    <div class="c win"><b>1 × ZOD 25,6 В 100 А·год</b><ul><li>2560 Вт·год</li><li>Один корпус, без перемичок</li><li>Струм заряду до 100 А</li></ul><div class="p">18 990 ₴</div></div>
+    <div class="eq">=</div>
+    <div class="c"><b>2 × 12,8 В 100 А·год</b><ul><li>2560 Вт·год</li><li>Два корпуси + перемичка</li><li>Yulongne, Ameisentech або Powinver</li></ul><div class="p">23 580 ₴</div></div>
+  </div>
+  <div class="cmp-save">Економія 4 590 ₴ з ZOD</div>
+  <button class="btn btn-primary btn-block" type="button" data-m="zod" style="margin-top:12px">Замовити ZOD за 18 990 ₴</button>
+  <p class="note">ZOD підходить тільки для 24 В інвертора. Для 12 В інвертора, ДБЖ чи котла беріть акумулятор на 12,8 В. Не знаєте, який у вас інвертор? Надішліть фото наклейки, підкажемо.</p>
+</div></section>
 
 <section style="padding-bottom:0"><div class="wrap">
   <div class="fast">
@@ -338,7 +364,7 @@ fbq('track', 'ViewContent', {content_name:'АКБ Yulongne LiFePO4 12,8 В 100 �
         <span class="stk in">✓ Є в наявності</span>
         <ul><li><b>2560 Вт·год</b> в одному корпусі</li><li>Для 24 В інвертора вистачає одного</li><li>Розряд 100 А, пік 200 А</li></ul>
         <div class="hrs">Холодильник + роутер + світло: <b>≈14 год</b></div>
-        <div class="mp">19 240 ₴<small>від 2 шт — 37 980 ₴ <b class="sv">економія 500 ₴</b></small></div>
+        <div class="mp">18 990 ₴<small>замість пари 12 В за 23 580 ₴ <b class="sv">економія 4 590 ₴</b></small></div>
         <button class="btn btn-primary" type="button" data-m="zod">Замовити ZOD</button>
         <details><summary>Усі характеристики і фото</summary>
           <div class="gal"><img src="../img/zod24-label.jpg" alt="Характеристики ZOD" loading="lazy"></div>
@@ -472,7 +498,7 @@ fbq('track', 'ViewContent', {content_name:'АКБ Yulongne LiFePO4 12,8 В 100 �
         <button type="button" class="mod" data-m="everexceed"><b>EverExceed 100 А·год</b>12 340 ₴ · є</button>
         <button type="button" class="mod" data-m="kepworth"><b>Kepworth Mini 100 А·год</b>12 330 ₴ · є</button>
         <button type="button" class="mod" data-m="supcelion"><b>Supcelion 100 А·год</b>12 640 ₴ · є</button>
-        <button type="button" class="mod" data-m="zod"><b>ZOD 24 В 100 А·год</b>19 240 ₴ · є</button>
+        <button type="button" class="mod" data-m="zod"><b>ZOD 24 В 100 А·год</b>18 990 ₴ · є</button>
         <button type="button" class="mod" data-m="idzlldi"><b>Idzlldi 150 А·год</b>15 240 ₴ · уточн.</button>
       </div>
       <label>Кількість <small style="font-weight:500;color:var(--ink-2)">(від 2 шт — мінус 250 ₴ з кожного)</small></label>
@@ -519,11 +545,13 @@ fbq('track', 'ViewContent', {content_name:'АКБ Yulongne LiFePO4 12,8 В 100 �
     everexceed: { price: 12340, name: 'АКБ EverExceed LDP12-100 LiFePO4 12,8 В 100 А·год' },
     kepworth: { price: 12330, name: 'АКБ Kepworth Mini LiFePO4 12,8 В 100 А·год' },
     supcelion: { price: 12640, name: 'АКБ Supcelion LiFePO4 12,8 В 100 А·год' },
-    zod: { price: 19240, name: 'АКБ ZOD LiFePO4 25,6 В 100 А·год' },
+    zod: { price: 18990, disc: 0, name: 'АКБ ZOD LiFePO4 25,6 В 100 А·год' },
     idzlldi:     { price: 15240, name: 'АКБ Idzlldi LiFePO4 12,8 В 150 А·год' }
   };
   var DISC = 250; // знижка з кожного акумулятора від 2 шт
-  function unit(){ return q >= 2 ? PRICE - DISC : PRICE; }
+  var CUR = 'yulongne';
+  function disc(){ var d = MODELS[CUR].disc; return d === undefined ? DISC : d; } // ZOD продаємо по РРЦ, без знижки
+  function unit(){ return q >= 2 ? PRICE - disc() : PRICE; }
   function total(){ return unit()*q; }
   var PRICE = MODELS.yulongne.price, NAME = MODELS.yulongne.name;
   var q = 2;
@@ -537,10 +565,11 @@ fbq('track', 'ViewContent', {content_name:'АКБ Yulongne LiFePO4 12,8 В 100 �
     document.getElementById('sum').textContent = fmt(total());
     document.getElementById('barP').textContent = fmt(total());
     var sv = document.getElementById('save');
-    sv.textContent = n >= 2 ? 'Знижка 250 ₴ з кожного: економія ' + fmt(DISC*n) : 'Від 2 шт — мінус 250 ₴ з кожного';
+    if(CUR === 'zod') sv.textContent = n === 1 ? 'Один ZOD замість пари 12 В: економія 4 590 ₴' : 'ZOD — 18 990 ₴ за шт';
+    else sv.textContent = n >= 2 ? 'Знижка 250 ₴ з кожного: економія ' + fmt(DISC*n) : 'Від 2 шт — мінус 250 ₴ з кожного';
   }
   function setM(m){
-    PRICE = MODELS[m].price; NAME = MODELS[m].name;
+    CUR = m; PRICE = MODELS[m].price; NAME = MODELS[m].name;
     document.querySelectorAll('.mod').forEach(function(b){ b.classList.toggle('on', b.dataset.m === m); });
     setQ(q);
   }
@@ -550,7 +579,12 @@ fbq('track', 'ViewContent', {content_name:'АКБ Yulongne LiFePO4 12,8 В 100 �
       if(!b.classList.contains('mod')) document.getElementById('order').scrollIntoView({behavior:'smooth'});
     });
   });
-  document.querySelectorAll('.offer').forEach(function(b){ b.addEventListener('click', function(){ setM('yulongne'); }); });
+  document.querySelectorAll('.offer').forEach(function(b){ b.addEventListener('click', function(){
+    var o = b.dataset.o;
+    document.querySelectorAll('.offer').forEach(function(x){ x.classList.toggle('on', x === b); });
+    if(o === 'zod'){ q = 1; setM('zod'); } else { q = +o; setM('yulongne'); }
+    ev('akb_offer_' + o);
+  }); });
   document.querySelectorAll('[data-q]').forEach(function(b){
     b.addEventListener('click', function(){ setQ(+b.dataset.q); ev('akb_qty_' + b.dataset.q); });
   });
@@ -572,7 +606,7 @@ fbq('track', 'ViewContent', {content_name:'АКБ Yulongne LiFePO4 12,8 В 100 �
     var text = '🔋 <b>ЗАМОВЛЕННЯ АКБ (сторінка /akb)</b>\n\n' +
       '👤 <b>Ім\'я:</b> ' + esc(nm.value.trim() || 'не вказано') + '\n' +
       '📞 <b>Телефон:</b> ' + esc(phone) + '\n\n' +
-      '🛒 <b>Товар:</b> ' + esc(NAME) + ' × ' + q + ' шт по ' + fmt(unit()) + ' = ' + fmt(total()) + (q >= 2 ? ' (знижка ' + fmt(DISC*q) + ')' : '') + '\n' +
+      '🛒 <b>Товар:</b> ' + esc(NAME) + ' × ' + q + ' шт по ' + fmt(unit()) + ' = ' + fmt(total()) + (q >= 2 && disc() ? ' (знижка ' + fmt(disc()*q) + ')' : '') + '\n' +
       '📣 <b>Джерело:</b> <code>' + esc(src()) + '</code>';
     send.disabled = true; send.textContent = 'Надсилання...';
     fetch(LEAD_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ text: text, initData: '', src: src() }) })
